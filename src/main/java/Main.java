@@ -35,13 +35,15 @@ public class Main {
         bots.add(bot3);
         bots.add(bot4);
 
-        new BotSection(bot2);
-        new BotSection(bot3);
-        new BotSection(bot4);
+       BotSection section2 = new BotSection(bot2);
+       BotSection section3 = new BotSection(bot3);
+       BotSection section4 = new BotSection(bot4);
 
         bot2.start();
         bot3.start();
         bot4.start();
+
+        section2.start();
 
 
         Game game = new Game(bots);

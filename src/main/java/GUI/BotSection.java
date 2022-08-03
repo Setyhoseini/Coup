@@ -1,5 +1,6 @@
 package GUI;
 
+import Logic.Game.Controller;
 import Logic.Player.Bot;
 import Logic.Player.Human;
 
@@ -9,8 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class BotSection implements ActionListener {
+public class BotSection extends Thread implements ActionListener {
+    public Controller controller = Controller.Neutral;
+    AtomicBoolean running = new AtomicBoolean(true);
+
+
+
     Bot bot;
     JLabel card1 = new JLabel();
     JLabel card2 = new JLabel();
@@ -830,6 +837,21 @@ public class BotSection implements ActionListener {
         //block
         if (actionEvent.getSource() == block) {
 
+        }
+    }
+
+
+    @Override
+    public void run() {
+        while (running.get()) {
+            switch (controller) {
+                case Bot_Is_Thinking:
+                    thinkingLabel.setVisible(true);
+                    break;
+                case Bot_Finished_Thinking:
+                    thinkingLabel.setVisible(false);
+                    break;
+            }
         }
     }
 }

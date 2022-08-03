@@ -3,6 +3,9 @@ package Logic.Player;
 import GUI.Card;
 import GUI.BotSection;
 import Logic.Game.Action;
+import Logic.Game.Controller;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Bot extends Thread {
     BotSection section;
@@ -11,7 +14,10 @@ public class Bot extends Thread {
     int coins;
     Card card1;
     Card card2;
-    PlayerState state;
+    public PlayerState state;
+    AtomicBoolean running = new AtomicBoolean(true);
+
+
 
     public Bot(int num, Card card1, Card card2, BotType role) {
         this.num = num;
@@ -19,6 +25,10 @@ public class Bot extends Thread {
         this.card2 = card2;
         this.role = role;
         this.coins = 2;
+
+
+        //**********
+        if (num == 2)
         this.state = PlayerState.IsToPlay;
     }
 
@@ -61,11 +71,14 @@ public class Bot extends Thread {
 
 
     public void playParanoid() throws InterruptedException {
-        while (true) {
+        while (running.get()) {
             switch (state) {
                 case IsToPlay:
+                    Thread.sleep(5000);
+                    section.controller = Controller.Bot_Is_Thinking;
                     Thread.sleep(7000);
                     Action.income(num);
+                    section.controller = Controller.Bot_Finished_Thinking;
                     break;
                 case IsToReactToChallenge:
 
