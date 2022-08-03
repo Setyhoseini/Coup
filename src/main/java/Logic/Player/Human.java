@@ -5,7 +5,7 @@ import GUI.HumanSection;
 
 public class Human extends Thread {
     public static int coins;
-    int id;
+    int num;
     public static Card card1;
     public static Card card2;
 
@@ -13,11 +13,11 @@ public class Human extends Thread {
    public Human(Card card1, Card card2) {
        Human.card1 = card1;
        Human.card2 = card2;
-       id = 1;
+       num = 1;
        coins = 2;
    }
 
-   public static void updateNum(int n) {
+   public static void updateCoins(int n) {
        coins += n;
        HumanSection.updateNum();
    }

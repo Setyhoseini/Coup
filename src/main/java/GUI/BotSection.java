@@ -291,14 +291,14 @@ public class BotSection implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         //coup
         if (actionEvent.getSource() == coup) {
-           Human.updateNum(-7);
+           Human.updateCoins(-7);
 
         }
 
 
         //steal
         if (actionEvent.getSource() == steal) {
-            Human.updateNum(2);
+            Human.updateCoins(2);
             bot.updateCoins(-2);
         }
 

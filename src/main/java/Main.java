@@ -1,8 +1,11 @@
 import GUI.*;
 import GUI.Frame;
+import Logic.Game.Game;
 import Logic.Player.Bot;
 import Logic.Player.BotType;
 import Logic.Player.Human;
+
+import java.util.Vector;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,10 +26,31 @@ public class Main {
         new Human(card1, card2);
         new HumanSection(card1, card2);
 
-        new BotSection(new Bot(2, card3, card4, BotType.Paranoid));
-        new BotSection(new Bot(3, card5, card6, BotType.Cautious_Assassin));
-        new BotSection(new Bot(4, card7, card8, BotType.Coup_Lover));
+        Bot bot2 = new Bot(2, card3, card4, BotType.Paranoid);
+        Bot bot3 = new Bot(3, card5, card6, BotType.Cautious_Assassin);
+        Bot bot4 = new Bot(4, card7, card8, BotType.Coup_Lover);
+
+        Vector<Bot> bots = new Vector<>();
+        bots.add(bot2);
+        bots.add(bot3);
+        bots.add(bot4);
+
+        new BotSection(bot2);
+        new BotSection(bot3);
+        new BotSection(bot4);
+
+        bot2.start();
+        bot3.start();
+        bot4.start();
+
+
+        Game game = new Game(bots);
+
+
+
 
         new Frame();
+
+
     }
 }

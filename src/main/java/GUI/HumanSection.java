@@ -1,4 +1,5 @@
 package GUI;
+import Logic.Game.Game;
 import Logic.Player.Human;
 
 import javax.swing.*;
@@ -138,7 +139,7 @@ public class HumanSection implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         //income
          if (actionEvent.getSource() == income) {
-             Human.updateNum(1);
+             Game.receiveMessage(Message.Income);
          }
 
          //exchange one card
@@ -169,7 +170,7 @@ public class HumanSection implements ActionListener {
 
         //foreign aid
         if (actionEvent.getSource() == aid) {
-            Human.updateNum(2);
+            Human.updateCoins(2);
         }
 
         //do nothing
@@ -179,7 +180,7 @@ public class HumanSection implements ActionListener {
 
         //tax
         if (actionEvent.getSource() == tax) {
-            Human.updateNum(3);
+            Human.updateCoins(3);
         }
 
         //react to challenge
