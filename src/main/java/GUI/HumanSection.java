@@ -83,7 +83,7 @@ public class HumanSection implements ActionListener {
     }
 
     public void initExchangeBothButton() {
-        exchangeBoth = new JButton("Exchange cards");
+        exchangeBoth = new JButton("Exchange Cards");
         exchangeBoth.setFont(new Font("Trebuchet MS", Font.BOLD, 17));
         exchangeBoth.setBounds(965, 230, 160, 50);
         exchangeBoth.setFocusable(false);
