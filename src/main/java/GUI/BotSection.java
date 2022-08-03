@@ -1,7 +1,7 @@
 package GUI;
 
-import Logic.Bot;
-import Logic.Human;
+import Logic.Player.Bot;
+import Logic.Player.Human;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Vector;
 
-public class RobotSection implements ActionListener {
+public class BotSection implements ActionListener {
     Bot bot;
     JLabel card1 = new JLabel();
     JLabel card2 = new JLabel();
@@ -22,30 +21,53 @@ public class RobotSection implements ActionListener {
     JButton challenge;
     JButton block;
 
-    public RobotSection(Bot bot) {
+    public BotSection(Bot bot) {
         this.bot = bot;
         card1.setIcon(Card.Back.getImage());
         card2.setIcon(Card.Back.getImage());
-        this.num.setText("" + bot.num);
-        initCards(bot.ID);
-        initCoinNum(bot.ID);
-        initCoupButton(bot.ID);
-        initStealButton(bot.ID);
-        initAssassinateButton(bot.ID);
-        initChallengeButton(bot.ID);
-        initBlockButton(bot.ID);
+        this.num.setText("" + bot.getCoins());
+        initCards(bot.getNum());
+        initCoinNum(bot.getNum());
+        initCoupButton(bot.getNum());
+        initStealButton(bot.getNum());
+        initAssassinateButton(bot.getNum());
+        initChallengeButton(bot.getNum());
+        initBlockButton(bot.getNum());
         bot.setSection(this);
     }
 
 
 
     public void revealACard() {
-        ArrayList<Card> cards = new ArrayList();
-        cards.add(bot.getCard1());
-        cards.add(bot.getCard2());
-        Collections.shuffle(cards);
-        if (cards.get(0).equals(card1)) {
-            
+        if (bot.getCard1() != null && bot.getCard2() == null) {
+            card1.setIcon(bot.getCard1().getImage());
+
+            // Logic
+            bot.setCard1(null);
+        }
+        else if (bot.getCard2() != null && bot.getCard1() == null){
+            card2.setIcon(bot.getCard2().getImage());
+
+            // Logic
+            bot.setCard2(null);
+        }
+        else {
+            ArrayList<Card> cards = new ArrayList<>();
+            cards.add(bot.getCard1());
+            cards.add(bot.getCard2());
+            Collections.shuffle(cards);
+            if (cards.get(0).equals(bot.getCard1())) {
+                card1.setIcon(bot.getCard1().getImage());
+
+                // Logic
+                bot.setCard1(null);
+            }
+            else {
+                card2.setIcon(bot.getCard2().getImage());
+
+               // Logic
+                bot.setCard2(null);
+            }
         }
     }
 
@@ -261,8 +283,8 @@ public class RobotSection implements ActionListener {
 
 
 
-    public void updateNum() {
-        num.setText("" + bot.getNum());
+    public void updateCoins() {
+        num.setText("" + bot.getCoins());
     }
 
     @Override
@@ -277,7 +299,7 @@ public class RobotSection implements ActionListener {
         //steal
         if (actionEvent.getSource() == steal) {
             Human.updateNum(2);
-            bot.updateNum(-2);
+            bot.updateCoins(-2);
         }
 
 
@@ -289,7 +311,7 @@ public class RobotSection implements ActionListener {
 
         //assassinate
         if (actionEvent.getSource() == assassinate) {
-
+           revealACard();
         }
 
 

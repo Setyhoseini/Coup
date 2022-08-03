@@ -1,7 +1,8 @@
 import GUI.*;
 import GUI.Frame;
-import Logic.Bot;
-import Logic.Human;
+import Logic.Player.Bot;
+import Logic.Player.BotType;
+import Logic.Player.Human;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,9 +23,9 @@ public class Main {
         new Human(card1, card2);
         new HumanSection(card1, card2);
 
-        new RobotSection(new Bot(2, "paranoid", card3, card4));
-        new RobotSection(new Bot(3, "cautious assassin", card5, card6));
-        new RobotSection(new Bot(4, "coup lover", card7, card8));
+        new BotSection(new Bot(2, card3, card4, BotType.Paranoid));
+        new BotSection(new Bot(3, card5, card6, BotType.Cautious_Assassin));
+        new BotSection(new Bot(4, card7, card8, BotType.Coup_Lover));
 
         new Frame();
     }

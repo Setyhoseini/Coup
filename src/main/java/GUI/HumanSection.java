@@ -1,6 +1,5 @@
 package GUI;
-import Logic.Human;
-import com.sun.tools.javac.Main;
+import Logic.Player.Human;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +10,7 @@ import java.util.Collections;
 public class HumanSection implements ActionListener {
     static JLabel card1 = new JLabel();
     static JLabel card2 = new JLabel();
-    static JLabel num = new JLabel("" + Human.num);
+    static JLabel num = new JLabel("" + Human.coins);
     static JButton income;
     static JButton aid;
     static JButton tax;
@@ -52,7 +51,7 @@ public class HumanSection implements ActionListener {
     }
 
     public static void updateNum() {
-        num.setText("" + Human.num);
+        num.setText("" + Human.coins);
     }
 
     public void initIncomeButton() {

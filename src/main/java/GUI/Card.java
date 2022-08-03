@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public enum Card {
 
+
     Back(new ImageIcon("ba.png")),
     Duke(new ImageIcon("du.png")),
     Contessa(new ImageIcon("co.png")),
