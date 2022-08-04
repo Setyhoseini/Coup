@@ -25,11 +25,10 @@ public class Bot extends Thread {
         this.card2 = card2;
         this.role = role;
         this.coins = 2;
-
-
-        //**********
-        if (num == 2)
-        this.state = PlayerState.IsToPlay;
+        this.state = PlayerState.Neutral;
+//        //**********
+//        if (num == 2)
+//        this.state = PlayerState.IsToPlay;
     }
 
     public void setSection(BotSection section) {
@@ -74,11 +73,11 @@ public class Bot extends Thread {
         while (running.get()) {
             switch (state) {
                 case IsToPlay:
-                    Thread.sleep(5000);
                     section.controller = Controller.Bot_Is_Thinking;
-                    Thread.sleep(7000);
+                    Thread.sleep(6000);
                     Action.income(num);
                     section.controller = Controller.Bot_Finished_Thinking;
+                    state = PlayerState.Neutral;
                     break;
                 case IsToReactToChallenge:
 

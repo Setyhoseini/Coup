@@ -1,5 +1,5 @@
 package Logic.Player;
 
 public enum PlayerState {
-    IsToPlay, IsToReactToChallenge, IsAskedToChallenged, IsAskedToBlock
+    IsToPlay, IsToReactToChallenge, IsAskedToChallenged, IsAskedToBlock, Neutral
 }

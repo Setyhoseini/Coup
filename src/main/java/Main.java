@@ -5,6 +5,7 @@ import Logic.Player.Bot;
 import Logic.Player.BotType;
 import Logic.Player.Human;
 
+import javax.swing.*;
 import java.util.Vector;
 
 public class Main {
@@ -23,7 +24,8 @@ public class Main {
         Card.Deck.add(card14);
         Card.Deck.add(card15);
 
-        new Human(card1, card2);
+
+        Human player = new Human(card1, card2);
         new HumanSection(card1, card2);
 
         Bot bot2 = new Bot(2, card3, card4, BotType.Paranoid);
@@ -39,6 +41,7 @@ public class Main {
        BotSection section3 = new BotSection(bot3);
        BotSection section4 = new BotSection(bot4);
 
+        player.start();
         bot2.start();
         bot3.start();
         bot4.start();

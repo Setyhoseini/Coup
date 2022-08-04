@@ -22,6 +22,9 @@ public class Frame extends JFrame implements ActionListener {
         initPlayerFourSection();
     }
 
+
+
+
     public void initBackground() {
         label.setBounds(0, 0, 1800, 1000);
         label.setIcon(icon);
@@ -34,12 +37,12 @@ public class Frame extends JFrame implements ActionListener {
         this.add(label);
         this.setVisible(true);
 
-      /*  JTextArea text = new JTextArea();
-        text.setEnabled(false);
-        text.setToolTipText("what the heck");
-        JScrollPane events = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        events.setBounds(33, 465, 495, 460);
-      */
+//        JTextArea text = new JTextArea();
+//        text.setEnabled(false);
+//        text.setToolTipText("what the heck");
+//        JScrollPane events = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//        events.setBounds(33, 465, 495, 460);
+
     }
 
     public void initHumanSection() {

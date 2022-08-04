@@ -9,10 +9,19 @@ import java.util.Vector;
 public class Game extends Thread{
     public static Vector<Bot> bots = new Vector<>();
     public static Vector<Card> deck = new Vector<>();
-
+    public static Vector<Integer> players = new Vector<>();
 
     public Game(Vector<Bot> bots) {
         Game.bots = bots;
+        players.add(1);
+        players.add(2);
+        players.add(3);
+        players.add(4);
+    }
+
+
+    public void changeTurn() {
+
     }
 
 
