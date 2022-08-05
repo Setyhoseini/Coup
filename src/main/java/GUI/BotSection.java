@@ -1,5 +1,6 @@
 package GUI;
 
+import Logic.Game.ActionName;
 import Logic.Game.Controller;
 import Logic.Player.Bot;
 import Logic.Player.Human;
@@ -15,8 +16,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class BotSection extends Thread implements ActionListener {
     public Controller controller = Controller.Neutral;
     AtomicBoolean running = new AtomicBoolean(true);
-
-
 
     Bot bot;
     JLabel card1 = new JLabel();
@@ -71,6 +70,17 @@ public class BotSection extends Thread implements ActionListener {
     ImageIcon foreignAidLabel = new ImageIcon("foreignAid.png");
     ImageIcon winChallengeLabel = new ImageIcon("winChallenge.png");
     ImageIcon loseChallengeLabel = new ImageIcon("loseChallenge.png");
+
+
+    public void disableAll() {
+        coup.setEnabled(false);
+        steal.setEnabled(false);
+        challenge.setEnabled(false);
+        block.setEnabled(false);
+        assassinate.setEnabled(false);
+    }
+
+
 
 
     public BotSection(Bot bot) {
@@ -810,33 +820,61 @@ public class BotSection extends Thread implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         //coup
         if (actionEvent.getSource() == coup) {
-           Human.updateCoins(-7);
-
+           switch (bot.getNum()) {
+               case 2:
+                   Human.lastAction = ActionName.Coup_On_2;
+                   break;
+               case 3:
+                   Human.lastAction = ActionName.Coup_On_3;
+                   break;
+               case 4:
+                   Human.lastAction = ActionName.Coup_On_4;
+                   break;
+           }
         }
 
 
         //steal
         if (actionEvent.getSource() == steal) {
-            Human.updateCoins(2);
-            bot.updateCoins(-2);
+            switch (bot.getNum()) {
+                case 2:
+                    Human.lastAction = ActionName.Steal_From_2;
+                    break;
+                case 3:
+                    Human.lastAction = ActionName.Steal_From_3;
+                    break;
+                case 4:
+                    Human.lastAction = ActionName.Steal_From_4;
+                    break;
+            }
         }
 
 
         //challenge
         if (actionEvent.getSource() == challenge) {
-
+            Human.lastAction = ActionName.Challenge;
         }
 
 
         //assassinate
         if (actionEvent.getSource() == assassinate) {
-           revealACard();
+            switch (bot.getNum()) {
+                case 2:
+                    Human.lastAction = ActionName.Assassinate_2;
+                    break;
+                case 3:
+                    Human.lastAction = ActionName.Assassinate_3;
+                    break;
+                case 4:
+                    Human.lastAction = ActionName.Assassinate_4;
+                    break;
+            }
         }
 
 
         //block
         if (actionEvent.getSource() == block) {
-
+           Human.lastAction = ActionName.Block;
         }
     }
 
@@ -845,10 +883,10 @@ public class BotSection extends Thread implements ActionListener {
     public void run() {
         while (running.get()) {
             switch (controller) {
-                case Bot_Is_Thinking:
+                case Is_Thinking:
                     thinkingLabel.setVisible(true);
                     break;
-                case Bot_Finished_Thinking:
+                case Finished_Thinking:
                     thinkingLabel.setVisible(false);
                     break;
             }

@@ -3,12 +3,13 @@ package Logic.Player;
 import GUI.Card;
 import GUI.BotSection;
 import Logic.Game.Action;
+import Logic.Game.ActionName;
 import Logic.Game.Controller;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Bot extends Thread {
-    BotSection section;
+    public BotSection section;
     BotType role;
     int num;
     int coins;
@@ -16,8 +17,7 @@ public class Bot extends Thread {
     Card card2;
     public PlayerState state;
     AtomicBoolean running = new AtomicBoolean(true);
-
-
+    ActionName lastAction = null;
 
     public Bot(int num, Card card1, Card card2, BotType role) {
         this.num = num;
@@ -26,9 +26,6 @@ public class Bot extends Thread {
         this.role = role;
         this.coins = 2;
         this.state = PlayerState.Neutral;
-//        //**********
-//        if (num == 2)
-//        this.state = PlayerState.IsToPlay;
     }
 
     public void setSection(BotSection section) {
@@ -73,10 +70,10 @@ public class Bot extends Thread {
         while (running.get()) {
             switch (state) {
                 case IsToPlay:
-                    section.controller = Controller.Bot_Is_Thinking;
+                    section.controller = Controller.Is_Thinking;
                     Thread.sleep(6000);
                     Action.income(num);
-                    section.controller = Controller.Bot_Finished_Thinking;
+                    section.controller = Controller.Finished_Thinking;
                     state = PlayerState.Neutral;
                     break;
                 case IsToReactToChallenge:
@@ -85,7 +82,7 @@ public class Bot extends Thread {
                 case IsAskedToBlock:
 
                     break;
-                case IsAskedToChallenged:
+                case IsAskedToChallenge:
 
                     break;
             }

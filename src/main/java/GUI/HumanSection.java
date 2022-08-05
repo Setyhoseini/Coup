@@ -1,5 +1,8 @@
 package GUI;
+import Logic.Game.ActionName;
 import Logic.Game.Game;
+import Logic.Game.Action;
+import Logic.Player.Bot;
 import Logic.Player.Human;
 
 import javax.swing.*;
@@ -34,6 +37,83 @@ public class HumanSection implements ActionListener {
         initDoNothingButton();
         initExchangeButtons();
     }
+
+
+    public static void disableAll() {
+        income.setEnabled(false);
+        aid.setEnabled(false);
+        tax.setEnabled(false);
+        exchangeBoth.setEnabled(false);
+        reactToChallenge.setEnabled(false);
+        doNothing.setEnabled(false);
+        exchange1.setEnabled(false);
+        exchange2.setEnabled(false);
+    }
+
+
+
+    public static void waitForResponse() {
+        while (Human.lastAction == null) {
+        }
+    }
+
+
+
+    public static void enableIsAskedToChallenge(int num) {
+        disableAll();
+        for (Bot b : Game.bots) {
+            b.section.disableAll();
+        }
+        Game.getBotByNum(num).section.challenge.setEnabled(true);
+        doNothing.setEnabled(true);
+    }
+
+    public static void enableIsAskedToBlock(int num) {
+        disableAll();
+        for (Bot b : Game.bots) {
+            b.section.disableAll();
+        }
+        Game.getBotByNum(num).section.block.setEnabled(true);
+        doNothing.setEnabled(true);
+    }
+
+    public static void enableNeutral() {
+        disableAll();
+        for (Bot b : Game.bots) {
+            b.section.disableAll();
+        }
+    }
+
+    public static void enableIsToPlay() {
+        disableAll();
+        for (Bot b : Game.bots) {
+            b.section.disableAll();
+            b.section.steal.setEnabled(true);
+            b.section.assassinate.setEnabled(true);
+        }
+        if (Human.coins >= 3) {
+            tax.setEnabled(true);
+        }
+        if (Human.coins >= 7) {
+            for (Bot b : Game.bots) {
+                b.section.coup.setEnabled(true);
+            }
+        }
+        income.setEnabled(true);
+        aid.setEnabled(true);
+        if (Human.card1 != null) {
+            exchange1.setEnabled(true);
+        }
+        if (Human.card2 != null) {
+            exchange2.setEnabled(true);
+        }
+        exchangeBoth.setEnabled(true);
+    }
+
+
+
+
+
 
     public void initCards() {
         card1.setBounds(588, 50, 170, 255);
@@ -124,11 +204,11 @@ public class HumanSection implements ActionListener {
         exchange2.addActionListener(this);
     }
 
-    public void setCard1(Card card) {
+    public static void setCard1(Card card) {
         Human.card1 = card;
         card1.setIcon(card.getImage());
     }
-    public void setCard2(Card card) {
+    public static void setCard2(Card card) {
         Human.card2 = card;
         card2.setIcon(card.getImage());
     }
@@ -139,54 +219,41 @@ public class HumanSection implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         //income
          if (actionEvent.getSource() == income) {
-             Game.receiveMessage(Message.Income);
+            Action.income(1);
          }
 
          //exchange one card
          if (actionEvent.getSource() == exchange1) {
-             Card c = Human.card1;
-             Collections.shuffle(Card.Deck);
-             setCard1(Card.Deck.remove(0));
-             Card.Deck.add(c);
+             Action.exchangeOne(1, 1);
          }
-        if (actionEvent.getSource() == exchange2) {
-            Card c = Human.card2;
-            Collections.shuffle(Card.Deck);
-            setCard2(Card.Deck.remove(0));
-            Card.Deck.add(c);
-        }
+         if (actionEvent.getSource() == exchange2) {
+             Action.exchangeOne(1, 2);
+         }
 
 
         //exchange both cards
         if (actionEvent.getSource() == exchangeBoth) {
-            Card c1 = Human.card1;
-            Card c2 = Human.card2;
-            Collections.shuffle(Card.Deck);
-            setCard1(Card.Deck.remove(0));
-            setCard2(Card.Deck.remove(1));
-            Card.Deck.add(c1);
-            Card.Deck.add(c2);
+            Human.lastAction = ActionName.Exchange_Both_Cards;
         }
 
         //foreign aid
         if (actionEvent.getSource() == aid) {
-            Human.updateCoins(2);
+           Human.lastAction = ActionName.Foreign_Aid;
         }
 
         //do nothing
         if (actionEvent.getSource() == doNothing) {
-
+            Human.lastAction = ActionName.Do_Nothing;
         }
 
         //tax
         if (actionEvent.getSource() == tax) {
-            Human.updateCoins(3);
+            Human.lastAction = ActionName.Tax;
         }
 
         //react to challenge
         if (actionEvent.getSource() == reactToChallenge) {
-
+            Human.lastAction = ActionName.React_To_Challenge;
         }
-
     }
 }

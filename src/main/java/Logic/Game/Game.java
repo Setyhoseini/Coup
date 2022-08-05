@@ -10,6 +10,7 @@ public class Game extends Thread{
     public static Vector<Bot> bots = new Vector<>();
     public static Vector<Card> deck = new Vector<>();
     public static Vector<Integer> players = new Vector<>();
+    public static ActionName lastAction = null;
 
     public Game(Vector<Bot> bots) {
         Game.bots = bots;
