@@ -18,6 +18,8 @@ public class Bot extends Thread {
     public PlayerState state;
     AtomicBoolean running = new AtomicBoolean(true);
     ActionName lastAction = null;
+    public static AtomicBoolean paranoidChallenge = new AtomicBoolean(false);
+    public static AtomicBoolean paranoidIsPlaying = new AtomicBoolean(false);
 
     public Bot(int num, Card card1, Card card2, BotType role) {
         this.num = num;
@@ -26,6 +28,7 @@ public class Bot extends Thread {
         this.role = role;
         this.coins = 2;
         this.state = PlayerState.Neutral;
+        if (role == BotType.Paranoid) paranoidIsPlaying.set(true);
     }
 
     public void setSection(BotSection section) {
@@ -66,15 +69,32 @@ public class Bot extends Thread {
     }
 
 
+    public boolean challenges() {
+        if (role == BotType.Paranoid) {
+            if (paranoidChallenge.get()) {
+                paranoidChallenge.set(false);
+                return false;
+            }
+            else {
+                paranoidChallenge.set(true);
+                return true;
+            }
+        }
+        else {
+            return !(Math.random() > 0.3);
+        }
+    }
+
+
     public void playParanoid() throws InterruptedException {
         while (running.get()) {
             switch (state) {
                 case IsToPlay:
-                    section.controller = Controller.Is_Thinking;
-                    Thread.sleep(6000);
-                    Action.income(num);
-                    section.controller = Controller.Finished_Thinking;
-                    state = PlayerState.Neutral;
+//                    section.controller = Controller.Is_Thinking;
+//                    Thread.sleep(6000);
+//                    Action.income(num);
+//                    section.controller = Controller.Neutral;
+//                    state = PlayerState.Neutral;
                     break;
                 case IsToReactToChallenge:
 

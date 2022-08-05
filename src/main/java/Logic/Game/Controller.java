@@ -2,8 +2,12 @@ package Logic.Game;
 
 public enum Controller {
     Neutral,
+
     Is_Thinking,
-    Finished_Thinking,
+
+    Challenges,
+
+
     Won_Challenge,
     Lost_Challenge,
 

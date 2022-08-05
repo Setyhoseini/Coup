@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
 
 public class HumanSection implements ActionListener {
     static JLabel card1 = new JLabel();
@@ -58,6 +57,11 @@ public class HumanSection implements ActionListener {
     }
 
 
+
+    public static void enableIsToReactToChallenge() {
+        disableAll();
+        reactToChallenge.setEnabled(true);
+    }
 
     public static void enableIsAskedToChallenge(int num) {
         disableAll();

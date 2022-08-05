@@ -1,7 +1,9 @@
 package Logic.Player;
 import GUI.Card;
 import GUI.HumanSection;
+import Logic.Game.Action;
 import Logic.Game.ActionName;
+import Logic.Game.Controller;
 import Logic.Game.Game;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -72,6 +74,52 @@ public class Human extends Thread {
                  HumanSection.waitForResponse();
                  switch (lastAction) {
                      case Tax:
+                         lastAction = null;
+
+
+
+                         try {
+                             Thread.sleep(2500);
+                         } catch (InterruptedException e) {
+                             e.printStackTrace();
+                         }
+
+                         int challenge = Game.botChallenges();
+                         Bot challenger = Game.getBotByNum(challenge);
+                         if (challenge == 0) {
+                             Action.tax(1);
+                             state = PlayerState.Neutral;
+                             Game.changeTurn();
+                         }
+                         else {
+                             challenger.section.controller = Controller.Challenges;
+                             HumanSection.enableIsToReactToChallenge();
+                             HumanSection.waitForResponse();
+
+                             lastAction = null;
+
+                             if (card1 == Card.Duke || card2 == Card.Duke) {
+                                 // show message "lost challenge"
+                                 challenger.section.controller = Controller.Lost_Challenge;
+                                 try {
+                                     Thread.sleep(4000);
+                                 } catch (InterruptedException e) {
+                                     e.printStackTrace();
+                                 }
+                                 // apply losing the challenge
+                                 challenger.section.controller = Controller.Neutral;
+                                 challenger.section.revealACard();
+                                 if (challenger.card1 == null && challenger.card2 == null) {
+                                     Game.players.remove(challenge);
+                                 }
+
+                                 // apply tax
+                                 Action.tax(1);
+
+                                 // change turn
+                                 Game.changeTurn();
+                             }
+                         }
 
                          break;
                      case Foreign_Aid:

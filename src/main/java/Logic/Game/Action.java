@@ -18,7 +18,7 @@ public class Action {
         else Game.getBotByNum(by).updateCoins(2);
     }
 
-    public void tax(int by) {
+    public static void tax(int by) {
         if (by == 1) Human.updateCoins(3);
         else Game.getBotByNum(by).updateCoins(3);
     }

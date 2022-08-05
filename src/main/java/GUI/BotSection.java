@@ -879,6 +879,37 @@ public class BotSection extends Thread implements ActionListener {
     }
 
 
+
+
+
+    public void revealCard(int card) {
+
+    }
+
+
+
+    public void neutralState() {
+        assassinateDecision1.setVisible(false);
+        assassinateDecision2.setVisible(false);
+        assassinateDecision3.setVisible(false);
+        assassinateDecision4.setVisible(false);
+        stealDecision1.setVisible(false);
+        stealDecision2.setVisible(false);
+        stealDecision3.setVisible(false);
+        stealDecision4.setVisible(false);
+        blockDecision.setVisible(false);
+        challengeDecision.setVisible(false);
+        incomeDecision.setVisible(false);
+        foreignAidDecision.setVisible(false);
+        taxDecision.setVisible(false);
+        exchangeOneDecision.setVisible(false);
+        exchangeTwoDecision.setVisible(false);
+        winChallenge.setVisible(false);
+        loseChallenge.setVisible(false);
+        thinkingLabel.setVisible(false);
+    }
+
+
     @Override
     public void run() {
         while (running.get()) {
@@ -886,9 +917,13 @@ public class BotSection extends Thread implements ActionListener {
                 case Is_Thinking:
                     thinkingLabel.setVisible(true);
                     break;
-                case Finished_Thinking:
-                    thinkingLabel.setVisible(false);
+                case Neutral:
+                    neutralState();
                     break;
+                case Challenges:
+                    challengeDecision.setVisible(true);
+                    break;
+
             }
         }
     }
