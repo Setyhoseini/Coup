@@ -13,7 +13,7 @@ public class Bot extends Thread {
     public BotSection section;
     BotType role;
     Integer num;
-    int coins;
+    public int coins;
     Card card1;
     Card card2;
     public PlayerState state;
@@ -62,6 +62,10 @@ public class Bot extends Thread {
 
     public void setCard2(Card card2) {
         this.card2 = card2;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
     }
 
     public void updateCoins(int n) {

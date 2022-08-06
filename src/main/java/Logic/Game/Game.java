@@ -2,7 +2,6 @@ package Logic.Game;
 
 import GUI.Card;
 import GUI.HumanSection;
-import GUI.Message;
 import Logic.Player.Bot;
 import Logic.Player.BotType;
 import Logic.Player.Human;
@@ -15,9 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Game extends Thread{
     public static Vector<Bot> bots = new Vector<>();
-    public static Vector<Card> deck = new Vector<>();
     public static Vector<Integer> players = new Vector<>();
-    public static ActionName lastAction = null;
     public static AtomicInteger turn = new AtomicInteger();
     public static AtomicBoolean gameIsGoing = new AtomicBoolean(true);
 
@@ -35,7 +32,6 @@ public class Game extends Thread{
 
 
     public static void changeTurn() {
-
         if (turn.get() == 1) {
             Human.state = PlayerState.Neutral;
         }
@@ -55,7 +51,10 @@ public class Game extends Thread{
             Human.state = PlayerState.IsToPlay;
 
             //***************************
-            HumanSection.enableIsToPlay();
+            if (Human.coins >= 10) {
+                HumanSection.enableMustCoup();
+            }
+            else HumanSection.enableIsToPlay();
         }
         else {
             for (Bot b : bots) {
@@ -207,15 +206,6 @@ public class Game extends Thread{
         }
         return bot;
     }
-
-
-    public static void receiveMessage(Message message) {
-
-    }
-
-
-
-
 
 
     @Override

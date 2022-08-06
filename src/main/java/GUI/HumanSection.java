@@ -91,16 +91,20 @@ public class HumanSection implements ActionListener {
     public static void enableIsToPlay() {
         disableAll();
         for (Bot b : Game.bots) {
-            b.section.disableAll();
-            b.section.steal.setEnabled(true);
+            if (Game.players.contains(b.getNum()) && b.coins >= 0) {
+                b.section.disableAll();
+                b.section.steal.setEnabled(true);
+            }
         }
         if (Human.coins >= 3) {
             for (Bot b : Game.bots) {
+                if (Game.players.contains(b.getNum()))
                 b.section.assassinate.setEnabled(true);
             }
         }
         if (Human.coins >= 7) {
             for (Bot b : Game.bots) {
+                if (Game.players.contains(b.getNum()))
                 b.section.coup.setEnabled(true);
             }
         }
@@ -118,6 +122,14 @@ public class HumanSection implements ActionListener {
 
 
 
+    public static void enableMustCoup() {
+        disableAll();
+        for (Bot b : Game.bots) {
+            if (Game.players.contains(b.getNum())) {
+                b.section.coup.setEnabled(true);
+            }
+        }
+    }
 
 
 

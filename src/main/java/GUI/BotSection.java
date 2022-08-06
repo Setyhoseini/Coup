@@ -608,7 +608,7 @@ public class BotSection extends Thread implements ActionListener {
             bot.setCard1(null);
         }
         else {
-            card2.setIcon(bot.getCard1().getImage());
+            card2.setIcon(bot.getCard2().getImage());
             bot.setCard2(null);
         }
     }

@@ -2,6 +2,7 @@ package Logic.Game;
 
 import GUI.Card;
 import GUI.HumanSection;
+import Logic.Player.Bot;
 import Logic.Player.Human;
 
 import java.util.Collections;
@@ -61,16 +62,73 @@ public class Action {
 
     }
 
-    public void coup(int by, int on) {
-
+    public static void coup(int by, int on) {
+        if (by == 1) {
+            Human.updateCoins(-7);
+            Bot bot = Game.getBotByNum(on);
+            bot.section.revealACard();
+            if (bot.getCard1() == null && bot.getCard2() == null) {
+                Game.players.remove((Integer) on);
+            }
+        }
+        else {
+            Bot couper = Game.getBotByNum(by);
+            couper.updateCoins(-7);
+            if (on == 1) {
+                // todo. the human should choose which card to reveal
+            }
+            else {
+                Bot bot = Game.getBotByNum(on);
+                bot.section.revealACard();
+                if (bot.getCard1() == null && bot.getCard2() == null) {
+                    Game.players.remove((Integer) on);
+                }
+            }
+        }
+        Game.changeTurn();
     }
 
     public void assassinate(int by, int on) {
 
     }
 
-    public void steal(int by, int on) {
-
+    public static void steal(int by, int on) {
+        if (by == 1) {
+            Bot bot = Game.getBotByNum(on);
+            if (bot.coins == 1) {
+                bot.updateCoins(-1);
+                Human.updateCoins(1);
+            }
+            else {
+                bot.updateCoins(-2);
+                Human.updateCoins(2);
+            }
+        }
+        else {
+            Bot stealer = Game.getBotByNum(by);
+            if (on == 1) {
+                if (Human.coins == 1) {
+                    Human.updateCoins(-1);
+                    stealer.updateCoins(1);
+                }
+                else {
+                    Human.updateCoins(-2);
+                    stealer.updateCoins(2);
+                }
+            }
+            else {
+                Bot b = Game.getBotByNum(on);
+                if (b.coins == 1) {
+                    b.updateCoins(-1);
+                    stealer.updateCoins(1);
+                }
+                else {
+                    b.updateCoins(-2);
+                    stealer.updateCoins(2);
+                }
+            }
+        }
+        Game.changeTurn();
     }
 
     public void block(int by, int on) {
