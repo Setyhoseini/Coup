@@ -74,7 +74,7 @@ public class Game extends Thread{
         if (Bot.paranoidIsPlaying.get()) {
             if (!Bot.paranoidChallenge.get()) {
                 for (Bot b : bots) {
-                    if (b.getRole() == BotType.Paranoid && who != b.getNum()) {
+                    if (b.getRole() == BotType.Paranoid && who != b.getNum() && players.contains(b.getNum())) {
                         x = b.getNum();
                         break;
                     }
@@ -85,8 +85,8 @@ public class Game extends Thread{
                 Bot.paranoidChallenge.set(false);
                 Vector<Integer> list = new Vector<>();
                 for (Bot b : bots) {
-                    if (b.getRole() != BotType.Paranoid && who != b.getNum()) {
-                        if ((Math.random() < 0.1)) list.add(b.getNum());
+                    if (b.getRole() != BotType.Paranoid && who != b.getNum() && players.contains(b.getNum())) {
+                        if ((Math.random() < 0.08)) list.add(b.getNum());
                     }
                 }
                 Collections.shuffle(list);
@@ -115,16 +115,16 @@ public class Game extends Thread{
                                 } else {
                                     switch (b.getRole()) {
                                         case Paranoid:
-                                            if (Math.random() < 0.4) list2.add(b.getNum());
+                                            if (Math.random() < 0.4 && players.contains(b.getNum())) list2.add(b.getNum());
                                             break;
                                         case Coup_Lover:
-                                            if (Math.random() < 0.35) list2.add(b.getNum());
+                                            if (Math.random() < 0.35 && players.contains(b.getNum())) list2.add(b.getNum());
                                             break;
                                         case Cautious_Assassin:
 
                                             break;
                                         case Nerd:
-                                            if (Math.random() < 0.13) list2.add(b.getNum());
+                                            if (Math.random() < 0.13 && players.contains(b.getNum())) list2.add(b.getNum());
                                             break;
                                     }
                                 }

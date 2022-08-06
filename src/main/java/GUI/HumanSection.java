@@ -93,16 +93,18 @@ public class HumanSection implements ActionListener {
         for (Bot b : Game.bots) {
             b.section.disableAll();
             b.section.steal.setEnabled(true);
-            b.section.assassinate.setEnabled(true);
         }
         if (Human.coins >= 3) {
-            tax.setEnabled(true);
+            for (Bot b : Game.bots) {
+                b.section.assassinate.setEnabled(true);
+            }
         }
         if (Human.coins >= 7) {
             for (Bot b : Game.bots) {
                 b.section.coup.setEnabled(true);
             }
         }
+        tax.setEnabled(true);
         income.setEnabled(true);
         aid.setEnabled(true);
         if (Human.card1 != null) {

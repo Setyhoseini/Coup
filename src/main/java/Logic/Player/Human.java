@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Human extends Thread {
     public static int coins;
-    int num;
+    Integer num;
     public static Card card1;
     public static Card card2;
     public static PlayerState state;
@@ -118,7 +118,7 @@ public class Human extends Thread {
                                    e.printStackTrace();
                                }
 
-                               int challenge = Game.botChallenges(1);
+                               Integer challenge = Game.botChallenges(1);
 
                                if (challenge == 0) {
                                    Action.tax(1);
@@ -203,7 +203,7 @@ public class Human extends Thread {
                                }
 
                                //
-                               int block = Game.botBlocks(1, 0, "foreign_aid");
+                               Integer block = Game.botBlocks(1, 0, "foreign_aid");
                                if (block == 0) {
                                    Action.foreignAid(1);
                                    Game.changeTurn();
@@ -224,7 +224,7 @@ public class Human extends Thread {
                                        lastAction = null;
 
                                        // ask bots to challenge the block
-                                       int challenge2 = Game.botChallenges(block);
+                                       Integer challenge2 = Game.botChallenges(block);
                                        if (challenge2 == 0) {
                                            Game.changeTurn();
                                        }

@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Bot extends Thread {
     public BotSection section;
     BotType role;
-    int num;
+    Integer num;
     int coins;
     Card card1;
     Card card2;
