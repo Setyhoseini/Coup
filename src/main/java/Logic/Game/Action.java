@@ -11,6 +11,9 @@ public class Action {
     public static void income(int by) {
         if (by == 1) Human.updateCoins(1);
         else Game.getBotByNum(by).updateCoins(1);
+
+        //***************
+        Game.changeTurn();
     }
 
     public static void foreignAid(int by) {
@@ -48,6 +51,10 @@ public class Action {
             }
             Card.Deck.add(c);
         }
+
+
+        //***************
+        Game.changeTurn();
     }
 
     public void exchangeTwo(int by) {

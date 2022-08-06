@@ -7,6 +7,8 @@ public enum Controller {
 
     Challenges,
 
+    Blocks,
+
 
     Won_Challenge,
     Lost_Challenge,

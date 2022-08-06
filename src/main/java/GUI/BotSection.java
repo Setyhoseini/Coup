@@ -602,7 +602,25 @@ public class BotSection extends Thread implements ActionListener {
 
 
 
+    public void revealACard(int card) {
+        if (card == 1) {
+            card1.setIcon(bot.getCard1().getImage());
+        }
+        else {
+            card2.setIcon(bot.getCard1().getImage());
+        }
+    }
 
+
+
+    public void hideACard(int card) {
+        if (card == 1) {
+            card1.setIcon(Card.Back.getImage());
+        }
+        else {
+            card2.setIcon(Card.Back.getImage());
+        }
+    }
 
 
 

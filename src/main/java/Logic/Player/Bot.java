@@ -90,11 +90,11 @@ public class Bot extends Thread {
         while (running.get()) {
             switch (state) {
                 case IsToPlay:
-//                    section.controller = Controller.Is_Thinking;
-//                    Thread.sleep(6000);
-//                    Action.income(num);
-//                    section.controller = Controller.Neutral;
-//                    state = PlayerState.Neutral;
+                    section.controller = Controller.Is_Thinking;
+                    Thread.sleep(6000);
+                    Action.income(num);
+                    section.controller = Controller.Neutral;
+                    state = PlayerState.Neutral;
                     break;
                 case IsToReactToChallenge:
 
