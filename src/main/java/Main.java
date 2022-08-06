@@ -41,15 +41,22 @@ public class Main {
        BotSection section3 = new BotSection(bot3);
        BotSection section4 = new BotSection(bot4);
 
+
+
+        Game game = new Game(bots);
+
+
         player.start();
         bot2.start();
         bot3.start();
         bot4.start();
 
         section2.start();
+        section3.start();
+        section4.start();
 
 
-        Game game = new Game(bots);
+
 
 
 

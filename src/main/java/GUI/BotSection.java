@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BotSection extends Thread implements ActionListener {
     public Controller controller = Controller.Neutral;
-    AtomicBoolean running = new AtomicBoolean(true);
+    public AtomicBoolean running = new AtomicBoolean(true);
 
     Bot bot;
     JLabel card1 = new JLabel();
@@ -941,7 +941,15 @@ public class BotSection extends Thread implements ActionListener {
                 case Challenges:
                     challengeDecision.setVisible(true);
                     break;
-
+                case Blocks:
+                    blockDecision.setVisible(true);
+                    break;
+                case Lost_Challenge:
+                    loseChallenge.setVisible(true);
+                    break;
+                case Won_Challenge:
+                    winChallenge.setVisible(true);
+                    break;
             }
         }
     }

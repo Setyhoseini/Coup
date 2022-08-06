@@ -223,15 +223,18 @@ public class HumanSection implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         //income
          if (actionEvent.getSource() == income) {
-            Action.income(1);
+           // Action.income(1);
+             Human.lastAction = ActionName.Income;
          }
 
          //exchange one card
          if (actionEvent.getSource() == exchange1) {
-             Action.exchangeOne(1, 1);
+           //  Action.exchangeOne(1, 1);
+             Human.lastAction = ActionName.Exchange_Card1;
          }
          if (actionEvent.getSource() == exchange2) {
-             Action.exchangeOne(1, 2);
+           //  Action.exchangeOne(1, 2);
+             Human.lastAction = ActionName.Exchange_Card2;
          }
 
 

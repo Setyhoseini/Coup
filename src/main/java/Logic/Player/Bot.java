@@ -5,6 +5,7 @@ import GUI.BotSection;
 import Logic.Game.Action;
 import Logic.Game.ActionName;
 import Logic.Game.Controller;
+import Logic.Game.Game;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -86,15 +87,49 @@ public class Bot extends Thread {
     }
 
 
+//
+//    public ActionName calculateAction() {
+//
+//    }
+
+
+
+
     public void playParanoid() throws InterruptedException {
         while (running.get()) {
             switch (state) {
                 case IsToPlay:
-                    section.controller = Controller.Is_Thinking;
-                    Thread.sleep(6000);
-                    Action.income(num);
-                    section.controller = Controller.Neutral;
-                    state = PlayerState.Neutral;
+                        section.controller = Controller.Is_Thinking;
+                        Thread.sleep(4000);
+                        Action.income(num);
+                        section.controller = Controller.Neutral;
+                        state = PlayerState.Neutral;
+                    break;
+                case IsToReactToChallenge:
+
+                    break;
+                case IsAskedToBlock:
+
+                    break;
+                case IsAskedToChallenge:
+
+                    break;
+                case Neutral:
+
+                    break;
+            }
+        }
+    }
+
+    public void playCautiousAssassin() throws InterruptedException {
+        while (running.get()) {
+            switch (state) {
+                case IsToPlay:
+                        section.controller = Controller.Is_Thinking;
+                        Thread.sleep(4000);
+                        Action.income(num);
+                        section.controller = Controller.Neutral;
+                        state = PlayerState.Neutral;
                     break;
                 case IsToReactToChallenge:
 
@@ -109,21 +144,50 @@ public class Bot extends Thread {
         }
     }
 
-    public void playCautiousAssassin() {
-        while (true) {
+    public void playCoupLover() throws InterruptedException {
+        while (running.get()) {
+            switch (state) {
+                case IsToPlay:
+                        section.controller = Controller.Is_Thinking;
+                        Thread.sleep(4000);
+                        Action.income(num);
+                        section.controller = Controller.Neutral;
+                        state = PlayerState.Neutral;
 
+                    break;
+                case IsToReactToChallenge:
+
+                    break;
+                case IsAskedToBlock:
+
+                    break;
+                case IsAskedToChallenge:
+
+                    break;
+            }
         }
     }
 
-    public void playCoupLover() {
-        while (true) {
+    public void playNerd() throws InterruptedException {
+        while (running.get()) {
+            switch (state) {
+                case IsToPlay:
+                        section.controller = Controller.Is_Thinking;
+                        Thread.sleep(4000);
+                        Action.income(num);
+                        section.controller = Controller.Neutral;
+                        state = PlayerState.Neutral;
+                    break;
+                case IsToReactToChallenge:
 
-        }
-    }
+                    break;
+                case IsAskedToBlock:
 
-    public void playNerd() {
-        while (true) {
+                    break;
+                case IsAskedToChallenge:
 
+                    break;
+            }
         }
     }
 
@@ -141,13 +205,25 @@ public class Bot extends Thread {
                 }
                 break;
             case Cautious_Assassin:
-                playCautiousAssassin();
+                try {
+                    playCautiousAssassin();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             case Coup_Lover:
-                playCoupLover();
+                try {
+                    playCoupLover();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             case Nerd:
-                playNerd();
+                try {
+                    playNerd();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
