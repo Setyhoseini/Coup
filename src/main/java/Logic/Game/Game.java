@@ -86,7 +86,7 @@ public class Game extends Thread{
                 Vector<Integer> list = new Vector<>();
                 for (Bot b : bots) {
                     if (b.getRole() != BotType.Paranoid && who != b.getNum() && players.contains(b.getNum())) {
-                        if ((Math.random() < 0.08)) list.add(b.getNum());
+                        if ((Math.random() < 0.9)) list.add(b.getNum());
                     }
                 }
                 Collections.shuffle(list);
@@ -221,7 +221,10 @@ public class Game extends Thread{
     @Override
     public void run() {
          while (gameIsGoing.get()) {
-             // if (players.size == 0) --> todo
+             // if (players.size == 1) --> todo
+             if (players.size() == 1) {
+
+             }
          }
     }
 }
