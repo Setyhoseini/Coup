@@ -2,6 +2,7 @@ package Logic.Game;
 
 import GUI.Card;
 import GUI.ChooseCardsWindow;
+import GUI.ChooseOneCardWindow;
 import GUI.HumanSection;
 import Logic.Player.Bot;
 import Logic.Player.BotType;
@@ -15,19 +16,19 @@ public class Action {
     public static void income(int by) {
         if (by == 1) Human.updateCoins(1);
         else Game.getBotByNum(by).updateCoins(1);
-
-        //***************
         Game.changeTurn();
     }
 
     public static void foreignAid(int by) {
         if (by == 1) Human.updateCoins(2);
         else Game.getBotByNum(by).updateCoins(2);
+        Game.changeTurn();
     }
 
     public static void tax(int by) {
         if (by == 1) Human.updateCoins(3);
         else Game.getBotByNum(by).updateCoins(3);
+        Game.changeTurn();
     }
 
     public static void exchangeOne(int by, int card) {
@@ -107,6 +108,7 @@ public class Action {
         else {
 
         }
+        Game.changeTurn();
     }
 
     public static void coup(int by, int on) {
@@ -227,8 +229,56 @@ public class Action {
     }
 
 
-    public static void challengeSequenceForTax(int by) {
 
+
+
+    public static void pause(float seconds) throws InterruptedException {
+        Thread.sleep((long) (seconds*1000));
+    }
+
+
+
+
+
+    public static void challengeSequenceForTax(int by) throws InterruptedException {
+        if (by == 1) {
+            Integer challenge = Game.botChallenges(1);
+            if (challenge == 0) {
+                Action.tax(1);
+            }
+            else {
+                Bot challenger = Game.getBotByNum(challenge);
+                challenger.section.controller = Controller.Challenges;
+                HumanSection.enableIsToReactToChallenge();
+                Human.waitForResponse();
+                Human.lastAction = null;
+                HumanSection.enableNeutral();
+                challenger.section.controller = Controller.Neutral;
+                if (Human.card1 == Card.Duke || Human.card2 == Card.Duke) {
+                    if (Human.card1 == Card.Duke) HumanSection.replaceACard(1);
+                    else HumanSection.replaceACard(2);
+                    challenger.section.controller = Controller.Lost_Challenge;
+                    pause(4);
+                    challenger.section.controller = Controller.Neutral;
+                    challenger.section.revealACard();
+                    Action.tax(1);
+                }
+                else {
+                    challenger.section.controller = Controller.Won_Challenge;
+                    pause(4);
+                    HumanSection.assassinateACard();
+                    challenger.section.controller = Controller.Neutral;
+                    Game.changeTurn();
+                }
+            }
+        }
+        else if (!Game.players.contains(1)) {
+            // only ask the bots to challenge
+
+        }
+        else {
+            // ask human, and then the bots to challenge
+        }
     }
 
     public static void challengeSequenceForExchange(int by) {

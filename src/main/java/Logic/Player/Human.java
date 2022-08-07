@@ -337,6 +337,10 @@ public class Human extends Thread {
 
 
 
+   public static void pause(float seconds) throws InterruptedException {
+       Thread.sleep((long) (seconds*1000));
+   }
+
 
 
 
@@ -370,63 +374,68 @@ public class Human extends Thread {
                                    e.printStackTrace();
                                }
 
-                               Integer challenge = Game.botChallenges(1);
-
-                               if (challenge == 0) {
-                                   Action.tax(1);
-                                   Game.changeTurn();
-                               }
-                               else {
-                                   Bot challenger = Game.getBotByNum(challenge);
-                                   challenger.section.controller = Controller.Challenges;
-                                   HumanSection.enableIsToReactToChallenge();
-                                   waitForResponse();
-
-                                   lastAction = null;
-                                   HumanSection.enableNeutral();
-
-
-                                   if (card1 == Card.Duke || card2 == Card.Duke) {
-
-                                       // todo human duke should be replaced from deck
-
-                                       // show message "lost challenge"
-                                       challenger.section.controller = Controller.Lost_Challenge;
-                                       try {
-                                           Thread.sleep(4000);
-                                       } catch (InterruptedException e) {
-                                           e.printStackTrace();
-                                       }
-                                       // apply losing the challenge
-                                       challenger.section.controller = Controller.Neutral;
-                                       challenger.section.revealACard();
-                                       if (challenger.card1 == null && challenger.card2 == null) {
-                                           Game.players.remove(challenge);
-                                       }
-
-                                       // apply tax
-                                       Action.tax(1);
-
-                                       // change turn
-                                       Game.changeTurn();
-                                   }
-                                   else {
-                                       //  TODO win the challenge case
-                                       challenger.section.controller = Controller.Won_Challenge;
-                                       try {
-                                           Thread.sleep(4000);
-                                       } catch (InterruptedException e) {
-                                           e.printStackTrace();
-                                       }
-
-                                       challenger.section.controller = Controller.Neutral;
-                                       // todo ask the human which card they wanna reveal
-                                       if (card1 == null && card2 == null) {
-                                           Game.players.remove(1);
-                                       }
-
-                                       Game.changeTurn();
-                                   }
+//                               Integer challenge = Game.botChallenges(1);
+//
+//                               if (challenge == 0) {
+//                                   Action.tax(1);
+//                                   Game.changeTurn();
+//                               }
+//                               else {
+//                                   Bot challenger = Game.getBotByNum(challenge);
+//                                   challenger.section.controller = Controller.Challenges;
+//                                   HumanSection.enableIsToReactToChallenge();
+//                                   waitForResponse();
+//
+//                                   lastAction = null;
+//                                   HumanSection.enableNeutral();
+//
+//
+//                                   if (card1 == Card.Duke || card2 == Card.Duke) {
+//
+//                                       // todo human duke should be replaced from deck
+//
+//                                       // show message "lost challenge"
+//                                       challenger.section.controller = Controller.Lost_Challenge;
+//                                       try {
+//                                           Thread.sleep(4000);
+//                                       } catch (InterruptedException e) {
+//                                           e.printStackTrace();
+//                                       }
+//                                       // apply losing the challenge
+//                                       challenger.section.controller = Controller.Neutral;
+//                                       challenger.section.revealACard();
+//                                       if (challenger.card1 == null && challenger.card2 == null) {
+//                                           Game.players.remove(challenge);
+//                                       }
+//
+//                                       // apply tax
+//                                       Action.tax(1);
+//
+//                                       // change turn
+//                                       Game.changeTurn();
+//                                   }
+//                                   else {
+//                                       //  TODO win the challenge case
+//                                       challenger.section.controller = Controller.Won_Challenge;
+//                                       try {
+//                                           Thread.sleep(4000);
+//                                       } catch (InterruptedException e) {
+//                                           e.printStackTrace();
+//                                       }
+//
+//                                       challenger.section.controller = Controller.Neutral;
+//                                       // todo ask the human which card they wanna reveal
+//                                       if (card1 == null && card2 == null) {
+//                                           Game.players.remove(1);
+//                                       }
+//
+//                                       Game.changeTurn();
+//                                   }
+//                               }
+                               try {
+                                   Action.challengeSequenceForTax(1);
+                               } catch (InterruptedException e) {
+                                   e.printStackTrace();
                                }
                                break;
 

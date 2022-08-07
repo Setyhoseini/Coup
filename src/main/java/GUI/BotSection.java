@@ -2,6 +2,7 @@ package GUI;
 
 import Logic.Game.ActionName;
 import Logic.Game.Controller;
+import Logic.Game.Game;
 import Logic.Player.Bot;
 import Logic.Player.Human;
 
@@ -611,6 +612,7 @@ public class BotSection extends Thread implements ActionListener {
             card2.setIcon(bot.getCard2().getImage());
             bot.setCard2(null);
         }
+        if (bot.card1 == null && bot.card2 == null) Game.players.remove(bot.getNum());
     }
 
 

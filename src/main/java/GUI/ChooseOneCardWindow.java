@@ -85,6 +85,7 @@ public class ChooseOneCardWindow extends JFrame implements ActionListener {
         if (actionEvent.getSource() == confirm) {
             if (card1Check.isSelected()) Human.lastAction = ActionName.Confirmed_1;
             if (card2Check.isSelected()) Human.lastAction = ActionName.Confirmed_2;
+            this.dispose();
         }
     }
 }

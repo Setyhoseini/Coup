@@ -14,8 +14,8 @@ public class Bot extends Thread {
     BotType role;
     Integer num;
     public int coins;
-    Card card1;
-    Card card2;
+    public Card card1;
+    public Card card2;
     public PlayerState state;
     AtomicBoolean running = new AtomicBoolean(true);
     ActionName lastAction = null;

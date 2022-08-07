@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 
 public class HumanSection implements ActionListener {
     static JLabel card1 = new JLabel();
@@ -154,9 +155,70 @@ public class HumanSection implements ActionListener {
     }
 
     public static void updateCards() {
-        card1.setIcon(Human.card1.getImage());
-        card2.setIcon(Human.card2.getImage());
+        if (card1 != null) {
+            card1.setIcon(Human.card1.getImage());
+        }
+        if (card2 != null) {
+            card2.setIcon(Human.card2.getImage());
+        }
+        else {
+            card2.setIcon(Card.Back.getImage());
+        }
     }
+
+    public static void replaceACard(int card) {
+        if (card == 1) {
+            Card current = Human.card1;
+            Collections.shuffle(Card.Deck);
+            Human.card1 = Card.Deck.remove(0);
+            Card.Deck.add(current);
+            card1.setIcon(Human.card1.getImage());
+        }
+        else {
+            Card current = Human.card2;
+            Collections.shuffle(Card.Deck);
+            Human.card2 = Card.Deck.remove(0);
+            Card.Deck.add(current);
+            card2.setIcon(Human.card2.getImage());
+        }
+    }
+
+    public static void assassinateACard() {
+        if (Human.card1 != null && Human.card2 != null) {
+            new ChooseOneCardWindow(Human.card1, Human.card2);
+            Human.waitForResponse();
+            if (Human.lastAction == ActionName.Confirmed_1) {
+                assassinateACard(2);
+            }
+            else {
+                assassinateACard(1);
+            }
+            Human.lastAction = null;
+        }
+        else {
+            if (Human.card1 == null) {
+                assassinateACard(2);
+            }
+            else {
+                assassinateACard(1);
+            }
+        }
+    }
+
+    public static void assassinateACard(int card) {
+        if (card == 1) {
+            card1.setIcon(Human.card1.getDeadImage());
+            Human.card1 = null;
+        }
+        else {
+            card2.setIcon(Human.card2.getDeadImage());
+            Human.card2 = null;
+        }
+        if (Human.card1 == null && Human.card2 == null) {
+            Game.players.remove((Integer)1);
+        }
+    }
+
 
     public void initIncomeButton() {
         income = new JButton("Income");
