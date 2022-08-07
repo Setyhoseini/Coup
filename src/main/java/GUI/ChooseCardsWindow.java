@@ -141,6 +141,8 @@ public class ChooseCardsWindow extends JFrame implements ActionListener {
                  card2Check.setEnabled(false);
                  deck1Check.setEnabled(false);
                  deck2Check.setEnabled(false);
+
+                 confirm.setEnabled(true);
              }
          }
 
@@ -155,10 +157,17 @@ public class ChooseCardsWindow extends JFrame implements ActionListener {
              card2Check.setSelected(false);
              deck1Check.setSelected(false);
              deck2Check.setSelected(false);
+
+             confirm.setEnabled(false);
          }
 
          if (actionEvent.getSource() == confirm) {
-             Human.lastAction = ActionName.Confirmed_Cards;
+             if (deck1Check.isSelected() && deck2Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_1_2;
+             if (deck1Check.isSelected() && card1Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_1_3;
+             if (deck1Check.isSelected() && card2Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_1_4;
+             if (deck2Check.isSelected() && card1Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_2_3;
+             if (deck2Check.isSelected() && card2Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_2_4;
+             if (card1Check.isSelected() && card2Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_3_4;
          }
     }
 }
