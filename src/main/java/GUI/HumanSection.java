@@ -153,6 +153,11 @@ public class HumanSection implements ActionListener {
         num.setText("" + Human.coins);
     }
 
+    public static void updateCards() {
+        card1.setIcon(Human.card1.getImage());
+        card2.setIcon(Human.card2.getImage());
+    }
+
     public void initIncomeButton() {
         income = new JButton("Income");
         income.setFont(new Font("Trebuchet MS", Font.BOLD, 23));

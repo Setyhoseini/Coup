@@ -168,6 +168,7 @@ public class ChooseCardsWindow extends JFrame implements ActionListener {
              if (deck2Check.isSelected() && card1Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_2_3;
              if (deck2Check.isSelected() && card2Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_2_4;
              if (card1Check.isSelected() && card2Check.isSelected()) Human.lastAction = ActionName.Confirmed_Cards_3_4;
+             this.dispose();
          }
     }
 }

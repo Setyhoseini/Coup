@@ -25,11 +25,11 @@ public class Main {
         Card.Deck.add(card15);
 
 
-        Human player = new Human(card1, card2);
-        new HumanSection(card1, card2);
+        Human player = new Human(card1, card5);
+        new HumanSection(card1, card5);
 
         Bot bot2 = new Bot(2, card3, card4, BotType.Paranoid);
-        Bot bot3 = new Bot(3, card5, card6, BotType.Cautious_Assassin);
+        Bot bot3 = new Bot(3, card2, card6, BotType.Cautious_Assassin);
         Bot bot4 = new Bot(4, card7, card8, BotType.Coup_Lover);
 
         Vector<Bot> bots = new Vector<>();
@@ -65,6 +65,6 @@ public class Main {
 
 
 
-       new ChooseOneCardWindow(card1, card2);
+     //  new ChooseOneCardWindow(card1, card2);
     }
 }

@@ -16,7 +16,7 @@ public class Human extends Thread {
     public static Card card1;
     public static Card card2;
     public static PlayerState state;
-    AtomicBoolean running = new AtomicBoolean(true);
+    static AtomicBoolean running = new AtomicBoolean(true);
     public static ActionName lastAction = null;
 
 
@@ -68,7 +68,7 @@ public class Human extends Thread {
 
 
 
-   public void waitForResponse() {
+   public static void waitForResponse() {
        while (running.get() && lastAction == null) {
 
        }

@@ -109,15 +109,7 @@ public class Bot extends Thread {
                         section.controller = Controller.Neutral;
                         state = PlayerState.Neutral;
                     break;
-                case IsToReactToChallenge:
 
-                    break;
-                case IsAskedToBlock:
-
-                    break;
-                case IsAskedToChallenge:
-
-                    break;
                 case Neutral:
 
                     break;
@@ -135,15 +127,6 @@ public class Bot extends Thread {
                         section.controller = Controller.Neutral;
                         state = PlayerState.Neutral;
                     break;
-                case IsToReactToChallenge:
-
-                    break;
-                case IsAskedToBlock:
-
-                    break;
-                case IsAskedToChallenge:
-
-                    break;
             }
         }
     }
@@ -159,15 +142,6 @@ public class Bot extends Thread {
                         state = PlayerState.Neutral;
 
                     break;
-                case IsToReactToChallenge:
-
-                    break;
-                case IsAskedToBlock:
-
-                    break;
-                case IsAskedToChallenge:
-
-                    break;
             }
         }
     }
@@ -181,15 +155,6 @@ public class Bot extends Thread {
                         Action.income(num);
                         section.controller = Controller.Neutral;
                         state = PlayerState.Neutral;
-                    break;
-                case IsToReactToChallenge:
-
-                    break;
-                case IsAskedToBlock:
-
-                    break;
-                case IsAskedToChallenge:
-
                     break;
             }
         }

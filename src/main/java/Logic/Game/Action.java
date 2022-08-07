@@ -1,11 +1,13 @@
 package Logic.Game;
 
 import GUI.Card;
+import GUI.ChooseCardsWindow;
 import GUI.HumanSection;
 import Logic.Player.Bot;
 import Logic.Player.BotType;
 import Logic.Player.Human;
 
+import java.text.DecimalFormat;
 import java.util.Collections;
 
 public class Action {
@@ -60,7 +62,51 @@ public class Action {
     }
 
     public static void exchangeTwo(int by) {
+        if (by == 1) {
+            Collections.shuffle(Card.Deck);
+            Card deck1 = Card.Deck.get(0);
+            Card deck2 = Card.Deck.get(1);
+            new ChooseCardsWindow(deck1, deck2, Human.card1, Human.card2);
+            HumanSection.enableNeutral();
+            Human.lastAction = null;
+            Human.waitForResponse();
 
+            switch (Human.lastAction) {
+                case Confirmed_Cards_1_2:
+                    Card.Deck.add(Human.card1);
+                    Card.Deck.add(Human.card2);
+                    Human.card1 = deck1;
+                    Human.card2 = deck2;
+                    Card.Deck.remove(deck1);
+                    Card.Deck.remove(deck2);
+                    break;
+                case Confirmed_Cards_1_3:
+                    Card.Deck.add(Human.card2);
+                    Human.card2 = deck1;
+                    Card.Deck.remove(deck1);
+                    break;
+                case Confirmed_Cards_1_4:
+                    Card.Deck.add(Human.card1);
+                    Human.card1 = deck1;
+                    Card.Deck.remove(deck1);
+                    break;
+                case Confirmed_Cards_2_3:
+                    Card.Deck.add(Human.card2);
+                    Human.card2 = deck2;
+                    Card.Deck.remove(deck2);
+                    break;
+                case Confirmed_Cards_2_4:
+                    Card.Deck.add(Human.card1);
+                    Human.card1 = deck2;
+                    Card.Deck.remove(deck2);
+                    break;
+            }
+            Human.lastAction = null;
+            HumanSection.updateCards();
+        }
+        else {
+
+        }
     }
 
     public static void coup(int by, int on) {
@@ -116,8 +162,8 @@ public class Action {
                         victim.section.revealACard(2);
                     }
                     else {
-                        if (victim.getCard2() == Card.Assassin) {
-                            victim.section.revealACard(1);
+                        if (victim.getCard1() == Card.Assassin) {
+                            victim.section.revealACard(2);
                         }
                         else {
                             victim.section.revealACard(1);
