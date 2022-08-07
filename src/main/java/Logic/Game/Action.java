@@ -3,6 +3,7 @@ package Logic.Game;
 import GUI.Card;
 import GUI.HumanSection;
 import Logic.Player.Bot;
+import Logic.Player.BotType;
 import Logic.Player.Human;
 
 import java.util.Collections;
@@ -88,8 +89,56 @@ public class Action {
         Game.changeTurn();
     }
 
-    public void assassinate(int by, int on) {
+    public static void assassinate(int by, int on) {
+        if (by == 1) {
+            Human.updateCoins(-3);
+        }
+        else {
+            Game.getBotByNum(by).updateCoins(-3);
+        }
 
+        if (on == 1) {
+            // todo ask the human which card they wanna reveal
+        }
+        else {
+            Bot victim = Game.getBotByNum(on);
+            if (victim.getRole() == BotType.Cautious_Assassin) {
+                if (victim.getCard1() == Card.Assassin) {
+                    if (victim.getCard2() == null) {
+                        victim.section.revealACard(1);
+                    }
+                    else {
+                        victim.section.revealACard(2);
+                    }
+                }
+                else {
+                    if (victim.getCard1() == null) {
+                        victim.section.revealACard(2);
+                    }
+                    else {
+                        if (victim.getCard2() == Card.Assassin) {
+                            victim.section.revealACard(1);
+                        }
+                        else {
+                            victim.section.revealACard(1);
+                        }
+                    }
+                }
+            }
+            else {
+                if (victim.getCard1() == null) {
+                    victim.section.revealACard(2);
+                }
+                else {
+                    victim.section.revealACard(1);
+                }
+            }
+
+            if (victim.getCard1() == null && victim.getCard2() == null) {
+                Game.players.remove((Integer) on);
+            }
+        }
+            Game.changeTurn();
     }
 
     public static void steal(int by, int on) {
@@ -129,13 +178,5 @@ public class Action {
             }
         }
         Game.changeTurn();
-    }
-
-    public void block(int by, int on) {
-
-    }
-
-    public void challenge(int by, int on) {
-
     }
 }

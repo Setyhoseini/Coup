@@ -64,5 +64,7 @@ public class Main {
         new Frame();
 
 
+
+       new ChooseCardsWindow(card1, card2, card3, card4);
     }
 }

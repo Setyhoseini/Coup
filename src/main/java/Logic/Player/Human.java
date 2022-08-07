@@ -350,13 +350,7 @@ public class Human extends Thread {
                case IsToPlay:
                  HumanSection.enableIsToPlay();
 
-
-
-                 //***************************
-                //   HumanSection.waitForResponse();
                   waitForResponse();
-
-
 
                    while (Human.lastAction == null) {
                        try {
@@ -365,15 +359,10 @@ public class Human extends Thread {
                            e.printStackTrace();
                        }
                    }
-
-
                        switch (lastAction) {
                            case Tax:
-
-
                                lastAction = null;
                                HumanSection.enableNeutral();
-
 
                                // todo show a loading message or something
                                try {
@@ -401,7 +390,6 @@ public class Human extends Thread {
                                    if (card1 == Card.Duke || card2 == Card.Duke) {
 
                                        // todo human duke should be replaced from deck
-
 
                                        // show message "lost challenge"
                                        challenger.section.controller = Controller.Lost_Challenge;
@@ -438,7 +426,6 @@ public class Human extends Thread {
                                            Game.players.remove(1);
                                        }
 
-
                                        Game.changeTurn();
                                    }
                                }
@@ -448,17 +435,10 @@ public class Human extends Thread {
 
 
 
-
-
-
-
-
-
                            case Foreign_Aid:
 
                                lastAction = null;
                                HumanSection.enableNeutral();
-
 
                                try {
                                    Thread.sleep(2500);
@@ -475,7 +455,6 @@ public class Human extends Thread {
                                else {
                                    Bot blocker = Game.getBotByNum(block);
                                    blocker.section.controller = Controller.Blocks;
-
 
                                    HumanSection.enableIsAskedToChallenge(block);
                                    waitForResponse();
@@ -512,8 +491,6 @@ public class Human extends Thread {
                                                    Game.players.remove(challenger.getNum());
                                                }
 
-
-
                                                // showing the bot's duke and then replacing it
                                                if (blocker.getCard1() == Card.Duke) {
                                                    blocker.section.revealACard(1);
@@ -524,7 +501,6 @@ public class Human extends Thread {
                                                        e.printStackTrace();
                                                    }
 
-
                                                    Collections.shuffle(Card.Deck);
                                                    blocker.card1 = Card.Deck.get(0);
                                                    blocker.section.hideACard(1);
@@ -532,19 +508,16 @@ public class Human extends Thread {
                                                else {
                                                    blocker.section.revealACard(2);
 
-
                                                    try {
                                                        Thread.sleep(3000);
                                                    } catch (InterruptedException e) {
                                                        e.printStackTrace();
                                                    }
 
-
                                                    Collections.shuffle(Card.Deck);
                                                    blocker.card2 = Card.Deck.get(0);
                                                    blocker.section.hideACard(2);
                                                }
-
 
                                                blocker.section.controller = Controller.Neutral;
                                                Game.changeTurn();
@@ -558,24 +531,19 @@ public class Human extends Thread {
                                                    Game.players.remove(block);
                                                }
 
-
                                                try {
                                                    Thread.sleep(3000);
                                                } catch (InterruptedException e) {
                                                    e.printStackTrace();
                                                }
 
-
-
                                                blocker.section.controller = Controller.Neutral;
-
 
                                                Action.foreignAid(1);
                                                Game.changeTurn();
                                            }
                                        }
                                    }
-
 
                                    else {
                                        // when the human themselves challenge their blocker
@@ -584,7 +552,6 @@ public class Human extends Thread {
                                        blocker.section.controller = Controller.Neutral;
                                        lastAction = null;
 
-
                                        if (blocker.getCard1() == Card.Duke || blocker.getCard2() == Card.Duke) {
                                            blocker.section.controller = Controller.Won_Challenge;
 
@@ -592,7 +559,6 @@ public class Human extends Thread {
                                            if (Human.card1 == null && Human.getCard2() == null) {
                                                Game.players.remove(1);
                                            }
-
 
                                            // showing the bot's duke and then replacing it
                                            if (blocker.getCard1() == Card.Duke) {
@@ -604,7 +570,6 @@ public class Human extends Thread {
                                                    e.printStackTrace();
                                                }
 
-
                                                Collections.shuffle(Card.Deck);
                                                blocker.card1 = Card.Deck.get(0);
                                                blocker.section.hideACard(1);
@@ -612,19 +577,16 @@ public class Human extends Thread {
                                            else {
                                                blocker.section.revealACard(2);
 
-
                                                try {
                                                    Thread.sleep(3000);
                                                } catch (InterruptedException e) {
                                                    e.printStackTrace();
                                                }
 
-
                                                Collections.shuffle(Card.Deck);
                                                blocker.card2 = Card.Deck.get(0);
                                                blocker.section.hideACard(2);
                                            }
-
 
                                            blocker.section.controller = Controller.Neutral;
                                            Game.changeTurn();
@@ -638,7 +600,6 @@ public class Human extends Thread {
                                                Game.players.remove(block);
                                            }
 
-
                                            try {
                                                Thread.sleep(3000);
                                            } catch (InterruptedException e) {
@@ -646,7 +607,6 @@ public class Human extends Thread {
                                            }
 
                                            blocker.section.controller = Controller.Neutral;
-
 
                                            Action.foreignAid(1);
                                            Game.changeTurn();
@@ -657,18 +617,11 @@ public class Human extends Thread {
 
 
 
-
-
-
-
-
                            case Income:
                                lastAction = null;
                                HumanSection.enableNeutral();
                                Action.income(1);
                                break;
-
-
 
 
                            case Exchange_Card1:
@@ -678,8 +631,6 @@ public class Human extends Thread {
                                break;
 
 
-
-
                            case Exchange_Card2:
                                lastAction = null;
                                HumanSection.enableNeutral();
@@ -687,14 +638,9 @@ public class Human extends Thread {
                                break;
 
 
-
                            case Exchange_Both_Cards:
 
                                break;
-
-
-
-
 
 
                            case Coup_On_2:
@@ -718,12 +664,6 @@ public class Human extends Thread {
                                break;
 
 
-
-
-
-
-
-
                            case Steal_From_2:
                                applyCaseSteal(2);
                                break;
@@ -733,22 +673,24 @@ public class Human extends Thread {
                            case Steal_From_4:
                                applyCaseSteal(4);
                                break;
+
+
+                           case Assassinate_2:
+                               lastAction = null;
+                               HumanSection.enableNeutral();
+                               Action.assassinate(1, 2);
+                               break;
+                           case Assassinate_3:
+                               lastAction = null;
+                               HumanSection.enableNeutral();
+                               Action.assassinate(1, 3);
+                               break;
+                           case Assassinate_4:
+                               lastAction = null;
+                               HumanSection.enableNeutral();
+                               Action.assassinate(1, 4);
+                               break;
                        }
-
-
-
-
-
-                   break;
-               case IsAskedToBlock:
-
-                   break;
-               case IsAskedToChallenge:
-
-                   break;
-               case IsToReactToChallenge:
-
-                   break;
            }
        }
     }
