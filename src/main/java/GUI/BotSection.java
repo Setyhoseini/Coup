@@ -599,6 +599,10 @@ public class BotSection extends Thread implements ActionListener {
                 bot.setCard2(null);
             }
         }
+
+        if (bot.card1 == null && bot.card2 == null) {
+            Game.players.remove(bot.getNum());
+        }
     }
 
 
@@ -615,6 +619,24 @@ public class BotSection extends Thread implements ActionListener {
         if (bot.card1 == null && bot.card2 == null) Game.players.remove(bot.getNum());
     }
 
+
+
+    public void replaceACard(int card) {
+        if (card == 1) {
+            Card current = bot.card1;
+            Collections.shuffle(Card.Deck);
+            bot.card1 = Card.Deck.remove(0);
+            Card.Deck.add(current);
+            card1.setIcon(Card.Back.getImage());
+        }
+        else {
+            Card current = bot.card2;
+            Collections.shuffle(Card.Deck);
+            bot.card2 = Card.Deck.remove(0);
+            Card.Deck.add(current);
+            card2.setIcon(Card.Back.getImage());
+        }
+    }
 
 
     public void hideACard(int card) {

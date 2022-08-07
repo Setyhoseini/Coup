@@ -48,7 +48,7 @@ public class Bot extends Thread {
         return role;
     }
 
-    public int getNum() {
+    public Integer getNum() {
         return num;
     }
 
