@@ -225,4 +225,47 @@ public class Action {
         }
         Game.changeTurn();
     }
+
+
+    public static void challengeSequenceForTax(int by) {
+
+    }
+
+    public static void challengeSequenceForExchange(int by) {
+
+    }
+
+    public static void challengeSequenceForForeignAidBlock(int by) {
+
+    }
+    public static void challengeSequenceForAssassinateBlock(int by, int on) {
+
+    }
+
+    public static void challengeSequenceForStealBlock(int by, int on) {
+
+    }
+
+    public static void challengeSequenceForAssassinate(int by, int on) {
+
+    }
+
+    public static void challengeSequenceForSteal(int by, int on) {
+
+    }
+
+
+
+
+    public static void blockSequenceForForeignAid(int by) {
+
+    }
+
+    public static void blockSequenceForSteal(int by, int on) {
+
+    }
+
+    public static void blockSequenceForAssassinate(int by, int on) {
+
+    }
 }
