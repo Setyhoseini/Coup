@@ -1,16 +1,15 @@
 package GUI;
 
+import Logic.Game.ActionName;
+import Logic.Player.Human;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ChooseCardsWindow extends JFrame implements ActionListener {
-
     int count = 0;
-    AtomicBoolean isChoosing = new AtomicBoolean(true);
 
     JLabel deck1Label = new JLabel();
     JLabel deck2Label = new JLabel();
@@ -29,84 +28,16 @@ public class ChooseCardsWindow extends JFrame implements ActionListener {
     JButton confirm = new JButton("Confirm");
     JButton reset = new JButton("Reset");
 
-
-
     ButtonGroup checks = new ButtonGroup();
 
     public ChooseCardsWindow(Card deck1, Card deck2, Card card1, Card card2) {
-
-
-
-        chooseTwo.setFont(new Font("Trebuchet MS", Font.BOLD, 30));
-        chooseTwo.setBounds(240, 12, 300, 50);
-        chooseTwo.setForeground(Color.orange);
-
-
-
-        yourCards.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
-        fromDeck.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
-        yourCards.setBounds(25, 260, 200, 50);
-        fromDeck.setBounds(25, 572, 200, 50);
-        yourCards.setForeground(Color.LIGHT_GRAY);
-        fromDeck.setForeground(Color.LIGHT_GRAY);
-
-
-
-        confirm.setBounds(615, 610, 100, 40);
-        confirm.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-        confirm.setFocusable(false);
-        confirm.setEnabled(false);
-
-        reset.setBounds(615, 550, 100, 40);
-        reset.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-        reset.setFocusable(false);
-
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-
         this.getContentPane().setBackground(Color.DARK_GRAY);
         this.setSize(760, 760);
         this.setVisible(true);
         this.setLayout(null);
         this.setResizable(false);
-
-
-        this.add(confirm);
-        this.add(reset);
-        this.add(chooseTwo);
-
-
-
-        card1Check.setBounds(265, 360, 20, 20);
-        card1Check.setBackground(null);
-        this.add(card1Check);
-
-        card2Check.setBounds(460, 360, 20, 20);
-        card2Check.setBackground(null);
-        this.add(card2Check);
-
-        deck1Check.setBounds(265, 669, 20, 20);
-        deck1Check.setBackground(null);
-        this.add(deck1Check);
-
-        deck2Check.setBounds(460, 669, 20, 20);
-        deck2Check.setBackground(null);
-        this.add(deck2Check);
-
-
-        checks.add(card1Check);
-        checks.add(card2Check);
-        checks.add(deck1Check);
-        checks.add(deck2Check);
-
-
-        card1Check.addActionListener(this);
-        card2Check.addActionListener(this);
-        deck1Check.addActionListener(this);
-        deck2Check.addActionListener(this);
-
-        confirm.addActionListener(this);
-        reset.addActionListener(this);
-
+        this.setLocationRelativeTo(null);
 
         card1Label.setBounds(190, 100, 170, 255);
         card1Label.setIcon(card1.getImage());
@@ -124,11 +55,68 @@ public class ChooseCardsWindow extends JFrame implements ActionListener {
         deck2Label.setIcon(deck2.getImage());
         this.add(deck2Label);
 
+        initButtons();
+        initCheckBoxes();
+        initTextLabels();
+    }
 
-        this.setLocationRelativeTo(null);
+    public void initButtons() {
+        confirm.setBounds(615, 610, 100, 40);
+        confirm.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
+        confirm.setFocusable(false);
+        confirm.setEnabled(false);
+        this.add(confirm);
+
+        reset.setBounds(615, 550, 100, 40);
+        reset.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
+        reset.setFocusable(false);
+        this.add(reset);
+
+        confirm.addActionListener(this);
+        reset.addActionListener(this);
+    }
+
+    public void initTextLabels() {
+        chooseTwo.setFont(new Font("Trebuchet MS", Font.BOLD, 30));
+        chooseTwo.setBounds(240, 12, 300, 50);
+        chooseTwo.setForeground(Color.orange);
+        yourCards.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
+        fromDeck.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
+        yourCards.setBounds(25, 260, 200, 50);
+        fromDeck.setBounds(25, 572, 200, 50);
+        yourCards.setForeground(Color.LIGHT_GRAY);
+        fromDeck.setForeground(Color.LIGHT_GRAY);
+        this.add(chooseTwo);
         this.add(fromDeck);
         this.add(yourCards);
+    }
 
+    public void initCheckBoxes() {
+        card1Check.setBounds(265, 360, 20, 20);
+        card1Check.setBackground(null);
+        this.add(card1Check);
+
+        card2Check.setBounds(460, 360, 20, 20);
+        card2Check.setBackground(null);
+        this.add(card2Check);
+
+        deck1Check.setBounds(265, 669, 20, 20);
+        deck1Check.setBackground(null);
+        this.add(deck1Check);
+
+        deck2Check.setBounds(460, 669, 20, 20);
+        deck2Check.setBackground(null);
+        this.add(deck2Check);
+
+        checks.add(card1Check);
+        checks.add(card2Check);
+        checks.add(deck1Check);
+        checks.add(deck2Check);
+
+        card1Check.addActionListener(this);
+        card2Check.addActionListener(this);
+        deck1Check.addActionListener(this);
+        deck2Check.addActionListener(this);
     }
 
     @Override
@@ -170,8 +158,7 @@ public class ChooseCardsWindow extends JFrame implements ActionListener {
          }
 
          if (actionEvent.getSource() == confirm) {
-
+             Human.lastAction = ActionName.Confirmed_Cards;
          }
-
-        }
+    }
 }

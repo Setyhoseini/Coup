@@ -59,7 +59,7 @@ public class Action {
         Game.changeTurn();
     }
 
-    public void exchangeTwo(int by) {
+    public static void exchangeTwo(int by) {
 
     }
 

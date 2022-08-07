@@ -1,6 +1,8 @@
 package Logic.Game;
 
 public enum ActionName {
+    Confirmed_Cards,
+
     Income, Exchange_Card1, Exchange_Card2,
 
     Foreign_Aid, Tax, Exchange_Both_Cards,
