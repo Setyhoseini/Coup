@@ -10,6 +10,7 @@ public enum ActionName {
 
     Confirmed_1,
     Confirmed_2,
+    Confirmed_3,
 
     Income, Exchange_Card1, Exchange_Card2,
     Foreign_Aid, Tax, Exchange_Both_Cards,

@@ -1,9 +1,6 @@
 package Logic.Game;
 
-import GUI.Card;
-import GUI.ChooseCardsWindow;
-import GUI.ChooseOneCardWindow;
-import GUI.HumanSection;
+import GUI.*;
 import Logic.Player.Bot;
 import Logic.Player.BotType;
 import Logic.Player.Human;
@@ -67,43 +64,85 @@ public class Action {
             Collections.shuffle(Card.Deck);
             Card deck1 = Card.Deck.get(0);
             Card deck2 = Card.Deck.get(1);
-            new ChooseCardsWindow(deck1, deck2, Human.card1, Human.card2);
-            HumanSection.enableNeutral();
-            Human.lastAction = null;
-            Human.waitForResponse();
+            if (Human.card2 == null) {
+                new ChooseOneCardForExchangeWindow(deck1, deck2, Human.card1);
+                HumanSection.enableNeutral();
+                Human.lastAction = null;
+                Human.waitForResponse();
 
-            switch (Human.lastAction) {
-                case Confirmed_Cards_1_2:
-                    Card.Deck.add(Human.card1);
-                    Card.Deck.add(Human.card2);
-                    Human.card1 = deck1;
-                    Human.card2 = deck2;
-                    Card.Deck.remove(deck1);
-                    Card.Deck.remove(deck2);
-                    break;
-                case Confirmed_Cards_1_3:
-                    Card.Deck.add(Human.card2);
-                    Human.card2 = deck1;
-                    Card.Deck.remove(deck1);
-                    break;
-                case Confirmed_Cards_1_4:
-                    Card.Deck.add(Human.card1);
-                    Human.card1 = deck1;
-                    Card.Deck.remove(deck1);
-                    break;
-                case Confirmed_Cards_2_3:
-                    Card.Deck.add(Human.card2);
-                    Human.card2 = deck2;
-                    Card.Deck.remove(deck2);
-                    break;
-                case Confirmed_Cards_2_4:
-                    Card.Deck.add(Human.card1);
-                    Human.card1 = deck2;
-                    Card.Deck.remove(deck2);
-                    break;
+                switch (Human.lastAction) {
+                    case Confirmed_2:
+                        Card.Deck.add(Human.card1);
+                        Human.card1 = deck2;
+                        Card.Deck.remove(deck2);
+                        break;
+                    case Confirmed_1:
+                        Card.Deck.add(Human.card1);
+                        Human.card1 = deck1;
+                        Card.Deck.remove(deck1);
+                        break;
+                }
+                HumanSection.updateCard1();
+            }
+            else if (Human.card1 == null) {
+                new ChooseOneCardForExchangeWindow(deck1, deck2, Human.card2);
+                HumanSection.enableNeutral();
+                Human.lastAction = null;
+                Human.waitForResponse();
+
+                switch (Human.lastAction) {
+                    case Confirmed_2:
+                        Card.Deck.add(Human.card2);
+                        Human.card2 = deck2;
+                        Card.Deck.remove(deck2);
+                        break;
+                    case Confirmed_1:
+                        Card.Deck.add(Human.card2);
+                        Human.card2 = deck1;
+                        Card.Deck.remove(deck1);
+                        break;
+                }
+                HumanSection.updateCard2();
+            }
+            else {
+                new ChooseCardsWindow(deck1, deck2, Human.card1, Human.card2);
+                HumanSection.enableNeutral();
+                Human.lastAction = null;
+                Human.waitForResponse();
+
+                switch (Human.lastAction) {
+                    case Confirmed_Cards_1_2:
+                        Card.Deck.add(Human.card1);
+                        Card.Deck.add(Human.card2);
+                        Human.card1 = deck1;
+                        Human.card2 = deck2;
+                        Card.Deck.remove(deck1);
+                        Card.Deck.remove(deck2);
+                        break;
+                    case Confirmed_Cards_1_3:
+                        Card.Deck.add(Human.card2);
+                        Human.card2 = deck1;
+                        Card.Deck.remove(deck1);
+                        break;
+                    case Confirmed_Cards_1_4:
+                        Card.Deck.add(Human.card1);
+                        Human.card1 = deck1;
+                        Card.Deck.remove(deck1);
+                        break;
+                    case Confirmed_Cards_2_3:
+                        Card.Deck.add(Human.card2);
+                        Human.card2 = deck2;
+                        Card.Deck.remove(deck2);
+                        break;
+                    case Confirmed_Cards_2_4:
+                        Card.Deck.add(Human.card1);
+                        Human.card1 = deck2;
+                        Card.Deck.remove(deck2);
+                        break;
+                }
+                HumanSection.updateCards();
             }
             Human.lastAction = null;
-            HumanSection.updateCards();
         }
         else {
 

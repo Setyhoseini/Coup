@@ -352,7 +352,6 @@ public class Human extends Thread {
        while (running.get()) {
            switch (state) {
                case IsToPlay:
-                 HumanSection.enableIsToPlay();
                  waitForResponse();
 
                    while (Human.lastAction == null) {

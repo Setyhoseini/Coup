@@ -8,6 +8,7 @@ import Logic.Player.Human;
 import Logic.Player.PlayerState;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,6 +29,7 @@ public class Game extends Thread{
 
         //********************************
         Human.state = PlayerState.IsToPlay;
+        HumanSection.enableIsToPlay();
     }
 
 
@@ -43,22 +45,18 @@ public class Game extends Thread{
                 }
             }
         }
-
-
         int newTurn = players.indexOf(turn.get()) + 1;
         if (newTurn == players.size()) newTurn = 0;
         if (players.get(newTurn) == 1) {
-            Human.state = PlayerState.IsToPlay;
-
-            //***************************
             if (Human.coins >= 10) {
                 HumanSection.enableMustCoup();
             }
             else HumanSection.enableIsToPlay();
+            Human.state = PlayerState.IsToPlay;
         }
         else {
             for (Bot b : bots) {
-                if (b.getNum() == players.get(newTurn)) {
+                if (Objects.equals(b.getNum(), players.get(newTurn))) {
                     b.state = PlayerState.IsToPlay;
                     break;
                 }
@@ -68,7 +66,7 @@ public class Game extends Thread{
     }
 
 
-    public static int botChallenges(int who) {
+    public static Integer botChallenges(int who) {
         int x = 0;
         if (Bot.paranoidIsPlaying.get()) {
             if (!Bot.paranoidChallenge.get()) {
@@ -99,7 +97,7 @@ public class Game extends Thread{
     }
 
 
-    public static int botBlocks(int who, int on, String action) {
+    public static Integer botBlocks(int who, int on, String action) {
         int x = 0;
             Vector<Integer> list1 = new Vector<>();
             Vector<Integer> list2 = new Vector<>();

@@ -5,7 +5,6 @@ import Logic.Player.Bot;
 import Logic.Player.BotType;
 import Logic.Player.Human;
 
-import javax.swing.*;
 import java.util.Vector;
 
 public class Main {
@@ -24,7 +23,6 @@ public class Main {
         Card.Deck.add(card14);
         Card.Deck.add(card15);
 
-
         Human player = new Human(card1, card5);
         new HumanSection(card1, card5);
 
@@ -37,14 +35,11 @@ public class Main {
         bots.add(bot3);
         bots.add(bot4);
 
-       BotSection section2 = new BotSection(bot2);
-       BotSection section3 = new BotSection(bot3);
-       BotSection section4 = new BotSection(bot4);
-
-
+        BotSection section2 = new BotSection(bot2);
+        BotSection section3 = new BotSection(bot3);
+        BotSection section4 = new BotSection(bot4);
 
         Game game = new Game(bots);
-
 
         player.start();
         bot2.start();
@@ -55,16 +50,8 @@ public class Main {
         section3.start();
         section4.start();
 
-
-
         game.start();
 
-
-
         new Frame();
-
-
-
-     //  new ChooseOneCardWindow(card1, card2);
     }
 }

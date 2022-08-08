@@ -124,7 +124,6 @@ public class HumanSection implements ActionListener {
 
 
     public static void enableMustCoup() {
-        disableAll();
         for (Bot b : Game.bots) {
             if (Game.players.contains(b.getNum())) {
                 b.section.coup.setEnabled(true);
@@ -155,15 +154,16 @@ public class HumanSection implements ActionListener {
     }
 
     public static void updateCards() {
-        if (card1 != null) {
-            card1.setIcon(Human.card1.getImage());
-        }
-        if (card2 != null) {
-            card2.setIcon(Human.card2.getImage());
-        }
-        else {
-            card2.setIcon(Card.Back.getImage());
-        }
+        updateCard1();
+        updateCard2();
+    }
+
+    public static void updateCard1() {
+        card1.setIcon(Human.card1.getImage());
+    }
+
+    public static void updateCard2() {
+        card2.setIcon(Human.card2.getImage());
     }
 
     public static void replaceACard(int card) {
