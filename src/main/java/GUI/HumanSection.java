@@ -52,13 +52,6 @@ public class HumanSection implements ActionListener {
 
 
 
-    public static void waitForResponse() {
-        while (Human.lastAction == null) {
-        }
-    }
-
-
-
     public static void enableIsToReactToChallenge() {
         disableAll();
         reactToChallenge.setEnabled(true);

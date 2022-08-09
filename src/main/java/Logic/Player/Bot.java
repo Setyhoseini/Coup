@@ -104,9 +104,10 @@ public class Bot extends Thread {
             switch (state) {
                 case IsToPlay:
                         section.controller = Controller.Is_Thinking;
-                        Thread.sleep(4000);
-                        Action.income(num);
+                        Thread.sleep(2000);
                         section.controller = Controller.Neutral;
+                      //  Action.blockSequenceForForeignAid(getNum());
+                        Action.challengeSequenceForTax(getNum());
                         state = PlayerState.Neutral;
                     break;
 
@@ -122,7 +123,7 @@ public class Bot extends Thread {
             switch (state) {
                 case IsToPlay:
                         section.controller = Controller.Is_Thinking;
-                        Thread.sleep(4000);
+                        Thread.sleep(2000);
                         Action.income(num);
                         section.controller = Controller.Neutral;
                         state = PlayerState.Neutral;
@@ -136,7 +137,7 @@ public class Bot extends Thread {
             switch (state) {
                 case IsToPlay:
                         section.controller = Controller.Is_Thinking;
-                        Thread.sleep(4000);
+                        Thread.sleep(2000);
                         Action.income(num);
                         section.controller = Controller.Neutral;
                         state = PlayerState.Neutral;
@@ -151,7 +152,7 @@ public class Bot extends Thread {
             switch (state) {
                 case IsToPlay:
                         section.controller = Controller.Is_Thinking;
-                        Thread.sleep(4000);
+                        Thread.sleep(2000);
                         Action.income(num);
                         section.controller = Controller.Neutral;
                         state = PlayerState.Neutral;

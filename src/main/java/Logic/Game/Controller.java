@@ -9,6 +9,8 @@ public enum Controller {
 
     Blocks,
 
+    Foreign_Aid,
+
 
     Won_Challenge,
     Lost_Challenge,

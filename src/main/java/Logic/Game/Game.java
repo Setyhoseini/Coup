@@ -45,24 +45,56 @@ public class Game extends Thread{
                 }
             }
         }
-        int newTurn = players.indexOf(turn.get()) + 1;
-        if (newTurn == players.size()) newTurn = 0;
-        if (players.get(newTurn) == 1) {
-            if (Human.coins >= 10) {
-                HumanSection.enableMustCoup();
-            }
-            else HumanSection.enableIsToPlay();
-            Human.state = PlayerState.IsToPlay;
-        }
-        else {
-            for (Bot b : bots) {
-                if (Objects.equals(b.getNum(), players.get(newTurn))) {
-                    b.state = PlayerState.IsToPlay;
+
+
+
+        if (!players.contains(turn.get())) {
+            int temp = turn.get();
+            for (int n : players) {
+                if (n > turn.get()) {
+                    turn.set(n);
                     break;
                 }
             }
+            if (temp == turn.get()) {
+                turn.set(players.get(0));
+            }
+            if (turn.get() == 1) {
+                if (Human.coins >= 10) {
+                    HumanSection.enableMustCoup();
+                }
+                else HumanSection.enableIsToPlay();
+                Human.state = PlayerState.IsToPlay;
+            }
+            else {
+                for (Bot b : bots) {
+                    if (Objects.equals(b.getNum(), turn.get())) {
+                        b.state = PlayerState.IsToPlay;
+                        break;
+                    }
+                }
+            }
         }
-        turn.set(players.get(newTurn));
+        else {
+            int newTurn = players.indexOf(turn.get()) + 1;
+            if (newTurn == players.size()) newTurn = 0;
+            if (players.get(newTurn) == 1) {
+                if (Human.coins >= 10) {
+                    HumanSection.enableMustCoup();
+                }
+                else HumanSection.enableIsToPlay();
+                Human.state = PlayerState.IsToPlay;
+            }
+            else {
+                for (Bot b : bots) {
+                    if (Objects.equals(b.getNum(), players.get(newTurn))) {
+                        b.state = PlayerState.IsToPlay;
+                        break;
+                    }
+                }
+            }
+            turn.set(players.get(newTurn));
+        }
     }
 
 
@@ -115,7 +147,7 @@ public class Game extends Thread{
                                             if (Math.random() < 0.4 && players.contains(b.getNum())) list2.add(b.getNum());
                                             break;
                                         case Coup_Lover:
-                                            if (Math.random() < 0.35 && players.contains(b.getNum())) list2.add(b.getNum());
+                                            if (Math.random() < 0.7 && players.contains(b.getNum())) list2.add(b.getNum());
                                             break;
                                         case Cautious_Assassin:
 
