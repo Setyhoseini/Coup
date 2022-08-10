@@ -29,6 +29,7 @@ public class Action {
 
     public static void exchangeOne(int by, int card) {
         if (by == 1) {
+            Human.updateCoins(-1);
             Card c = (card == 1 ? Human.getCard1() : Human.getCard2());
             Collections.shuffle(Card.Deck);
 
@@ -45,24 +46,20 @@ public class Action {
             Card.Deck.add(c);
         }
         else {
-            Card c = (card == 1 ? Game.getBotByNum(by).getCard1() : Game.getBotByNum(by).getCard2());
+            Bot bot = Game.getBotByNum(by);
+            bot.updateCoins(-1);
+            Card c = (card == 1 ? bot.getCard1() : bot.getCard2());
             Collections.shuffle(Card.Deck);
-            Game.getBotByNum(by).setCard1(Card.Deck.remove(0));
+            bot.setCard1(Card.Deck.remove(0));
             if (card == 1) {
-                Game.getBotByNum(by).setCard1(Card.Deck.remove(0));
+                bot.setCard1(Card.Deck.remove(0));
             } else {
-                Game.getBotByNum(by).setCard2(Card.Deck.remove(0));
+                bot.setCard2(Card.Deck.remove(0));
             }
             Card.Deck.add(c);
         }
-
-
-        //***************
         Game.changeTurn();
-
-
-
-        //**********************
+        //**************************************
         System.out.println(Card.Deck.toString());
     }
 
@@ -202,7 +199,7 @@ public class Action {
             Bot couper = Game.getBotByNum(by);
             couper.updateCoins(-7);
             if (on == 1) {
-                // todo. the human should choose which card to reveal
+                HumanSection.assassinateACard();
             }
             else {
                 Bot bot = Game.getBotByNum(on);
@@ -345,6 +342,8 @@ public class Action {
             Bot doer = Game.getBotByNum(by);
             doer.section.controller = Controller.Tax;
             if (challenge == 0) {
+                pause(1.5F);
+                doer.section.controller = Controller.Neutral;
                 Action.tax(by);
             }
             else {
@@ -715,6 +714,7 @@ public class Action {
             Human.lastAction = null;
             Integer challenge2 = Game.botChallenges(1);
             if (challenge2 == 0) {
+                Game.getBotByNum(on).section.controller = Controller.Neutral;
                 Game.changeTurn();
             } else {
                 Bot challenger = Game.getBotByNum(challenge2);
@@ -868,6 +868,7 @@ public class Action {
             Human.lastAction = null;
             Integer challenge2 = Game.botChallenges(1);
             if (challenge2 == 0) {
+                Game.getBotByNum(on).section.controller = Controller.Neutral;
                 Game.changeTurn();
             } else {
                 Bot challenger = Game.getBotByNum(challenge2);
@@ -1054,6 +1055,7 @@ public class Action {
         else if (!Game.players.contains(1)) {
             Bot doer = Game.getBotByNum(by);
             if (challenge == 0) {
+                doer.section.controller = Controller.Neutral;
                 Action.assassinate(by, on);
             }
             else {
@@ -1091,8 +1093,8 @@ public class Action {
                 Human.lastAction = null;
                 HumanSection.enableNeutral();
                 if (challenge == 0) {
-                    Action.assassinate(by, on);
                     doer.section.controller = Controller.Neutral;
+                    Action.assassinate(by, on);
                 }
                 else {
                     Bot challenger = Game.getBotByNum(challenge);
@@ -1129,7 +1131,7 @@ public class Action {
                     if (doer.card1 == Card.Assassin) doer.section.revealACard(1);
                     else doer.section.revealACard(2);
                     doer.section.controller = Controller.Won_Challenge;
-                    pause(4);
+                    pause(2);
                     doer.section.controller = Controller.Neutral;
                     if (doer.card1 == Card.Assassin) doer.section.replaceACard(1);
                     else doer.section.replaceACard(2);
@@ -1364,6 +1366,7 @@ public class Action {
             }
         }
         else {
+            HumanSection.enableNeutral();
             Integer block = Game.botBlocks(doer, on, "steal");
             if (block == 0) {
                 challengeSequenceForSteal(doer, on);
@@ -1413,7 +1416,7 @@ public class Action {
             }
         }
         else {
-          //  HumanSection.enableNeutral();
+            HumanSection.enableNeutral();
             Integer block = Game.botBlocks(doer, on, "assassinate");
             if (block == 0) {
                 challengeSequenceForAssassinate(doer, on);

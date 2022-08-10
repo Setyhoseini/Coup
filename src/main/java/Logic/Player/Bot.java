@@ -4,7 +4,9 @@ import GUI.Card;
 import GUI.BotSection;
 import Logic.Game.Action;
 import Logic.Game.Controller;
+import Logic.Game.Game;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Bot extends Thread {
@@ -68,51 +70,49 @@ public class Bot extends Thread {
 
     public void playParanoid() throws InterruptedException {
         while (running.get()) {
-            switch (state) {
-                case IsToPlay:
-                        section.controller = Controller.Is_Thinking;
-                        Thread.sleep(2000);
-                        section.controller = Controller.Neutral;
-                        Action.blockSequenceForSteal(getNum(), 1);
-                        state = PlayerState.Neutral;
-                    break;
-
-                case Neutral:
-
-                    break;
+            if (state == PlayerState.IsToPlay) {
+                section.controller = Controller.Is_Thinking;
+                Thread.sleep(2000);
+                section.controller = Controller.Neutral;
+                state = PlayerState.Neutral;
+                Action.blockSequenceForSteal(getNum(), 1);
             }
         }
     }
 
     public void playCautiousAssassin() throws InterruptedException {
         while (running.get()) {
-            switch (state) {
-                case IsToPlay:
-                        section.controller = Controller.Is_Thinking;
-                        Thread.sleep(2000);
-                        section.controller = Controller.Neutral;
+            if (state == PlayerState.IsToPlay) {
+                section.controller = Controller.Is_Thinking;
+                Thread.sleep(2000);
+                section.controller = Controller.Neutral;
 //                        if (card1 == Card.Ambassador || card2 == Card.Ambassador) Action.challengeSequenceForExchange(getNum());
 //                        else
-                    //    Action.income(num);
-
-                        Action.blockSequenceForAssassinate(getNum(), 1);
-                        state = PlayerState.Neutral;
-                    break;
+                //    Action.income(num);
+                state = PlayerState.Neutral;
+                Action.blockSequenceForAssassinate(getNum(), 1);
             }
         }
     }
 
     public void playCoupLover() throws InterruptedException {
         while (running.get()) {
-            switch (state) {
-                case IsToPlay:
-                        section.controller = Controller.Is_Thinking;
-                        Thread.sleep(2000);
-                        Action.income(num);
-                        section.controller = Controller.Neutral;
-                       // Action.blockSequenceForSteal(getNum(), 1);
-                        state = PlayerState.Neutral;
-                    break;
+            if (state == PlayerState.IsToPlay) {
+                section.controller = Controller.Is_Thinking;
+                Thread.sleep(2000);
+                section.controller = Controller.Neutral;
+                state = PlayerState.Neutral;
+                if (coins < 7) {
+                    Action.challengeSequenceForTax(getNum());
+                }
+                else {
+                    int rnd = new Random().nextInt(Game.players.size());
+                    if (Game.players.get(rnd).equals(getNum())) {
+                        if (rnd == 0) rnd = 1;
+                        else rnd = 0;
+                    }
+                    Action.coup(getNum(), Game.players.get(rnd));
+                }
             }
         }
     }

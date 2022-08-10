@@ -101,10 +101,10 @@ public class HumanSection implements ActionListener {
         tax.setEnabled(true);
         income.setEnabled(true);
         aid.setEnabled(true);
-        if (Human.card1 != null) {
+        if (Human.card1 != null && Human.coins > 0) {
             exchange1.setEnabled(true);
         }
-        if (Human.card2 != null) {
+        if (Human.card2 != null && Human.coins > 0) {
             exchange2.setEnabled(true);
         }
         exchangeBoth.setEnabled(true);
@@ -169,38 +169,42 @@ public class HumanSection implements ActionListener {
     }
 
     public static void assassinateACard() {
-        if (Human.card1 != null && Human.card2 != null) {
-            new ChooseOneCardWindow(Human.card1, Human.card2);
-            Human.waitForResponse();
-            if (Human.lastAction == ActionName.Confirmed_1) {
-                assassinateACard(2);
+        if (Human.card2 != null || Human.card1 != null) {
+            if (Human.card1 != null && Human.card2 != null) {
+                new ChooseOneCardWindow(Human.card1, Human.card2);
+                Human.waitForResponse();
+                if (Human.lastAction == ActionName.Confirmed_1) {
+                    assassinateACard(2);
+                }
+                else {
+                    assassinateACard(1);
+                }
+                Human.lastAction = null;
             }
             else {
-                assassinateACard(1);
-            }
-            Human.lastAction = null;
-        }
-        else {
-            if (Human.card1 == null) {
-                assassinateACard(2);
-            }
-            else {
-                assassinateACard(1);
+                if (Human.card1 == null) {
+                    assassinateACard(2);
+                }
+                else {
+                    assassinateACard(1);
+                }
             }
         }
     }
 
     public static void assassinateACard(int card) {
-        if (card == 1) {
-            card1.setIcon(Human.card1.getDeadImage());
-            Human.card1 = null;
-        }
-        else {
-            card2.setIcon(Human.card2.getDeadImage());
-            Human.card2 = null;
-        }
-        if (Human.card1 == null && Human.card2 == null) {
-            Game.players.remove((Integer)1);
+        if (Human.card1 != null || Human.card2 != null) {
+            if (card == 1) {
+                card1.setIcon(Human.card1.getDeadImage());
+                Human.card1 = null;
+            }
+            else {
+                card2.setIcon(Human.card2.getDeadImage());
+                Human.card2 = null;
+            }
+            if (Human.card1 == null && Human.card2 == null) {
+                Game.players.remove((Integer)1);
+            }
         }
     }
 

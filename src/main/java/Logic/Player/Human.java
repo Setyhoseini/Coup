@@ -55,202 +55,193 @@ public class Human extends Thread {
     @Override
     public void run() {
        while (running.get()) {
-           switch (state) {
-               case IsToPlay:
-                 waitForResponse();
-                   while (Human.lastAction == null) {
+           if (state == PlayerState.IsToPlay) {
+               waitForResponse();
+               while (Human.lastAction == null) {
+                   try {
+                       wait();
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }
+               }
+               switch (lastAction) {
+                   case Tax:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
                        try {
-                           wait();
+                           pause(2);
                        } catch (InterruptedException e) {
                            e.printStackTrace();
                        }
-                   }
-                       switch (lastAction) {
-                           case Tax:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               try {
-                                   pause(2);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               try {
-                                   Action.challengeSequenceForTax(1);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
-
-
-
-                           case Foreign_Aid:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               try {
-                                   pause(1.5F);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               try {
-                                   Action.blockSequenceForForeignAid(1);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
-
-
-
-                           case Income:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               Action.income(1);
-                               break;
-
-
-
-                           case Exchange_Card1:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               Action.exchangeOne(1, 1);
-                               break;
-
-
-
-                           case Exchange_Card2:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               Action.exchangeOne(1, 2);
-                               break;
-
-
-
-                           case Exchange_Both_Cards:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               try {
-                                   pause(2);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               try {
-                                   Action.challengeSequenceForExchange(1);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
-
-
-
-                           case Coup_On_2:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               Action.coup(1, 2);
-                               break;
-
-                           case Coup_On_3:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               Action.coup(1, 3);
-                               break;
-
-                           case Coup_On_4:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               Action.coup(1, 4);
-                               break;
-
-
-
-                           case Steal_From_2:
-                               lastAction = null;
-                               try {
-                                   pause(1.5F);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               HumanSection.enableNeutral();
-                               try {
-                                   Action.blockSequenceForSteal(1, 2);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
-
-                           case Steal_From_3:
-                               lastAction = null;
-                               try {
-                                   pause(1.5F);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               HumanSection.enableNeutral();
-                               try {
-                                   Action.blockSequenceForSteal(1, 3);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
-
-                           case Steal_From_4:
-                               lastAction = null;
-                               try {
-                                   pause(1.5F);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               HumanSection.enableNeutral();
-                               try {
-                                   Action.blockSequenceForSteal(1, 4);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
-
-
-
-                           case Assassinate_2:
-                               lastAction = null;
-                               try {
-                                   pause(1.5F);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               HumanSection.enableNeutral();
-                               try {
-                                   Action.blockSequenceForAssassinate(1, 2);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
-                           case Assassinate_3:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               try {
-                                   pause(1.5F);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                                 try {
-                                   Action.blockSequenceForAssassinate(1, 3);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
-                           case Assassinate_4:
-                               lastAction = null;
-                               HumanSection.enableNeutral();
-                               try {
-                                   pause(1.5F);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               try {
-                                   Action.blockSequenceForAssassinate(1, 4);
-                               } catch (InterruptedException e) {
-                                   e.printStackTrace();
-                               }
-                               break;
+                       try {
+                           Action.challengeSequenceForTax(1);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
                        }
+                       break;
+
+
+                   case Foreign_Aid:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       try {
+                           pause(1.5F);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       try {
+                           Action.blockSequenceForForeignAid(1);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       break;
+
+
+                   case Income:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       Action.income(1);
+                       break;
+
+
+                   case Exchange_Card1:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       Action.exchangeOne(1, 1);
+                       break;
+
+
+                   case Exchange_Card2:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       Action.exchangeOne(1, 2);
+                       break;
+
+
+                   case Exchange_Both_Cards:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       try {
+                           pause(2);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       try {
+                           Action.challengeSequenceForExchange(1);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       break;
+
+
+                   case Coup_On_2:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       Action.coup(1, 2);
+                       break;
+
+                   case Coup_On_3:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       Action.coup(1, 3);
+                       break;
+
+                   case Coup_On_4:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       Action.coup(1, 4);
+                       break;
+
+
+                   case Steal_From_2:
+                       lastAction = null;
+                       try {
+                           pause(1.5F);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       HumanSection.enableNeutral();
+                       try {
+                           Action.blockSequenceForSteal(1, 2);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       break;
+
+                   case Steal_From_3:
+                       lastAction = null;
+                       try {
+                           pause(1.5F);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       HumanSection.enableNeutral();
+                       try {
+                           Action.blockSequenceForSteal(1, 3);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       break;
+
+                   case Steal_From_4:
+                       lastAction = null;
+                       try {
+                           pause(1.5F);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       HumanSection.enableNeutral();
+                       try {
+                           Action.blockSequenceForSteal(1, 4);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       break;
+
+
+                   case Assassinate_2:
+                       lastAction = null;
+                       try {
+                           pause(1.5F);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       HumanSection.enableNeutral();
+                       try {
+                           Action.blockSequenceForAssassinate(1, 2);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       break;
+                   case Assassinate_3:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       try {
+                           pause(1.5F);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       try {
+                           Action.blockSequenceForAssassinate(1, 3);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       break;
+                   case Assassinate_4:
+                       lastAction = null;
+                       HumanSection.enableNeutral();
+                       try {
+                           pause(1.5F);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       try {
+                           Action.blockSequenceForAssassinate(1, 4);
+                       } catch (InterruptedException e) {
+                           e.printStackTrace();
+                       }
+                       break;
+               }
            }
        }
     }
