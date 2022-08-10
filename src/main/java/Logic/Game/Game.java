@@ -26,14 +26,13 @@ public class Game extends Thread{
         players.add(3);
         players.add(4);
         turn.set(1);
-
-        //********************************
         Human.state = PlayerState.IsToPlay;
         HumanSection.enableIsToPlay();
     }
 
 
     public static void changeTurn() {
+        int handle = turn.get();
         if (turn.get() == 1) {
             Human.state = PlayerState.Neutral;
         }
@@ -45,9 +44,6 @@ public class Game extends Thread{
                 }
             }
         }
-
-
-
         if (!players.contains(turn.get())) {
             int temp = turn.get();
             for (int n : players) {
@@ -95,8 +91,30 @@ public class Game extends Thread{
             }
             turn.set(players.get(newTurn));
         }
+        if (!players.contains(turn.get())) {
+            for (int n : players) {
+                if (n > handle) {
+                    turn.set(n);
+                    break;
+                }
+            }
+            if (turn.get() == 1) {
+                if (Human.coins >= 10) {
+                    HumanSection.enableMustCoup();
+                }
+                else HumanSection.enableIsToPlay();
+                Human.state = PlayerState.IsToPlay;
+            }
+            else {
+                for (Bot b : bots) {
+                    if (Objects.equals(b.getNum(), turn.get())) {
+                        b.state = PlayerState.IsToPlay;
+                        break;
+                    }
+                }
+            }
+        }
     }
-
 
     public static Integer botChallenges(int who) {
         int x = 0;
@@ -115,7 +133,7 @@ public class Game extends Thread{
                 Vector<Integer> list = new Vector<>();
                 for (Bot b : bots) {
                     if (b.getRole() != BotType.Paranoid && who != b.getNum() && players.contains(b.getNum())) {
-                        if ((Math.random() < 0.1)) list.add(b.getNum());
+                        if ((Math.random() < 1)) list.add(b.getNum());
                     }
                 }
                 Collections.shuffle(list);

@@ -231,35 +231,34 @@ public class Action {
             if (victim.getRole() == BotType.Cautious_Assassin) {
                 if (victim.getCard1() == Card.Assassin) {
                     if (victim.getCard2() == null) {
-                        victim.section.revealACard(1);
+                        victim.section.assassinateACard(1);
                     }
                     else {
-                        victim.section.revealACard(2);
+                        victim.section.assassinateACard(2);
                     }
                 }
                 else {
                     if (victim.getCard1() == null) {
-                        victim.section.revealACard(2);
+                        victim.section.assassinateACard(2);
                     }
                     else {
                         if (victim.getCard1() == Card.Assassin) {
-                            victim.section.revealACard(2);
+                            victim.section.assassinateACard(2);
                         }
                         else {
-                            victim.section.revealACard(1);
+                            victim.section.assassinateACard(1);
                         }
                     }
                 }
             }
             else {
                 if (victim.getCard1() == null) {
-                    victim.section.revealACard(2);
+                    victim.section.assassinateACard(2);
                 }
                 else {
-                    victim.section.revealACard(1);
+                    victim.section.assassinateACard(1);
                 }
             }
-
             if (victim.getCard1() == null && victim.getCard2() == null) {
                 Game.players.remove((Integer) on);
             }
@@ -736,6 +735,7 @@ public class Action {
                     }
                     pause(1.5F);
                     challenger.section.controller = Controller.Neutral;
+                    Game.getBotByNum(on).section.controller = Controller.Neutral;
                     Game.changeTurn();
                 } else {
                     challenger.section.controller = Controller.Won_Challenge;
@@ -748,6 +748,8 @@ public class Action {
         }
         else if (Game.players.contains(1)) {
             Bot blocker = Game.getBotByNum(theBlocker);
+            pause(1);
+            blocker.section.controller = Controller.Blocks;
             HumanSection.enableIsAskedToChallenge(theBlocker);
             Human.waitForResponse();
             HumanSection.enableNeutral();
@@ -757,9 +759,11 @@ public class Action {
                 Human.lastAction = null;
                 Integer challenge2 = Game.botChallenges(theBlocker);
                 if (challenge2 == 0) {
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                     Game.changeTurn();
                 } else {
                     Bot challenger = Game.getBotByNum(challenge2);
+                    if (challenge2 == on) challenger.section.controller = Controller.Neutral;
                     challenger.section.controller = Controller.Challenges;
                     pause(2.5F);
                     challenger.section.controller = Controller.Neutral;
@@ -776,12 +780,14 @@ public class Action {
                             blocker.section.replaceACard(2);
                         }
                         blocker.section.controller = Controller.Neutral;
+                        if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                         Game.changeTurn();
                     } else {
                         blocker.section.controller = Controller.Lost_Challenge;
                         blocker.section.revealACard();
                         pause(3);
                         blocker.section.controller = Controller.Neutral;
+                        if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                         Action.assassinate(theBlocker, on);
                     }
                 }
@@ -802,24 +808,30 @@ public class Action {
                     }
                     HumanSection.assassinateACard();
                     blocker.section.controller = Controller.Neutral;
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                     Game.changeTurn();
                 } else {
                     blocker.section.controller = Controller.Lost_Challenge;
                     blocker.section.revealACard();
                     pause(2);
                     blocker.section.controller = Controller.Neutral;
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                     Action.assassinate(theBlocker, on);
                 }
             }
         }
         else {
             Bot blocker = Game.getBotByNum(theBlocker);
+            pause(1.5F);
+            blocker.section.controller = Controller.Blocks;
+            pause(1.5F);
             blocker.section.controller = Controller.Neutral;
             Integer challenge2 = Game.botChallenges(theBlocker);
             if (challenge2 == 0) {
                 Game.changeTurn();
             } else {
                 Bot challenger = Game.getBotByNum(challenge2);
+                if (challenge2 == on) challenger.section.controller = Controller.Neutral;
                 challenger.section.controller = Controller.Challenges;
                 pause(2.5F);
                 challenger.section.controller = Controller.Neutral;
@@ -836,12 +848,14 @@ public class Action {
                         blocker.section.replaceACard(2);
                     }
                     blocker.section.controller = Controller.Neutral;
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                     Game.changeTurn();
                 } else {
                     blocker.section.controller = Controller.Lost_Challenge;
                     blocker.section.revealACard();
                     pause(3);
                     blocker.section.controller = Controller.Neutral;
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                     Action.assassinate(theBlocker, on);
                 }
             }
@@ -1059,9 +1073,25 @@ public class Action {
                     challengeSequenceForAssassinateBlock(1, doer);
                 }
             }
+            else {
+                Integer block = Game.botBlocks(doer, on, "assassinate");
+                if (block == 0) {
+                    challengeSequenceForAssassinate(doer, on);
+                }
+                else {
+                    challengeSequenceForAssassinateBlock(on, doer);
+                }
+            }
         }
         else {
-
+          //  HumanSection.enableNeutral();
+            Integer block = Game.botBlocks(doer, on, "assassinate");
+            if (block == 0) {
+                challengeSequenceForAssassinate(doer, on);
+            }
+            else {
+                challengeSequenceForAssassinateBlock(on, doer);
+            }
         }
     }
 }

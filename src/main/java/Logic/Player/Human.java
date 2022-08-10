@@ -488,17 +488,29 @@ public class Human extends Thread {
                            case Assassinate_2:
                                lastAction = null;
                                HumanSection.enableNeutral();
-                               Action.assassinate(1, 2);
+                               try {
+                                   Action.blockSequenceForAssassinate(1, 2);
+                               } catch (InterruptedException e) {
+                                   e.printStackTrace();
+                               }
                                break;
                            case Assassinate_3:
                                lastAction = null;
                                HumanSection.enableNeutral();
-                               Action.assassinate(1, 3);
+                               try {
+                                   Action.blockSequenceForAssassinate(1, 3);
+                               } catch (InterruptedException e) {
+                                   e.printStackTrace();
+                               }
                                break;
                            case Assassinate_4:
                                lastAction = null;
                                HumanSection.enableNeutral();
-                               Action.assassinate(1, 4);
+                               try {
+                                   Action.blockSequenceForAssassinate(1, 4);
+                               } catch (InterruptedException e) {
+                                   e.printStackTrace();
+                               }
                                break;
                        }
            }

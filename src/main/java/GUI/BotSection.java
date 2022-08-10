@@ -569,39 +569,32 @@ public class BotSection extends Thread implements ActionListener {
 
 
     public void revealACard() {
-        if (bot.getCard1() != null && bot.getCard2() == null) {
-            card1.setIcon(bot.getCard1().getDeadImage());
-
-            // Logic
-            bot.setCard1(null);
-        }
-        else if (bot.getCard2() != null && bot.getCard1() == null){
-            card2.setIcon(bot.getCard2().getDeadImage());
-
-            // Logic
-            bot.setCard2(null);
-        }
-        else {
-            ArrayList<Card> cards = new ArrayList<>();
-            cards.add(bot.getCard1());
-            cards.add(bot.getCard2());
-            Collections.shuffle(cards);
-            if (cards.get(0).equals(bot.getCard1())) {
+        if (card1 != null || card2 != null) {
+            if (bot.getCard1() != null && bot.getCard2() == null) {
                 card1.setIcon(bot.getCard1().getDeadImage());
-
-                // Logic
                 bot.setCard1(null);
             }
-            else {
+            else if (bot.getCard2() != null && bot.getCard1() == null){
                 card2.setIcon(bot.getCard2().getDeadImage());
-
-               // Logic
                 bot.setCard2(null);
             }
-        }
-
-        if (bot.card1 == null && bot.card2 == null) {
-            Game.players.remove(bot.getNum());
+            else {
+                ArrayList<Card> cards = new ArrayList<>();
+                cards.add(bot.getCard1());
+                cards.add(bot.getCard2());
+                Collections.shuffle(cards);
+                if (cards.get(0).equals(bot.getCard1())) {
+                    card1.setIcon(bot.getCard1().getDeadImage());
+                    bot.setCard1(null);
+                }
+                else {
+                    card2.setIcon(bot.getCard2().getDeadImage());
+                    bot.setCard2(null);
+                }
+            }
+            if (bot.card1 == null && bot.card2 == null) {
+                Game.players.remove(bot.getNum());
+            }
         }
     }
 
@@ -610,16 +603,25 @@ public class BotSection extends Thread implements ActionListener {
     public void revealACard(int card) {
         if (card == 1) {
             card1.setIcon(bot.getCard1().getImage());
-           // bot.setCard1(null);
         }
         else {
             card2.setIcon(bot.getCard2().getImage());
-          //  bot.setCard2(null);
         }
-    //    if (bot.card1 == null && bot.card2 == null) Game.players.remove(bot.getNum());
     }
 
-
+    public void assassinateACard(int card) {
+        if (card1 != null || card2 != null) {
+            if (card == 1) {
+                card1.setIcon(bot.getCard1().getDeadImage());
+                bot.setCard1(null);
+            }
+            else {
+                card2.setIcon(bot.getCard2().getDeadImage());
+                bot.setCard2(null);
+            }
+            if (bot.card1 == null && bot.card2 == null) Game.players.remove(bot.getNum());
+        }
+    }
 
     public void replaceACard(int card) {
         if (card == 1) {
