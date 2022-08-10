@@ -1133,7 +1133,13 @@ public class Action {
                     doer.section.controller = Controller.Neutral;
                     if (doer.card1 == Card.Assassin) doer.section.replaceACard(1);
                     else doer.section.replaceACard(2);
-                    HumanSection.assassinateACard();
+                    if (on == 1) {
+                        if (Human.card2 == null) HumanSection.assassinateACard(1);
+                        else HumanSection.assassinateACard(2);
+                    }
+                    else {
+                        HumanSection.assassinateACard();
+                    }
                     Action.assassinate(by, on);
                 }
                 else {

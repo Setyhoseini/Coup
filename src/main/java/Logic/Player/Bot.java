@@ -91,8 +91,11 @@ public class Bot extends Thread {
                         section.controller = Controller.Is_Thinking;
                         Thread.sleep(2000);
                         section.controller = Controller.Neutral;
-                        if (card1 == Card.Ambassador || card2 == Card.Ambassador) Action.challengeSequenceForExchange(getNum());
-                        else Action.income(num);
+//                        if (card1 == Card.Ambassador || card2 == Card.Ambassador) Action.challengeSequenceForExchange(getNum());
+//                        else
+                    //    Action.income(num);
+
+                        Action.blockSequenceForAssassinate(getNum(), 1);
                         state = PlayerState.Neutral;
                     break;
             }
