@@ -15,7 +15,6 @@ public enum Controller {
 
     Exchange_Cards,
 
-
     Won_Challenge,
     Lost_Challenge,
 
@@ -28,6 +27,4 @@ public enum Controller {
     Wants_To_Assassinate_Player2,
     Wants_To_Assassinate_Player3,
     Wants_To_Assassinate_Player4,
-
-
 }

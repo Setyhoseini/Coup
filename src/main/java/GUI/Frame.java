@@ -22,9 +22,6 @@ public class Frame extends JFrame implements ActionListener {
         initPlayerFourSection();
     }
 
-
-
-
     public void initBackground() {
         label.setBounds(0, 0, 1800, 1000);
         label.setIcon(icon);

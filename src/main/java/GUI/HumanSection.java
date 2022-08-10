@@ -1,7 +1,6 @@
 package GUI;
 import Logic.Game.ActionName;
 import Logic.Game.Game;
-import Logic.Game.Action;
 import Logic.Player.Bot;
 import Logic.Player.Human;
 
@@ -38,7 +37,6 @@ public class HumanSection implements ActionListener {
         initExchangeButtons();
     }
 
-
     public static void disableAll() {
         income.setEnabled(false);
         aid.setEnabled(false);
@@ -49,8 +47,6 @@ public class HumanSection implements ActionListener {
         exchange1.setEnabled(false);
         exchange2.setEnabled(false);
     }
-
-
 
     public static void enableIsToReactToChallenge() {
         disableAll();
@@ -114,8 +110,6 @@ public class HumanSection implements ActionListener {
         exchangeBoth.setEnabled(true);
     }
 
-
-
     public static void enableMustCoup() {
         for (Bot b : Game.bots) {
             if (Game.players.contains(b.getNum())) {
@@ -123,8 +117,6 @@ public class HumanSection implements ActionListener {
             }
         }
     }
-
-
 
     public void initCards() {
         card1.setBounds(588, 50, 170, 255);
@@ -212,7 +204,6 @@ public class HumanSection implements ActionListener {
         }
     }
 
-
     public void initIncomeButton() {
         income = new JButton("Income");
         income.setFont(new Font("Trebuchet MS", Font.BOLD, 23));
@@ -291,48 +282,35 @@ public class HumanSection implements ActionListener {
         card2.setIcon(card.getImage());
     }
 
-
-
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        //income
          if (actionEvent.getSource() == income) {
-           // Action.income(1);
              Human.lastAction = ActionName.Income;
          }
 
-         //exchange one card
          if (actionEvent.getSource() == exchange1) {
-           //  Action.exchangeOne(1, 1);
              Human.lastAction = ActionName.Exchange_Card1;
          }
          if (actionEvent.getSource() == exchange2) {
-           //  Action.exchangeOne(1, 2);
              Human.lastAction = ActionName.Exchange_Card2;
          }
 
-
-        //exchange both cards
         if (actionEvent.getSource() == exchangeBoth) {
             Human.lastAction = ActionName.Exchange_Both_Cards;
         }
 
-        //foreign aid
         if (actionEvent.getSource() == aid) {
            Human.lastAction = ActionName.Foreign_Aid;
         }
 
-        //do nothing
         if (actionEvent.getSource() == doNothing) {
             Human.lastAction = ActionName.Do_Nothing;
         }
 
-        //tax
         if (actionEvent.getSource() == tax) {
             Human.lastAction = ActionName.Tax;
         }
 
-        //react to challenge
         if (actionEvent.getSource() == reactToChallenge) {
             Human.lastAction = ActionName.React_To_Challenge;
         }

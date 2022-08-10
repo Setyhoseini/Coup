@@ -48,7 +48,6 @@ public class BotSection extends Thread implements ActionListener {
     JLabel loseChallenge = new JLabel();
     JLabel winChallenge = new JLabel();
 
-
     JLabel thinkingLabel = new JLabel();
     ImageIcon loading = new ImageIcon("thinking6.gif");
 
@@ -72,7 +71,6 @@ public class BotSection extends Thread implements ActionListener {
     ImageIcon winChallengeLabel = new ImageIcon("winChallenge.png");
     ImageIcon loseChallengeLabel = new ImageIcon("loseChallenge.png");
 
-
     public void disableAll() {
         coup.setEnabled(false);
         steal.setEnabled(false);
@@ -80,9 +78,6 @@ public class BotSection extends Thread implements ActionListener {
         block.setEnabled(false);
         assassinate.setEnabled(false);
     }
-
-
-
 
     public BotSection(Bot bot) {
         this.bot = bot;
@@ -99,7 +94,6 @@ public class BotSection extends Thread implements ActionListener {
         initStateLabels(bot.getNum());
         bot.setSection(this);
     }
-
 
     public void initStateLabels(int id) {
         initThinkingLabels(id);
@@ -121,7 +115,6 @@ public class BotSection extends Thread implements ActionListener {
         initBlockDecisionLabels(id);
         initChallengeDecisionLabels(id);
     }
-
 
     public void initWinChallengeLabels(int id) {
         switch (id) {
@@ -399,7 +392,6 @@ public class BotSection extends Thread implements ActionListener {
         }
     }
 
-
     public void initStealDecision1Labels(int id) {
         switch (id) {
             case 2:
@@ -422,10 +414,6 @@ public class BotSection extends Thread implements ActionListener {
                 break;
         }
     }
-
-
-
-
 
     public void initAssassinateDecision4Labels(int id) {
         switch (id) {
@@ -496,7 +484,6 @@ public class BotSection extends Thread implements ActionListener {
         }
     }
 
-
     public void initAssassinateDecision1Labels(int id) {
         switch (id) {
             case 2:
@@ -520,9 +507,6 @@ public class BotSection extends Thread implements ActionListener {
         }
     }
 
-
-
-
     public void initThinkingLabels(int id) {
         switch (id) {
             case 2:
@@ -545,28 +529,6 @@ public class BotSection extends Thread implements ActionListener {
                 break;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void revealACard() {
         if (card1 != null || card2 != null) {
@@ -598,8 +560,6 @@ public class BotSection extends Thread implements ActionListener {
         }
     }
 
-
-
     public void revealACard(int card) {
         if (card == 1) {
             card1.setIcon(bot.getCard1().getImage());
@@ -612,6 +572,7 @@ public class BotSection extends Thread implements ActionListener {
     public void assassinateACard(int card) {
         if (card1 != null || card2 != null) {
             if (card == 1) {
+                assert card1 != null;
                 card1.setIcon(bot.getCard1().getDeadImage());
                 bot.setCard1(null);
             }
@@ -639,25 +600,6 @@ public class BotSection extends Thread implements ActionListener {
             card2.setIcon(Card.Back.getImage());
         }
     }
-
-
-    public void hideACard(int card) {
-        if (card == 1) {
-            card1.setIcon(Card.Back.getImage());
-        }
-        else {
-            card2.setIcon(Card.Back.getImage());
-        }
-    }
-
-
-
-
-
-
-
-
-
 
     public void initCards(int id) {
         switch (id) {
@@ -856,15 +798,12 @@ public class BotSection extends Thread implements ActionListener {
         }
     }
 
-
-
     public void updateCoins() {
         num.setText("" + bot.getCoins());
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        //coup
         if (actionEvent.getSource() == coup) {
            switch (bot.getNum()) {
                case 2:
@@ -879,8 +818,6 @@ public class BotSection extends Thread implements ActionListener {
            }
         }
 
-
-        //steal
         if (actionEvent.getSource() == steal) {
             switch (bot.getNum()) {
                 case 2:
@@ -895,14 +832,10 @@ public class BotSection extends Thread implements ActionListener {
             }
         }
 
-
-        //challenge
         if (actionEvent.getSource() == challenge) {
             Human.lastAction = ActionName.Challenge;
         }
 
-
-        //assassinate
         if (actionEvent.getSource() == assassinate) {
             switch (bot.getNum()) {
                 case 2:
@@ -917,8 +850,6 @@ public class BotSection extends Thread implements ActionListener {
             }
         }
 
-
-        //block
         if (actionEvent.getSource() == block) {
            Human.lastAction = ActionName.Block;
         }
@@ -944,7 +875,6 @@ public class BotSection extends Thread implements ActionListener {
         loseChallenge.setVisible(false);
         thinkingLabel.setVisible(false);
     }
-
 
     @Override
     public void run() {

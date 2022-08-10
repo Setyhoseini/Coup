@@ -30,7 +30,6 @@ public class Game extends Thread{
         HumanSection.enableIsToPlay();
     }
 
-
     public static void changeTurn() {
         int handle = turn.get();
         if (turn.get() == 1) {
@@ -146,7 +145,6 @@ public class Game extends Thread{
         return x;
     }
 
-
     public static Integer botBlocks(int who, int on, String action) {
         int x = 0;
             Vector<Integer> list1 = new Vector<>();
@@ -187,9 +185,6 @@ public class Game extends Thread{
                             x = list2.get(0);
                         }
                         break;
-
-
-
                     case "assassinate":
                         bot = getBotByNum(on);
                         if (bot.getCard1() == Card.Contessa || bot.getCard2() == Card.Contessa) {
@@ -212,9 +207,6 @@ public class Game extends Thread{
                             }
                         }
                         break;
-
-
-
                     case "steal":
                         bot = getBotByNum(on);
                         if (bot.getCard1() == Card.Ambassador || bot.getCard2() == Card.Ambassador
@@ -242,8 +234,6 @@ public class Game extends Thread{
                 return x;
         }
 
-
-
     public static Bot getBotByNum(int num) {
         Bot bot = null;
         for (Bot b : bots) {
@@ -254,7 +244,6 @@ public class Game extends Thread{
         }
         return bot;
     }
-
 
     @Override
     public void run() {

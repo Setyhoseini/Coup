@@ -61,10 +61,6 @@ public class Bot extends Thread {
         this.card2 = card2;
     }
 
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-
     public void updateCoins(int n) {
         coins += n;
         section.updateCoins();
@@ -77,10 +73,7 @@ public class Bot extends Thread {
                         section.controller = Controller.Is_Thinking;
                         Thread.sleep(2000);
                         section.controller = Controller.Neutral;
-                      //  section.controller = Controller.Neutral;
-                       // Action.blockSequenceForForeignAid(getNum());
                         Action.blockSequenceForSteal(getNum(), 1);
-                       // Action.challengeSequenceForTax(getNum());
                         state = PlayerState.Neutral;
                     break;
 
