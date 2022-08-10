@@ -922,16 +922,6 @@ public class BotSection extends Thread implements ActionListener {
         }
     }
 
-
-
-
-
-    public void revealCard(int card) {
-
-    }
-
-
-
     public void neutralState() {
         assassinateDecision1.setVisible(false);
         assassinateDecision2.setVisible(false);
@@ -984,6 +974,18 @@ public class BotSection extends Thread implements ActionListener {
                     break;
                 case Exchange_Cards:
                     exchangeTwoDecision.setVisible(true);
+                    break;
+                case Wants_To_Assassinate_Player1:
+                    assassinateDecision1.setVisible(true);
+                    break;
+                case Wants_To_Assassinate_Player2:
+                    assassinateDecision2.setVisible(true);
+                    break;
+                case Wants_To_Assassinate_Player3:
+                    assassinateDecision3.setVisible(true);
+                    break;
+                case Wants_To_Assassinate_Player4:
+                    assassinateDecision4.setVisible(true);
                     break;
             }
         }

@@ -111,10 +111,10 @@ public class Bot extends Thread {
                 case IsToPlay:
                         section.controller = Controller.Is_Thinking;
                         Thread.sleep(2000);
-                        Action.income(num);
+                       // Action.income(num);
                         section.controller = Controller.Neutral;
+                        Action.blockSequenceForAssassinate(getNum(), 1);
                         state = PlayerState.Neutral;
-
                     break;
             }
         }
