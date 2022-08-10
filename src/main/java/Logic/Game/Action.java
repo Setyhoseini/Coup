@@ -311,11 +311,12 @@ public class Action {
             }
         }
         else if (!Game.players.contains(1)) {
+            Bot doer = Game.getBotByNum(by);
+            doer.section.controller = Controller.Tax;
             if (challenge == 0) {
                 Action.tax(by);
             }
             else {
-                Bot doer = Game.getBotByNum(by);
                 Bot challenger = Game.getBotByNum(challenge);
                 challenger.section.controller = Controller.Challenges;
                 pause(1.5F);
@@ -328,6 +329,7 @@ public class Action {
                     if (doer.card1 == Card.Duke) doer.section.replaceACard(1);
                     else doer.section.replaceACard(2);
                     challenger.section.controller = Controller.Neutral;
+                    doer.section.controller = Controller.Neutral;
                     challenger.section.revealACard();
                     Action.tax(by);
                 }
@@ -336,11 +338,14 @@ public class Action {
                     pause(4);
                     doer.section.revealACard();
                     challenger.section.controller = Controller.Neutral;
+                    doer.section.controller = Controller.Neutral;
                     Game.changeTurn();
                 }
             }
         }
         else {
+            Bot doer = Game.getBotByNum(by);
+            doer.section.controller = Controller.Tax;
             HumanSection.enableIsAskedToChallenge(by);
             Human.waitForResponse();
             if (Human.lastAction == ActionName.Do_Nothing) {
@@ -348,9 +353,9 @@ public class Action {
                 HumanSection.enableNeutral();
                 if (challenge == 0) {
                     Action.tax(by);
+                    doer.section.controller = Controller.Neutral;
                 }
                 else {
-                    Bot doer = Game.getBotByNum(by);
                     Bot challenger = Game.getBotByNum(challenge);
                     challenger.section.controller = Controller.Challenges;
                     pause(4);
@@ -363,6 +368,7 @@ public class Action {
                         if (doer.card1 == Card.Duke) doer.section.replaceACard(1);
                         else doer.section.replaceACard(2);
                         challenger.section.controller = Controller.Neutral;
+                        doer.section.controller = Controller.Neutral;
                         challenger.section.revealACard();
                         Action.tax(by);
                     }
@@ -371,6 +377,7 @@ public class Action {
                         pause(4);
                         doer.section.revealACard();
                         challenger.section.controller = Controller.Neutral;
+                        doer.section.controller = Controller.Neutral;
                         Game.changeTurn();
                     }
                 }
@@ -378,8 +385,8 @@ public class Action {
             else {
                 HumanSection.enableNeutral();
                 Human.lastAction = null;
-                Bot doer = Game.getBotByNum(by);
                 if (doer.card1 == Card.Duke || doer.card2 == Card.Duke) {
+                    doer.section.controller = Controller.Neutral;
                     if (doer.card1 == Card.Duke) doer.section.revealACard(1);
                     else doer.section.revealACard(2);
                     doer.section.controller = Controller.Won_Challenge;
@@ -391,6 +398,7 @@ public class Action {
                     Action.tax(by);
                 }
                 else {
+                    doer.section.controller = Controller.Neutral;
                     doer.section.controller = Controller.Lost_Challenge;
                     pause(4);
                     doer.section.controller = Controller.Neutral;

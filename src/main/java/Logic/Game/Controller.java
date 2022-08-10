@@ -11,6 +11,8 @@ public enum Controller {
 
     Foreign_Aid,
 
+    Tax,
+
 
     Won_Challenge,
     Lost_Challenge,

@@ -978,6 +978,10 @@ public class BotSection extends Thread implements ActionListener {
                     break;
                 case Foreign_Aid:
                     foreignAidDecision.setVisible(true);
+                    break;
+                case Tax:
+                    taxDecision.setVisible(true);
+                    break;
             }
         }
     }
