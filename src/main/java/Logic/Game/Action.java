@@ -862,8 +862,161 @@ public class Action {
         }
     }
 
-    public static void challengeSequenceForStealBlock(int by, int on) {
-
+    public static void challengeSequenceForStealBlock(int theBlocker, int on) throws InterruptedException {
+        if (theBlocker == 1) {
+            HumanSection.enableNeutral();
+            Human.lastAction = null;
+            Integer challenge2 = Game.botChallenges(1);
+            if (challenge2 == 0) {
+                Game.changeTurn();
+            } else {
+                Bot challenger = Game.getBotByNum(challenge2);
+                if (on == challenge2) challenger.section.controller = Controller.Neutral;
+                challenger.section.controller = Controller.Challenges;
+                HumanSection.enableIsToReactToChallenge();
+                Human.waitForResponse();
+                Human.lastAction = null;
+                HumanSection.enableNeutral();
+                challenger.section.controller = Controller.Neutral;
+                if (Human.getCard1() == Card.Ambassador || Human.getCard2() == Card.Ambassador
+                     || Human.getCard1() == Card.Captain || Human.getCard2() == Card.Captain) {
+                    challenger.section.controller = Controller.Lost_Challenge;
+                    challenger.section.revealACard();
+                    if (Human.getCard1() == Card.Ambassador || Human.getCard1() == Card.Captain) {
+                        HumanSection.replaceACard(1);
+                    } else {
+                        HumanSection.replaceACard(2);
+                    }
+                    pause(1.5F);
+                    challenger.section.controller = Controller.Neutral;
+                    Game.getBotByNum(on).section.controller = Controller.Neutral;
+                    Game.changeTurn();
+                } else {
+                    challenger.section.controller = Controller.Won_Challenge;
+                    HumanSection.assassinateACard();
+                    pause(1.5F);
+                    challenger.section.controller = Controller.Neutral;
+                    Action.steal(on, theBlocker);
+                }
+            }
+        }
+        else if (Game.players.contains(1)) {
+            Bot blocker = Game.getBotByNum(theBlocker);
+            pause(1);
+            blocker.section.controller = Controller.Blocks;
+            HumanSection.enableIsAskedToChallenge(theBlocker);
+            Human.waitForResponse();
+            HumanSection.enableNeutral();
+            if (Human.lastAction == ActionName.Do_Nothing) {
+                HumanSection.enableNeutral();
+                blocker.section.controller = Controller.Neutral;
+                Human.lastAction = null;
+                Integer challenge2 = Game.botChallenges(theBlocker);
+                if (challenge2 == 0) {
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
+                    Game.changeTurn();
+                } else {
+                    Bot challenger = Game.getBotByNum(challenge2);
+                    if (challenge2 == on) challenger.section.controller = Controller.Neutral;
+                    challenger.section.controller = Controller.Challenges;
+                    pause(2.5F);
+                    challenger.section.controller = Controller.Neutral;
+                    if (blocker.getCard1() == Card.Ambassador || blocker.getCard2() == Card.Ambassador
+                        || blocker.getCard1() == Card.Captain || blocker.getCard2() == Card.Captain) {
+                        blocker.section.controller = Controller.Won_Challenge;
+                        challenger.section.revealACard();
+                        if (blocker.getCard1() == Card.Captain || blocker.getCard1() == Card.Ambassador) {
+                            blocker.section.revealACard(1);
+                            pause(1.5F);
+                            blocker.section.replaceACard(1);
+                        } else {
+                            blocker.section.revealACard(2);
+                            pause(1.5F);
+                            blocker.section.replaceACard(2);
+                        }
+                        blocker.section.controller = Controller.Neutral;
+                        if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
+                        Game.changeTurn();
+                    } else {
+                        blocker.section.controller = Controller.Lost_Challenge;
+                        blocker.section.revealACard();
+                        pause(3);
+                        blocker.section.controller = Controller.Neutral;
+                        if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
+                        Action.steal(theBlocker, on);
+                    }
+                }
+            } else {
+                HumanSection.enableNeutral();
+                blocker.section.controller = Controller.Neutral;
+                Human.lastAction = null;
+                if (blocker.getCard1() == Card.Ambassador || blocker.getCard2() == Card.Ambassador
+                    || blocker.getCard1() == Card.Captain || blocker.getCard2() == Card.Captain) {
+                    blocker.section.controller = Controller.Won_Challenge;
+                    if (blocker.getCard1() == Card.Captain || blocker.getCard1() == Card.Ambassador) {
+                        blocker.section.revealACard(1);
+                        pause(1.5F);
+                        blocker.section.replaceACard(1);
+                    } else {
+                        blocker.section.revealACard(2);
+                        pause(1.5F);
+                        blocker.section.replaceACard(2);
+                    }
+                    HumanSection.assassinateACard();
+                    blocker.section.controller = Controller.Neutral;
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
+                    Game.changeTurn();
+                } else {
+                    blocker.section.controller = Controller.Lost_Challenge;
+                    blocker.section.revealACard();
+                    pause(2);
+                    blocker.section.controller = Controller.Neutral;
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
+                    Action.steal(theBlocker, on);
+                }
+            }
+        }
+        else {
+            Bot blocker = Game.getBotByNum(theBlocker);
+            pause(1.5F);
+            blocker.section.controller = Controller.Blocks;
+            pause(1.5F);
+            blocker.section.controller = Controller.Neutral;
+            Integer challenge2 = Game.botChallenges(theBlocker);
+            if (challenge2 == 0) {
+                Game.changeTurn();
+            } else {
+                Bot challenger = Game.getBotByNum(challenge2);
+                if (challenge2 == on) challenger.section.controller = Controller.Neutral;
+                challenger.section.controller = Controller.Challenges;
+                pause(2.5F);
+                challenger.section.controller = Controller.Neutral;
+                if (blocker.getCard1() == Card.Captain || blocker.getCard2() == Card.Captain
+                    || blocker.getCard1() == Card.Ambassador || blocker.getCard2() == Card.Ambassador) {
+                    blocker.section.controller = Controller.Won_Challenge;
+                    challenger.section.revealACard();
+                    if (blocker.getCard1() == Card.Captain || blocker.getCard1() == Card.Ambassador) {
+                        blocker.section.revealACard(1);
+                        pause(2);
+                        blocker.section.replaceACard(1);
+                    } else {
+                        blocker.section.revealACard(2);
+                        pause(2);
+                        blocker.section.replaceACard(2);
+                    }
+                    blocker.section.controller = Controller.Neutral;
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
+                    Game.changeTurn();
+                } else {
+                    blocker.section.controller = Controller.Lost_Challenge;
+                    blocker.section.revealACard();
+                    pause(3);
+                    blocker.section.controller = Controller.Neutral;
+                    if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
+                    Action.steal(theBlocker, on);
+                }
+            }
+        }
     }
 
     public static void challengeSequenceForAssassinate(int by, int on) throws InterruptedException {
@@ -995,8 +1148,133 @@ public class Action {
         }
     }
 
-    public static void challengeSequenceForSteal(int by, int on) {
-
+    public static void challengeSequenceForSteal(int by, int on) throws InterruptedException {
+        Integer challenge = Game.botChallenges(by);
+        if (by == 1) {
+            if (challenge == 0) {
+                Action.steal(1, on);
+            }
+            else {
+                Bot challenger = Game.getBotByNum(challenge);
+                challenger.section.controller = Controller.Challenges;
+                HumanSection.enableIsToReactToChallenge();
+                Human.waitForResponse();
+                Human.lastAction = null;
+                HumanSection.enableNeutral();
+                challenger.section.controller = Controller.Neutral;
+                if (Human.card1 == Card.Captain || Human.card2 == Card.Captain) {
+                    if (Human.card1 == Card.Captain) HumanSection.replaceACard(1);
+                    else HumanSection.replaceACard(2);
+                    challenger.section.controller = Controller.Lost_Challenge;
+                    pause(4);
+                    challenger.section.controller = Controller.Neutral;
+                    challenger.section.revealACard();
+                    Action.steal(1, on);
+                }
+                else {
+                    challenger.section.controller = Controller.Won_Challenge;
+                    pause(4);
+                    HumanSection.assassinateACard();
+                    challenger.section.controller = Controller.Neutral;
+                    Game.changeTurn();
+                }
+            }
+        }
+        else if (!Game.players.contains(1)) {
+            Bot doer = Game.getBotByNum(by);
+            if (challenge == 0) {
+                Action.steal(by, on);
+            }
+            else {
+                Bot challenger = Game.getBotByNum(challenge);
+                challenger.section.controller = Controller.Challenges;
+                pause(1.5F);
+                challenger.section.controller = Controller.Neutral;
+                if (doer.card1 == Card.Captain || doer.card2 == Card.Captain) {
+                    if (doer.card1 == Card.Captain) doer.section.revealACard(1);
+                    else doer.section.revealACard(2);
+                    challenger.section.controller = Controller.Lost_Challenge;
+                    pause(2);
+                    if (doer.card1 == Card.Captain) doer.section.replaceACard(1);
+                    else doer.section.replaceACard(2);
+                    challenger.section.controller = Controller.Neutral;
+                    doer.section.controller = Controller.Neutral;
+                    challenger.section.revealACard();
+                    Action.steal(by, on);
+                }
+                else {
+                    challenger.section.controller = Controller.Won_Challenge;
+                    pause(4);
+                    doer.section.revealACard();
+                    challenger.section.controller = Controller.Neutral;
+                    doer.section.controller = Controller.Neutral;
+                    Game.changeTurn();
+                }
+            }
+        }
+        else {
+            Bot doer = Game.getBotByNum(by);
+            HumanSection.enableIsAskedToChallenge(by);
+            Human.waitForResponse();
+            if (Human.lastAction == ActionName.Do_Nothing) {
+                Human.lastAction = null;
+                HumanSection.enableNeutral();
+                if (challenge == 0) {
+                    Action.steal(by, on);
+                    doer.section.controller = Controller.Neutral;
+                }
+                else {
+                    Bot challenger = Game.getBotByNum(challenge);
+                    challenger.section.controller = Controller.Challenges;
+                    pause(4);
+                    challenger.section.controller = Controller.Neutral;
+                    if (doer.card1 == Card.Captain || doer.card2 == Card.Captain) {
+                        if (doer.card1 == Card.Captain) doer.section.revealACard(1);
+                        else doer.section.revealACard(2);
+                        challenger.section.controller = Controller.Lost_Challenge;
+                        pause(4);
+                        if (doer.card1 == Card.Captain) doer.section.replaceACard(1);
+                        else doer.section.replaceACard(2);
+                        challenger.section.controller = Controller.Neutral;
+                        doer.section.controller = Controller.Neutral;
+                        challenger.section.revealACard();
+                        Action.steal(by, on);
+                    }
+                    else {
+                        challenger.section.controller = Controller.Won_Challenge;
+                        pause(4);
+                        doer.section.revealACard();
+                        challenger.section.controller = Controller.Neutral;
+                        doer.section.controller = Controller.Neutral;
+                        Game.changeTurn();
+                    }
+                }
+            }
+            else {
+                HumanSection.enableNeutral();
+                Human.lastAction = null;
+                if (doer.card1 == Card.Captain || doer.card2 == Card.Captain) {
+                    doer.section.controller = Controller.Neutral;
+                    if (doer.card1 == Card.Captain) doer.section.revealACard(1);
+                    else doer.section.revealACard(2);
+                    doer.section.controller = Controller.Won_Challenge;
+                    pause(4);
+                    doer.section.controller = Controller.Neutral;
+                    if (doer.card1 == Card.Captain) doer.section.replaceACard(1);
+                    else doer.section.replaceACard(2);
+                    HumanSection.assassinateACard();
+                    Action.steal(by, on);
+                }
+                else {
+                    doer.section.controller = Controller.Neutral;
+                    doer.section.controller = Controller.Lost_Challenge;
+                    pause(4);
+                    doer.section.controller = Controller.Neutral;
+                    doer.section.revealACard();
+                    Game.changeTurn();
+                }
+            }
+        }
     }
 
     public static void blockSequenceForForeignAid(int by) throws InterruptedException {
@@ -1041,8 +1319,53 @@ public class Action {
         }
     }
 
-    public static void blockSequenceForSteal(int by, int on) {
-
+    public static void blockSequenceForSteal(int doer, int on) throws InterruptedException {
+        if (doer != 1) {
+            Bot stealer = Game.getBotByNum(doer);
+            switch (on) {
+                case 1:
+                    stealer.section.controller = Controller.Wants_To_Steal_From_Player1;
+                    break;
+                case 2:
+                    stealer.section.controller = Controller.Wants_To_Steal_From_Player2;
+                    break;
+                case 3:
+                    stealer.section.controller = Controller.Wants_To_Steal_From_Player3;
+                    break;
+                case 4:
+                    stealer.section.controller = Controller.Wants_To_Steal_From_Player4;
+                    break;
+            }
+            if (on == 1) {
+                HumanSection.enableIsAskedToBlock(doer);
+                Human.waitForResponse();
+                if (Human.lastAction == ActionName.Do_Nothing) {
+                    Human.lastAction = null;
+                    HumanSection.enableNeutral();
+                    challengeSequenceForSteal(doer, 1);
+                } else {
+                    challengeSequenceForStealBlock(1, doer);
+                }
+            }
+            else {
+                Integer block = Game.botBlocks(doer, on, "steal");
+                if (block == 0) {
+                    challengeSequenceForSteal(doer, on);
+                }
+                else {
+                    challengeSequenceForStealBlock(on, doer);
+                }
+            }
+        }
+        else {
+            Integer block = Game.botBlocks(doer, on, "steal");
+            if (block == 0) {
+                challengeSequenceForSteal(doer, on);
+            }
+            else {
+                challengeSequenceForStealBlock(on, doer);
+            }
+        }
     }
 
     public static void blockSequenceForAssassinate(int doer, int on) throws InterruptedException {

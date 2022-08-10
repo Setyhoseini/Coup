@@ -989,6 +989,18 @@ public class BotSection extends Thread implements ActionListener {
                 case Wants_To_Assassinate_Player4:
                     assassinateDecision4.setVisible(true);
                     break;
+                case Wants_To_Steal_From_Player1:
+                    stealDecision1.setVisible(true);
+                    break;
+                case Wants_To_Steal_From_Player2:
+                    stealDecision2.setVisible(true);
+                    break;
+                case Wants_To_Steal_From_Player3:
+                    stealDecision3.setVisible(true);
+                    break;
+                case Wants_To_Steal_From_Player4:
+                    stealDecision4.setVisible(true);
+                    break;
             }
         }
     }

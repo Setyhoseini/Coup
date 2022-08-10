@@ -78,7 +78,8 @@ public class Bot extends Thread {
                         Thread.sleep(2000);
                         section.controller = Controller.Neutral;
                       //  section.controller = Controller.Neutral;
-                        Action.blockSequenceForForeignAid(getNum());
+                       // Action.blockSequenceForForeignAid(getNum());
+                        Action.blockSequenceForSteal(getNum(), 1);
                        // Action.challengeSequenceForTax(getNum());
                         state = PlayerState.Neutral;
                     break;
@@ -111,9 +112,9 @@ public class Bot extends Thread {
                 case IsToPlay:
                         section.controller = Controller.Is_Thinking;
                         Thread.sleep(2000);
-                       // Action.income(num);
+                        Action.income(num);
                         section.controller = Controller.Neutral;
-                        Action.blockSequenceForAssassinate(getNum(), 1);
+                       // Action.blockSequenceForSteal(getNum(), 1);
                         state = PlayerState.Neutral;
                     break;
             }

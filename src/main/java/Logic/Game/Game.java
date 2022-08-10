@@ -133,7 +133,7 @@ public class Game extends Thread{
                 Vector<Integer> list = new Vector<>();
                 for (Bot b : bots) {
                     if (b.getRole() != BotType.Paranoid && who != b.getNum() && players.contains(b.getNum())) {
-                        if ((Math.random() < 1)) list.add(b.getNum());
+                        if ((Math.random() < 0.05)) list.add(b.getNum());
                     }
                 }
                 Collections.shuffle(list);
