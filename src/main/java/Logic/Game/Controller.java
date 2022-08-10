@@ -13,6 +13,8 @@ public enum Controller {
 
     Tax,
 
+    Exchange_Cards,
+
 
     Won_Challenge,
     Lost_Challenge,

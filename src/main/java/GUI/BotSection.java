@@ -982,6 +982,9 @@ public class BotSection extends Thread implements ActionListener {
                 case Tax:
                     taxDecision.setVisible(true);
                     break;
+                case Exchange_Cards:
+                    exchangeTwoDecision.setVisible(true);
+                    break;
             }
         }
     }

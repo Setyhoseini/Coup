@@ -3,9 +3,7 @@ package Logic.Player;
 import GUI.Card;
 import GUI.BotSection;
 import Logic.Game.Action;
-import Logic.Game.ActionName;
 import Logic.Game.Controller;
-import Logic.Game.Game;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -18,7 +16,6 @@ public class Bot extends Thread {
     public Card card2;
     public PlayerState state;
     AtomicBoolean running = new AtomicBoolean(true);
-    ActionName lastAction = null;
     public static AtomicBoolean paranoidChallenge = new AtomicBoolean(false);
     public static AtomicBoolean paranoidIsPlaying = new AtomicBoolean(false);
 
@@ -73,32 +70,6 @@ public class Bot extends Thread {
         section.updateCoins();
     }
 
-
-    public boolean challenges() {
-        if (role == BotType.Paranoid) {
-            if (paranoidChallenge.get()) {
-                paranoidChallenge.set(false);
-                return false;
-            }
-            else {
-                paranoidChallenge.set(true);
-                return true;
-            }
-        }
-        else {
-            return !(Math.random() > 0.3);
-        }
-    }
-
-
-//
-//    public ActionName calculateAction() {
-//
-//    }
-
-
-
-
     public void playParanoid() throws InterruptedException {
         while (running.get()) {
             switch (state) {
@@ -106,8 +77,9 @@ public class Bot extends Thread {
                         section.controller = Controller.Is_Thinking;
                         Thread.sleep(2000);
                         section.controller = Controller.Neutral;
-                      //  Action.blockSequenceForForeignAid(getNum());
-                        Action.challengeSequenceForTax(getNum());
+                      //  section.controller = Controller.Neutral;
+                        Action.blockSequenceForForeignAid(getNum());
+                       // Action.challengeSequenceForTax(getNum());
                         state = PlayerState.Neutral;
                     break;
 
@@ -124,8 +96,9 @@ public class Bot extends Thread {
                 case IsToPlay:
                         section.controller = Controller.Is_Thinking;
                         Thread.sleep(2000);
-                        Action.income(num);
                         section.controller = Controller.Neutral;
+                        if (card1 == Card.Ambassador || card2 == Card.Ambassador) Action.challengeSequenceForExchange(getNum());
+                        else Action.income(num);
                         state = PlayerState.Neutral;
                     break;
             }
@@ -160,9 +133,6 @@ public class Bot extends Thread {
             }
         }
     }
-
-
-
 
     @Override
     public void run() {
