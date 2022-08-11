@@ -6,7 +6,9 @@ import Logic.Game.Action;
 import Logic.Game.Controller;
 import Logic.Game.Game;
 
+import java.util.Collections;
 import java.util.Random;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Bot extends Thread {
@@ -70,13 +72,118 @@ public class Bot extends Thread {
     public void playParanoid() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
             if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
-                if (Game.gameIsGoing.get()) {
                     section.controller = Controller.Is_Thinking;
                     Thread.sleep(2000);
                     section.controller = Controller.Neutral;
+                    if (card1 == Card.Captain || card2 == Card.Captain) {
+                        Vector<Integer> list = new Vector<>();
+                        for (int n : Game.players) {
+                            if (n == 1) {
+                                if (Human.coins > 1) list.add(1);
+                            }
+                            else {
+                                if (Game.getBotByNum(n).coins > 1) list.add(Game.getBotByNum(n).getNum());
+                            }
+                        }
+                        if (list.size() != 0) {
+                            Collections.shuffle(list);
+                            Action.steal(getNum(), list.get(0));
+                        }
+                        else {
+                            double random = Math.random();
+                            if (random > 0.6) Action.blockSequenceForForeignAid(getNum());
+                            else if (random < 0.6 && random > 0.3) Action.challengeSequenceForTax(getNum());
+                            else {
+                                section.controller = Controller.Income;
+                                Thread.sleep(2000);
+                                section.controller = Controller.Neutral;
+                                Action.income(getNum());
+                            }
+                        }
+                    }
+                    else {
+                       if (card1 == Card.Assassin || card2 == Card.Assassin) {
+                           if (coins > 2) {
+                               int rnd = new Random().nextInt(Game.players.size());
+                               if (Game.players.get(rnd).equals(getNum())) {
+                                   if (rnd == 0) rnd = 1;
+                                   else rnd = 0;
+                               }
+                               Action.blockSequenceForAssassinate(getNum(), Game.players.get(rnd));
+                           }
+                           else {
+                               section.controller = Controller.Income;
+                               Thread.sleep(2000);
+                               section.controller = Controller.Neutral;
+                               Action.income(getNum());
+                           }
+                       }
+                       else {
+                           double random = Math.random();
+                           if (card1 == Card.Ambassador || card2 == Card.Ambassador) {
+                               if (random > 0.2) Action.challengeSequenceForExchange(getNum());
+                               else {
+                                   if (coins > 2) {
+                                       int rnd = new Random().nextInt(Game.players.size());
+                                       if (Game.players.get(rnd).equals(getNum())) {
+                                           if (rnd == 0) rnd = 1;
+                                           else rnd = 0;
+                                       }
+                                       Action.blockSequenceForAssassinate(getNum(), Game.players.get(rnd));
+                                   }
+                                   else {
+                                       section.controller = Controller.Income;
+                                       Thread.sleep(2000);
+                                       section.controller = Controller.Neutral;
+                                       Action.income(getNum());
+                                   }
+                               }
+                           }
+                           else {
+                               if (random > 0.2) {
+                                   if (coins > 0) {
+                                       if (card1 != null) {
+                                           section.controller = Controller.Exchange_One_Card;
+                                           Thread.sleep(2000);
+                                           section.controller = Controller.Neutral;
+                                           Action.exchangeOne(getNum(), 1);
+                                       }
+                                       else {
+                                           section.controller = Controller.Exchange_One_Card;
+                                           Thread.sleep(2000);
+                                           section.controller = Controller.Neutral;
+                                           Action.exchangeOne(getNum(), 2);
+                                       }
+                                   }
+                                   else {
+                                       section.controller = Controller.Income;
+                                       Thread.sleep(2000);
+                                       section.controller = Controller.Neutral;
+                                       Action.income(getNum());
+                                   }
+                               }
+                               else {
+                                   Vector<Integer> list = new Vector<>();
+                                   for (int n : Game.players) {
+                                       if (n == 1) {
+                                           if (Human.coins > 1) list.add(1);
+                                       }
+                                       else {
+                                           if (Game.getBotByNum(n).coins > 1) list.add(Game.getBotByNum(n).getNum());
+                                       }
+                                   }
+                                   if (list.size() != 0) {
+                                       Collections.shuffle(list);
+                                       Action.steal(getNum(), list.get(0));
+                                   }
+                                   else {
+                                       Action.blockSequenceForForeignAid(getNum());
+                                   }
+                               }
+                           }
+                       }
+                    }
                     state = PlayerState.Neutral;
-                    Action.blockSequenceForSteal(getNum(), 1);
-                }
             }
         }
     }
@@ -97,10 +204,15 @@ public class Bot extends Thread {
                         Action.blockSequenceForAssassinate(getNum(), Game.players.get(rnd));
                     }
                     else {
-                        section.controller = Controller.Income;
-                        Thread.sleep(2000);
-                        section.controller = Controller.Neutral;
-                        Action.income(getNum());
+                        if (Math.random() > 0.4) {
+                            section.controller = Controller.Income;
+                            Thread.sleep(2000);
+                            section.controller = Controller.Neutral;
+                            Action.income(getNum());
+                        }
+                        else {
+                            Action.blockSequenceForForeignAid(getNum());
+                        }
                     }
                 }
                 else {

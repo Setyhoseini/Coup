@@ -48,9 +48,8 @@ public class Action {
         else {
             Bot bot = Game.getBotByNum(by);
             bot.updateCoins(-1);
-            Card c = (card == 1 ? bot.getCard1() : bot.getCard2());
+            Card c = (card == 1 ? bot.card1 : bot.card2);
             Collections.shuffle(Card.Deck);
-            bot.setCard1(Card.Deck.remove(0));
             if (card == 1) {
                 bot.setCard1(Card.Deck.remove(0));
             } else {
