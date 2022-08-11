@@ -1,5 +1,6 @@
 package GUI;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,6 +21,9 @@ public class Frame extends JFrame implements ActionListener {
         initPlayerTwoSection();
         initPlayerThreeSection();
         initPlayerFourSection();
+        initTextArea();
+        this.repaint();
+        this.revalidate();
     }
 
     public void initBackground() {
@@ -33,13 +37,26 @@ public class Frame extends JFrame implements ActionListener {
         label.add(sum);
         this.add(label);
         this.setVisible(true);
+    }
 
-//        JTextArea text = new JTextArea();
-//        text.setEnabled(false);
-//        text.setToolTipText("what the heck");
-//        JScrollPane events = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//        events.setBounds(33, 465, 495, 460);
-
+    public void initTextArea() {
+        JTextPane text = new JTextPane();
+        text.setBounds(60, 495, 443, 430);
+        text.setFont(new Font("Serif", Font.BOLD, 25));
+        text.setBackground(Color.LIGHT_GRAY);
+        text.setMargin( new Insets(20,20,20,20));
+        ImageIcon actions = new ImageIcon("actions.png");
+        JScrollPane scrollPane = new JScrollPane(text);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(60, 495, 443, 430);
+        text.setVisible(true);
+        scrollPane.setVisible(true);
+        text.setEditable(false);
+        label.add(scrollPane);
+        JLabel title = new JLabel(actions);
+        title.setBounds(21, 375, 200, 200);
+        title.setVisible(true);
+        label.add(title);
     }
 
     public void initHumanSection() {
