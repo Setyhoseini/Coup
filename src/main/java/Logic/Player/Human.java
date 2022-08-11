@@ -3,8 +3,7 @@ import GUI.Card;
 import GUI.HumanSection;
 import Logic.Game.Action;
 import Logic.Game.ActionName;
-
-import java.util.concurrent.atomic.AtomicBoolean;
+import Logic.Game.Game;
 
 public class Human extends Thread {
     public static int coins;
@@ -12,7 +11,6 @@ public class Human extends Thread {
     public static Card card1;
     public static Card card2;
     public static PlayerState state;
-    static AtomicBoolean running = new AtomicBoolean(true);
     public static ActionName lastAction = null;
 
    public Human(Card card1, Card card2) {
@@ -45,7 +43,7 @@ public class Human extends Thread {
    }
 
    public static void waitForResponse() {
-       while (running.get() && lastAction == null) {}
+       while (Game.gameIsGoing.get() && lastAction == null) {}
    }
 
    public static void pause(float seconds) throws InterruptedException {
@@ -54,7 +52,7 @@ public class Human extends Thread {
 
     @Override
     public void run() {
-       while (running.get()) {
+       while (Game.gameIsGoing.get()) {
            if (state == PlayerState.IsToPlay) {
                waitForResponse();
                while (Human.lastAction == null) {

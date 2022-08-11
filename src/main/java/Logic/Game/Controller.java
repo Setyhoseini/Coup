@@ -27,4 +27,9 @@ public enum Controller {
     Wants_To_Assassinate_Player2,
     Wants_To_Assassinate_Player3,
     Wants_To_Assassinate_Player4,
+
+    Launches_Coup_Against_1,
+    Launches_Coup_Against_2,
+    Launches_Coup_Against_3,
+    Launches_Coup_Against_4
 }

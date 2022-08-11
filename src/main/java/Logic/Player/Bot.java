@@ -17,7 +17,6 @@ public class Bot extends Thread {
     public Card card1;
     public Card card2;
     public PlayerState state;
-    AtomicBoolean running = new AtomicBoolean(true);
     public static AtomicBoolean paranoidChallenge = new AtomicBoolean(false);
     public static AtomicBoolean paranoidIsPlaying = new AtomicBoolean(false);
 
@@ -69,20 +68,22 @@ public class Bot extends Thread {
     }
 
     public void playParanoid() throws InterruptedException {
-        while (running.get()) {
-            if (state == PlayerState.IsToPlay) {
-                section.controller = Controller.Is_Thinking;
-                Thread.sleep(2000);
-                section.controller = Controller.Neutral;
-                state = PlayerState.Neutral;
-                Action.blockSequenceForSteal(getNum(), 1);
+        while (Game.gameIsGoing.get()) {
+            if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
+                if (Game.gameIsGoing.get()) {
+                    section.controller = Controller.Is_Thinking;
+                    Thread.sleep(2000);
+                    section.controller = Controller.Neutral;
+                    state = PlayerState.Neutral;
+                    Action.blockSequenceForSteal(getNum(), 1);
+                }
             }
         }
     }
 
     public void playCautiousAssassin() throws InterruptedException {
-        while (running.get()) {
-            if (state == PlayerState.IsToPlay) {
+        while (Game.gameIsGoing.get()) {
+            if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
                 section.controller = Controller.Is_Thinking;
                 Thread.sleep(2000);
                 section.controller = Controller.Neutral;
@@ -96,37 +97,51 @@ public class Bot extends Thread {
     }
 
     public void playCoupLover() throws InterruptedException {
-        while (running.get()) {
-            if (state == PlayerState.IsToPlay) {
+        while (Game.gameIsGoing.get()) {
+            if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
                 section.controller = Controller.Is_Thinking;
                 Thread.sleep(2000);
                 section.controller = Controller.Neutral;
                 state = PlayerState.Neutral;
-                if (coins < 7) {
-                    Action.challengeSequenceForTax(getNum());
-                }
-                else {
-                    int rnd = new Random().nextInt(Game.players.size());
-                    if (Game.players.get(rnd).equals(getNum())) {
-                        if (rnd == 0) rnd = 1;
-                        else rnd = 0;
+                    if (coins < 7) {
+                        Action.challengeSequenceForTax(getNum());
                     }
-                    Action.coup(getNum(), Game.players.get(rnd));
-                }
+                    else {
+                        int rnd = new Random().nextInt(Game.players.size());
+                        if (Game.players.get(rnd).equals(getNum())) {
+                            if (rnd == 0) rnd = 1;
+                            else rnd = 0;
+                        }
+                        switch (Game.players.get(rnd)) {
+                            case 1:
+                                section.controller = Controller.Launches_Coup_Against_1;
+                                break;
+                            case 2:
+                                section.controller = Controller.Launches_Coup_Against_2;
+                                break;
+                            case 3:
+                                section.controller = Controller.Launches_Coup_Against_3;
+                                break;
+                            case 4:
+                                section.controller = Controller.Launches_Coup_Against_4;
+                                break;
+                        }
+                        Thread.sleep(2000);
+                        section.controller = Controller.Neutral;
+                        Action.coup(getNum(), Game.players.get(rnd));
+                    }
             }
         }
     }
 
     public void playNerd() throws InterruptedException {
-        while (running.get()) {
-            switch (state) {
-                case IsToPlay:
-                        section.controller = Controller.Is_Thinking;
-                        Thread.sleep(2000);
-                        Action.income(num);
-                        section.controller = Controller.Neutral;
-                        state = PlayerState.Neutral;
-                    break;
+        while (Game.gameIsGoing.get()) {
+            if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
+                section.controller = Controller.Is_Thinking;
+                Thread.sleep(2000);
+                Action.income(num);
+                section.controller = Controller.Neutral;
+                state = PlayerState.Neutral;
             }
         }
     }

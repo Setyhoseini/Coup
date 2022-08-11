@@ -4,6 +4,7 @@ import Logic.Game.ActionName;
 import Logic.Game.Controller;
 import Logic.Game.Game;
 import Logic.Player.Bot;
+import Logic.Player.BotType;
 import Logic.Player.Human;
 
 import javax.swing.*;
@@ -38,6 +39,11 @@ public class BotSection extends Thread implements ActionListener {
     JLabel stealDecision3 = new JLabel();
     JLabel stealDecision4 = new JLabel();
 
+    JLabel coupDecision1 = new JLabel();
+    JLabel coupDecision2 = new JLabel();
+    JLabel coupDecision3 = new JLabel();
+    JLabel coupDecision4 = new JLabel();
+
     JLabel blockDecision = new JLabel();
     JLabel challengeDecision = new JLabel();
     JLabel incomeDecision = new JLabel();
@@ -55,6 +61,11 @@ public class BotSection extends Thread implements ActionListener {
     ImageIcon assassinate2 = new ImageIcon("assassinate2.png");
     ImageIcon assassinate3 = new ImageIcon("assassinate3.png");
     ImageIcon assassinate4 = new ImageIcon("assassinate4.png");
+
+    ImageIcon coup1 = new ImageIcon("coup1.png");
+    ImageIcon coup2 = new ImageIcon("coup2.png");
+    ImageIcon coup3 = new ImageIcon("coup3.png");
+    ImageIcon coup4 = new ImageIcon("coup4.png");
 
     ImageIcon steal1 = new ImageIcon("steal1.png");
     ImageIcon steal2 = new ImageIcon("steal2.png");
@@ -114,6 +125,10 @@ public class BotSection extends Thread implements ActionListener {
         initForeignAidDecisionLabels(id);
         initBlockDecisionLabels(id);
         initChallengeDecisionLabels(id);
+        initCoupDecision1Labels(id);
+        initCoupDecision2Labels(id);
+        initCoupDecision3Labels(id);
+        initCoupDecision4Labels(id);
     }
 
     public void initWinChallengeLabels(int id) {
@@ -319,6 +334,98 @@ public class BotSection extends Thread implements ActionListener {
                 blockDecision.setIcon(blockLabel);
                 blockDecision.setVisible(false);
                 Frame.label.add(blockDecision);
+                break;
+        }
+    }
+
+    public void initCoupDecision1Labels(int id) {
+        switch (id) {
+            case 2:
+                coupDecision1.setBounds(1180, 62, 400, 600);
+                coupDecision1.setIcon(coup1);
+                coupDecision1.setVisible(false);
+                Frame.label.add(coupDecision1);
+                break;
+            case 3:
+                coupDecision1.setBounds(1180, 522, 400, 600);
+                coupDecision1.setIcon(coup1);
+                coupDecision1.setVisible(false);
+                Frame.label.add(coupDecision1);
+                break;
+            case 4:
+                coupDecision1.setBounds(580, 522, 400, 600);
+                coupDecision1.setIcon(coup1);
+                coupDecision1.setVisible(false);
+                Frame.label.add(coupDecision1);
+                break;
+        }
+    }
+
+    public void initCoupDecision2Labels(int id) {
+        switch (id) {
+            case 2:
+                coupDecision2.setBounds(1180, 67, 400, 600);
+                coupDecision2.setIcon(coup2);
+                coupDecision2.setVisible(false);
+                Frame.label.add(coupDecision2);
+                break;
+            case 3:
+                coupDecision2.setBounds(1180, 527, 400, 600);
+                coupDecision2.setIcon(coup2);
+                coupDecision2.setVisible(false);
+                Frame.label.add(coupDecision2);
+                break;
+            case 4:
+                coupDecision2.setBounds(580, 527, 400, 600);
+                coupDecision2.setIcon(coup2);
+                coupDecision2.setVisible(false);
+                Frame.label.add(coupDecision2);
+                break;
+        }
+    }
+
+    public void initCoupDecision3Labels(int id) {
+        switch (id) {
+            case 2:
+                coupDecision3.setBounds(1180, 67, 410, 600);
+                coupDecision3.setIcon(coup3);
+                coupDecision3.setVisible(false);
+                Frame.label.add(coupDecision3);
+                break;
+            case 3:
+                coupDecision3.setBounds(1180, 527, 410, 600);
+                coupDecision3.setIcon(coup3);
+                coupDecision3.setVisible(false);
+                Frame.label.add(coupDecision3);
+                break;
+            case 4:
+                coupDecision3.setBounds(580, 527, 410, 600);
+                coupDecision3.setIcon(coup3);
+                coupDecision3.setVisible(false);
+                Frame.label.add(coupDecision3);
+                break;
+        }
+    }
+
+    public void initCoupDecision4Labels(int id) {
+        switch (id) {
+            case 2:
+                coupDecision4.setBounds(1180, 67, 422, 600);
+                coupDecision4.setIcon(coup4);
+                coupDecision4.setVisible(false);
+                Frame.label.add(coupDecision4);
+                break;
+            case 3:
+                coupDecision4.setBounds(1180, 527, 422, 600);
+                coupDecision4.setIcon(coup4);
+                coupDecision4.setVisible(false);
+                Frame.label.add(coupDecision4);
+                break;
+            case 4:
+                coupDecision4.setBounds(580, 527, 422, 600);
+                coupDecision4.setIcon(coup4);
+                coupDecision4.setVisible(false);
+                Frame.label.add(coupDecision4);
                 break;
         }
     }
@@ -555,6 +662,7 @@ public class BotSection extends Thread implements ActionListener {
                 }
             }
             if (bot.card1 == null && bot.card2 == null) {
+                if (bot.getRole() == BotType.Paranoid) Bot.paranoidIsPlaying.set(false);
                 Game.players.remove(bot.getNum());
             }
         }
@@ -580,7 +688,10 @@ public class BotSection extends Thread implements ActionListener {
                 card2.setIcon(bot.getCard2().getDeadImage());
                 bot.setCard2(null);
             }
-            if (bot.card1 == null && bot.card2 == null) Game.players.remove(bot.getNum());
+            if (bot.card1 == null && bot.card2 == null) {
+                if (bot.getRole() == BotType.Paranoid) Bot.paranoidIsPlaying.set(false);
+                Game.players.remove(bot.getNum());
+            }
         }
     }
 
@@ -864,6 +975,10 @@ public class BotSection extends Thread implements ActionListener {
         stealDecision2.setVisible(false);
         stealDecision3.setVisible(false);
         stealDecision4.setVisible(false);
+        coupDecision1.setVisible(false);
+        coupDecision2.setVisible(false);
+        coupDecision3.setVisible(false);
+        coupDecision4.setVisible(false);
         blockDecision.setVisible(false);
         challengeDecision.setVisible(false);
         incomeDecision.setVisible(false);
@@ -930,6 +1045,18 @@ public class BotSection extends Thread implements ActionListener {
                     break;
                 case Wants_To_Steal_From_Player4:
                     stealDecision4.setVisible(true);
+                    break;
+                case Launches_Coup_Against_1:
+                    coupDecision1.setVisible(true);
+                    break;
+                case Launches_Coup_Against_2:
+                    coupDecision2.setVisible(true);
+                    break;
+                case Launches_Coup_Against_3:
+                    coupDecision3.setVisible(true);
+                    break;
+                case Launches_Coup_Against_4:
+                    coupDecision4.setVisible(true);
                     break;
             }
         }

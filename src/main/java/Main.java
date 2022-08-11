@@ -52,6 +52,7 @@ public class Main {
 
         game.start();
 
+
         new Frame();
     }
 }
