@@ -66,7 +66,6 @@ public class Action {
 
     public static void exchangeOneWithoutRecord(int by, int card) {
         if (by == 1) {
-            Human.updateCoins(-1);
             Card c = (card == 1 ? Human.getCard1() : Human.getCard2());
             Collections.shuffle(Card.Deck);
 
@@ -84,7 +83,6 @@ public class Action {
         }
         else {
             Bot bot = Game.getBotByNum(by);
-            bot.updateCoins(-1);
             Card c = (card == 1 ? bot.card1 : bot.card2);
             Collections.shuffle(Card.Deck);
             if (card == 1) {

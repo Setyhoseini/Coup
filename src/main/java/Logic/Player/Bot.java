@@ -235,7 +235,6 @@ public class Bot extends Thread {
                         }
                     }
                     state = PlayerState.Neutral;
-                    state = PlayerState.Neutral;
             }
         }
     }
@@ -278,7 +277,6 @@ public class Bot extends Thread {
                     }
                 }
                 state = PlayerState.Neutral;
-                state = PlayerState.Neutral;
             }
         }
     }
@@ -296,7 +294,6 @@ public class Bot extends Thread {
                     else {
                         coupDecision();
                     }
-                    state = PlayerState.Neutral;
                     state = PlayerState.Neutral;
             }
         }
@@ -456,7 +453,6 @@ public class Bot extends Thread {
                         Action.challengeSequenceForTax(getNum());
                     }
                 }
-                state = PlayerState.Neutral;
                 state = PlayerState.Neutral;
             }
         }
