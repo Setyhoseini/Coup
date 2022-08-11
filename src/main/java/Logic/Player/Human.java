@@ -240,6 +240,8 @@ public class Human extends Thread {
                        }
                        break;
                }
+               state = PlayerState.Neutral;
+               state = PlayerState.Neutral;
            }
        }
     }

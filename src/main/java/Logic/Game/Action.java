@@ -64,6 +64,40 @@ public class Action {
         System.out.println(Card.Deck.toString());
     }
 
+    public static void exchangeOneWithoutRecord(int by, int card) {
+        if (by == 1) {
+            Human.updateCoins(-1);
+            Card c = (card == 1 ? Human.getCard1() : Human.getCard2());
+            Collections.shuffle(Card.Deck);
+
+            System.out.println(Card.Deck.toString());
+
+            Card x = Card.Deck.remove(0);
+            if (card == 1) {
+                Human.setCard1(x);
+                HumanSection.setCard1(x);
+            } else {
+                Human.setCard2(x);
+                HumanSection.setCard2(x);
+            }
+            Card.Deck.add(c);
+        }
+        else {
+            Bot bot = Game.getBotByNum(by);
+            bot.updateCoins(-1);
+            Card c = (card == 1 ? bot.card1 : bot.card2);
+            Collections.shuffle(Card.Deck);
+            if (card == 1) {
+                bot.setCard1(Card.Deck.remove(0));
+            } else {
+                bot.setCard2(Card.Deck.remove(0));
+            }
+            Card.Deck.add(c);
+        }
+        //**************************************
+        System.out.println(Card.Deck.toString());
+    }
+
     public static void exchangeTwo(int by) {
         if (by == 1) {
             Collections.shuffle(Card.Deck);
@@ -181,8 +215,8 @@ public class Action {
                 }
             }
             else {
-                if (doer.card1 == null) exchangeOne(by, 2);
-                else if (doer.card2 == null) exchangeOne(by, 1);
+                if (doer.card1 == null) exchangeOneWithoutRecord(by, 2);
+                else if (doer.card2 == null) exchangeOneWithoutRecord(by, 1);
                 else {
                     Collections.shuffle(Card.Deck);
                     Card deck1 = Card.Deck.remove(0);
@@ -360,15 +394,16 @@ public class Action {
             Integer challenge = Game.botChallenges(by);
             Bot doer = Game.getBotByNum(by);
             doer.section.controller = Controller.Tax;
+            pause(1.5F);
             if (challenge == 0) {
-                pause(1.5F);
+                doer.section.controller = Controller.Neutral;
                 doer.section.controller = Controller.Neutral;
                 Action.tax(by);
             }
             else {
                 Bot challenger = Game.getBotByNum(challenge);
                 challenger.section.controller = Controller.Challenges;
-                pause(1.5F);
+                pause(2.5F);
                 challenger.section.controller = Controller.Neutral;
                 if (doer.card1 == Card.Duke || doer.card2 == Card.Duke) {
                     if (doer.card1 == Card.Duke) doer.section.revealACard(1);
@@ -384,7 +419,7 @@ public class Action {
                 }
                 else {
                     challenger.section.controller = Controller.Won_Challenge;
-                    pause(4);
+                    pause(2);
                     doer.section.revealACard();
                     challenger.section.controller = Controller.Neutral;
                     doer.section.controller = Controller.Neutral;
@@ -496,6 +531,7 @@ public class Action {
         else if (!Game.players.contains(1)) {
             Bot doer = Game.getBotByNum(by);
             doer.section.controller = Controller.Exchange_Cards;
+            pause(2);
             if (challenge == 0) {
                 Action.exchangeTwo(by);
             }
@@ -700,6 +736,7 @@ public class Action {
             Bot blocker = Game.getBotByNum(theBlocker);
             blocker.section.controller = Controller.Neutral;
             Integer challenge2 = Game.botChallenges(theBlocker);
+            pause(2);
             if (challenge2 == 0) {
                 Game.changeTurn();
             } else {
@@ -1080,6 +1117,7 @@ public class Action {
         }
         else if (!Game.players.contains(1)) {
             Bot doer = Game.getBotByNum(by);
+            pause(2);
             if (challenge == 0) {
                 doer.section.controller = Controller.Neutral;
                 Action.assassinate(by, on);
@@ -1087,7 +1125,7 @@ public class Action {
             else {
                 Bot challenger = Game.getBotByNum(challenge);
                 challenger.section.controller = Controller.Challenges;
-                pause(1.5F);
+                pause(2.5F);
                 challenger.section.controller = Controller.Neutral;
                 if (doer.card1 == Card.Assassin || doer.card2 == Card.Assassin) {
                     if (doer.card1 == Card.Assassin) doer.section.revealACard(1);
@@ -1217,6 +1255,7 @@ public class Action {
         }
         else if (!Game.players.contains(1)) {
             Bot doer = Game.getBotByNum(by);
+            pause(2);
             if (challenge == 0) {
                 Action.steal(by, on);
             }
@@ -1343,7 +1382,7 @@ public class Action {
         } else {
             if (by != 1) Game.getBotByNum(by).section.controller = Controller.Foreign_Aid;
             Integer block = Game.botBlocks(by, 0, "foreign_aid");
-            pause(1.5F);
+            pause(2.5F);
             if (block == 0) {
                 if (by != 1) Game.getBotByNum(by).section.controller = Controller.Neutral;
                 Action.foreignAid(by);
@@ -1388,7 +1427,7 @@ public class Action {
                 }
             }
             else {
-                pause(1.5F);
+                pause(2.5F);
                 Integer block = Game.botBlocks(doer, on, "steal");
                 if (block == 0) {
                     challengeSequenceForSteal(doer, on);
@@ -1441,7 +1480,7 @@ public class Action {
                 }
             }
             else {
-                pause(1.5F);
+                pause(2.5F);
                 Integer block = Game.botBlocks(doer, on, "assassinate");
                 if (block == 0) {
                     challengeSequenceForAssassinate(doer, on);
