@@ -1058,6 +1058,12 @@ public class BotSection extends Thread implements ActionListener {
                 case Launches_Coup_Against_4:
                     coupDecision4.setVisible(true);
                     break;
+                case Exchange_One_Card:
+                    exchangeOneDecision.setVisible(true);
+                    break;
+                case Income:
+                    incomeDecision.setVisible(true);
+                    break;
             }
         }
     }

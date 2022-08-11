@@ -152,8 +152,8 @@ public class Action {
             Bot doer = Game.getBotByNum(by);
             if (doer.getRole() == BotType.Cautious_Assassin) {
                 Collections.shuffle(Card.Deck);
-                Card deck1 = Card.Deck.remove(0);
-                Card deck2 = Card.Deck.remove(1);
+                Card deck1 = Card.Deck.get(0);
+                Card deck2 = Card.Deck.get(1);
                 if (deck1 == Card.Assassin) {
                     if (doer.card1 == Card.Ambassador) {
                         Card card1 = doer.card1;
@@ -163,6 +163,18 @@ public class Action {
                     else {
                         Card card2 = doer.card2;
                         doer.card2 = deck1;
+                        Card.Deck.add(card2);
+                    }
+                }
+                else if (deck2 == Card.Assassin){
+                    if (doer.card1 == Card.Ambassador) {
+                        Card card1 = doer.card1;
+                        doer.card1 = deck2;
+                        Card.Deck.add(card1);
+                    }
+                    else {
+                        Card card2 = doer.card2;
+                        doer.card2 = deck2;
                         Card.Deck.add(card2);
                     }
                 }
@@ -221,17 +233,33 @@ public class Action {
         }
 
         if (on == 1) {
+            if (Human.card2 != null || Human.card1 != null)
             HumanSection.assassinateACard();
         }
         else {
             Bot victim = Game.getBotByNum(on);
-            if (victim.getRole() == BotType.Cautious_Assassin) {
-                if (victim.getCard1() == Card.Assassin) {
-                    if (victim.getCard2() == null) {
-                        victim.section.assassinateACard(1);
+            if (victim.card1 != null || victim.card2 != null) {
+                if (victim.getRole() == BotType.Cautious_Assassin) {
+                    if (victim.getCard1() == Card.Assassin) {
+                        if (victim.getCard2() == null) {
+                            victim.section.assassinateACard(1);
+                        }
+                        else {
+                            victim.section.assassinateACard(2);
+                        }
                     }
                     else {
-                        victim.section.assassinateACard(2);
+                        if (victim.getCard1() == null) {
+                            victim.section.assassinateACard(2);
+                        }
+                        else {
+                            if (victim.getCard1() == Card.Assassin) {
+                                victim.section.assassinateACard(2);
+                            }
+                            else {
+                                victim.section.assassinateACard(1);
+                            }
+                        }
                     }
                 }
                 else {
@@ -239,25 +267,12 @@ public class Action {
                         victim.section.assassinateACard(2);
                     }
                     else {
-                        if (victim.getCard1() == Card.Assassin) {
-                            victim.section.assassinateACard(2);
-                        }
-                        else {
-                            victim.section.assassinateACard(1);
-                        }
+                        victim.section.assassinateACard(1);
                     }
                 }
-            }
-            else {
-                if (victim.getCard1() == null) {
-                    victim.section.assassinateACard(2);
+                if (victim.getCard1() == null && victim.getCard2() == null) {
+                    Game.players.remove((Integer) on);
                 }
-                else {
-                    victim.section.assassinateACard(1);
-                }
-            }
-            if (victim.getCard1() == null && victim.getCard2() == null) {
-                Game.players.remove((Integer) on);
             }
         }
             Game.changeTurn();
@@ -1356,6 +1371,7 @@ public class Action {
                 }
             }
             else {
+                pause(1.5F);
                 Integer block = Game.botBlocks(doer, on, "steal");
                 if (block == 0) {
                     challengeSequenceForSteal(doer, on);
@@ -1406,6 +1422,7 @@ public class Action {
                 }
             }
             else {
+                pause(1.5F);
                 Integer block = Game.botBlocks(doer, on, "assassinate");
                 if (block == 0) {
                     challengeSequenceForAssassinate(doer, on);

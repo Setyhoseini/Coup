@@ -20,14 +20,14 @@ public class Main {
         Card.Deck.add(card11);
         Card.Deck.add(card12);
         Card.Deck.add(card13);
-        Card.Deck.add(card8);
+        Card.Deck.add(card6);
         Card.Deck.add(card5);
 
-        Human player = new Human(card1, card7);
-        new HumanSection(card1, card7);
+        Human player = new Human(card14, card7);
+        new HumanSection(card14, card7);
 
         Bot bot2 = new Bot(2, card3, card4, BotType.Paranoid);
-        Bot bot3 = new Bot(3, card14, card6, BotType.Cautious_Assassin);
+        Bot bot3 = new Bot(3, card1, card8, BotType.Cautious_Assassin);
         Bot bot4 = new Bot(4, card15, card2, BotType.Coup_Lover);
 
         Vector<Bot> bots = new Vector<>();

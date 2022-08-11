@@ -87,11 +87,45 @@ public class Bot extends Thread {
                 section.controller = Controller.Is_Thinking;
                 Thread.sleep(2000);
                 section.controller = Controller.Neutral;
-//                        if (card1 == Card.Ambassador || card2 == Card.Ambassador) Action.challengeSequenceForExchange(getNum());
-//                        else
-                //    Action.income(num);
+                if (card1 == Card.Assassin || card2 == Card.Assassin) {
+                    if (coins > 2) {
+                        int rnd = new Random().nextInt(Game.players.size());
+                        if (Game.players.get(rnd).equals(getNum())) {
+                            if (rnd == 0) rnd = 1;
+                            else rnd = 0;
+                        }
+                        Action.blockSequenceForAssassinate(getNum(), Game.players.get(rnd));
+                    }
+                    else {
+                        section.controller = Controller.Income;
+                        Thread.sleep(2000);
+                        section.controller = Controller.Neutral;
+                        Action.income(getNum());
+                    }
+                }
+                else {
+                    if (card1 == Card.Ambassador || card2 == Card.Ambassador) Action.challengeSequenceForExchange(getNum());
+                    else {
+                        if (coins > 0) {
+                            if (card1 != null) {
+                                section.controller = Controller.Exchange_One_Card;
+                                Thread.sleep(2000);
+                                section.controller = Controller.Neutral;
+                                Action.exchangeOne(getNum(), 1);
+                            }
+                            else {
+                                section.controller = Controller.Exchange_One_Card;
+                                Thread.sleep(2000);
+                                section.controller = Controller.Neutral;
+                                Action.exchangeOne(getNum(), 2);
+                            }
+                        }
+                        else {
+                            Action.blockSequenceForForeignAid(getNum());
+                        }
+                    }
+                }
                 state = PlayerState.Neutral;
-                Action.blockSequenceForAssassinate(getNum(), 1);
             }
         }
     }

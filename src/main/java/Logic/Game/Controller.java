@@ -9,11 +9,15 @@ public enum Controller {
 
     Blocks,
 
+    Income,
+
     Foreign_Aid,
 
     Tax,
 
     Exchange_Cards,
+
+    Exchange_One_Card,
 
     Won_Challenge,
     Lost_Challenge,
