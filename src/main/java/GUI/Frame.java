@@ -10,6 +10,7 @@ public class Frame extends JFrame implements ActionListener {
     ImageIcon icon7 = new ImageIcon("coin.png");
     ImageIcon icon = new ImageIcon("bg.png");
     public static JLabel label = new JLabel();
+    public static JTextArea text = new JTextArea();
 
     public Frame() {
         this.setSize(1800, 1000);
@@ -40,7 +41,6 @@ public class Frame extends JFrame implements ActionListener {
     }
 
     public void initTextArea() {
-        JTextPane text = new JTextPane();
         text.setBounds(60, 495, 443, 430);
         text.setFont(new Font("Serif", Font.BOLD, 25));
         text.setBackground(Color.LIGHT_GRAY);
@@ -57,6 +57,14 @@ public class Frame extends JFrame implements ActionListener {
         title.setBounds(21, 375, 200, 200);
         title.setVisible(true);
         label.add(title);
+
+
+
+
+     //   text.append("Player " + 4 + ":      " + "Assassinate" + " \u2192" + " Player " + 4 + "\n");
+      //  text.append("------------------------------------------------" + "\n");
+      //  text.append("Player 4: Assassinate " + "\u2192" + " Player 3" + "\n");
+
     }
 
     public void initHumanSection() {

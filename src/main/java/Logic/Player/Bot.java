@@ -107,7 +107,7 @@ public class Bot extends Thread {
                 if (Human.coins > 1) list.add(1);
             }
             else {
-                if (Game.getBotByNum(n).coins > 1) list.add(Game.getBotByNum(n).getNum());
+                if (Game.getBotByNum(n).coins > 1 && n != num) list.add(Game.getBotByNum(n).getNum());
             }
         }
         return list;
@@ -120,7 +120,7 @@ public class Bot extends Thread {
                 if (Human.coins > 0) list.add(1);
             }
             else {
-                if (Game.getBotByNum(n).coins > 1) list.add(Game.getBotByNum(n).getNum());
+                if (Game.getBotByNum(n).coins > 1 && n != num) list.add(Game.getBotByNum(n).getNum());
             }
         }
         return list;
@@ -136,15 +136,13 @@ public class Bot extends Thread {
                         Vector<Integer> list = stealWithAtLeastTwoCoins();
                         if (list.size() != 0) {
                             Collections.shuffle(list);
-                            Action.steal(getNum(), list.get(0));
+                            Action.blockSequenceForSteal(getNum(), list.get(0));
                         }
                         else {
                             double random = Math.random();
                             if (random > 0.6) Action.blockSequenceForForeignAid(getNum());
                             else if (random < 0.6 && random > 0.3) Action.challengeSequenceForTax(getNum());
-                            else {
-                                incomeDecision();
-                            }
+                            else incomeDecision();
                         }
                     }
                     else {
@@ -190,7 +188,7 @@ public class Bot extends Thread {
                                    }
                                    if (list.size() != 0) {
                                        Collections.shuffle(list);
-                                       Action.steal(getNum(), list.get(0));
+                                       Action.blockSequenceForSteal(getNum(), list.get(0));
                                    }
                                    else {
                                        Action.blockSequenceForForeignAid(getNum());

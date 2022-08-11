@@ -12,6 +12,7 @@ public class Action {
     public static void income(int by) {
         if (by == 1) Human.updateCoins(1);
         else Game.getBotByNum(by).updateCoins(1);
+        Game.recordAction(by, "Income", 0);
         Game.changeTurn();
     }
 
@@ -57,6 +58,7 @@ public class Action {
             }
             Card.Deck.add(c);
         }
+        Game.recordAction(by, "Exchange a Card", 0);
         Game.changeTurn();
         //**************************************
         System.out.println(Card.Deck.toString());
@@ -220,6 +222,7 @@ public class Action {
                 }
             }
         }
+        Game.recordAction(by, "Coup", on);
         Game.changeTurn();
     }
 
@@ -321,8 +324,9 @@ public class Action {
     }
 
     public static void challengeSequenceForTax(int by) throws InterruptedException {
-        Integer challenge = Game.botChallenges(by);
+        Game.recordAction(by, "Tax", 0);
         if (by == 1) {
+            Integer challenge = Game.botChallenges(by);
             if (challenge == 0) {
                 Action.tax(1);
             }
@@ -353,6 +357,7 @@ public class Action {
             }
         }
         else if (!Game.players.contains(1)) {
+            Integer challenge = Game.botChallenges(by);
             Bot doer = Game.getBotByNum(by);
             doer.section.controller = Controller.Tax;
             if (challenge == 0) {
@@ -395,6 +400,7 @@ public class Action {
             if (Human.lastAction == ActionName.Do_Nothing) {
                 Human.lastAction = null;
                 HumanSection.enableNeutral();
+                Integer challenge = Game.botChallenges(by);
                 if (challenge == 0) {
                     Action.tax(by);
                     doer.section.controller = Controller.Neutral;
@@ -427,6 +433,7 @@ public class Action {
                 }
             }
             else {
+                Game.recordAction(1, "Challenge", by);
                 HumanSection.enableNeutral();
                 Human.lastAction = null;
                 if (doer.card1 == Card.Duke || doer.card2 == Card.Duke) {
@@ -454,6 +461,7 @@ public class Action {
     }
 
     public static void challengeSequenceForExchange(int by) throws InterruptedException {
+        Game.recordAction(by, "Exchange Cards", 0);
         Integer challenge = Game.botChallenges(by);
         if (by == 1) {
             if (challenge == 0) {
@@ -558,6 +566,7 @@ public class Action {
                 }
             }
             else {
+                Game.recordAction(1, "Challenge", by);
                 HumanSection.enableNeutral();
                 Human.lastAction = null;
                 if (doer.card1 == Card.Ambassador || doer.card2 == Card.Ambassador) {
@@ -660,6 +669,7 @@ public class Action {
                     }
                 }
             } else {
+                Game.recordAction(1, "Challenge", theBlocker);
                 HumanSection.enableNeutral();
                 blocker.section.controller = Controller.Neutral;
                 Human.lastAction = null;
@@ -806,6 +816,7 @@ public class Action {
                     }
                 }
             } else {
+                Game.recordAction(1, "Challenge", theBlocker);
                 HumanSection.enableNeutral();
                 blocker.section.controller = Controller.Neutral;
                 Human.lastAction = null;
@@ -962,6 +973,7 @@ public class Action {
                     }
                 }
             } else {
+                Game.recordAction(1, "Challenge", theBlocker);
                 HumanSection.enableNeutral();
                 blocker.section.controller = Controller.Neutral;
                 Human.lastAction = null;
@@ -1138,6 +1150,7 @@ public class Action {
                 }
             }
             else {
+                Game.recordAction(1, "Challenge", by);
                 HumanSection.enableNeutral();
                 Human.lastAction = null;
                 if (doer.card1 == Card.Assassin || doer.card2 == Card.Assassin) {
@@ -1273,6 +1286,7 @@ public class Action {
                 }
             }
             else {
+                Game.recordAction(1, "Challenge", by);
                 HumanSection.enableNeutral();
                 Human.lastAction = null;
                 if (doer.card1 == Card.Captain || doer.card2 == Card.Captain) {
@@ -1300,6 +1314,7 @@ public class Action {
     }
 
     public static void blockSequenceForForeignAid(int by) throws InterruptedException {
+        Game.recordAction(by, "Foreign Aid", 0);
         if (by != 1 && Game.players.contains(1)) {
             HumanSection.enableIsAskedToBlock(by);
             Game.getBotByNum(by).section.controller = Controller.Foreign_Aid;
@@ -1321,6 +1336,7 @@ public class Action {
                     challengeSequenceForForeignAidBlock(block, by);
                 }
             } else {
+                Game.recordAction(1, "Block", by);
                 Game.getBotByNum(by).section.controller = Controller.Neutral;
                 challengeSequenceForForeignAidBlock(1, by);
             }
@@ -1342,6 +1358,7 @@ public class Action {
     }
 
     public static void blockSequenceForSteal(int doer, int on) throws InterruptedException {
+        Game.recordAction(doer, "Steal", on);
         if (doer != 1) {
             Bot stealer = Game.getBotByNum(doer);
             switch (on) {
@@ -1366,6 +1383,7 @@ public class Action {
                     HumanSection.enableNeutral();
                     challengeSequenceForSteal(doer, 1);
                 } else {
+                    Game.recordAction(1, "Block", doer);
                     challengeSequenceForStealBlock(1, doer);
                 }
             }
@@ -1393,6 +1411,7 @@ public class Action {
     }
 
     public static void blockSequenceForAssassinate(int doer, int on) throws InterruptedException {
+        Game.recordAction(doer, "Assassinate", on);
         if (doer != 1) {
             Bot assassin = Game.getBotByNum(doer);
             switch (on) {
@@ -1417,6 +1436,7 @@ public class Action {
                     HumanSection.enableNeutral();
                     challengeSequenceForAssassinate(doer, 1);
                 } else {
+                    Game.recordAction(1, "Block", doer);
                     challengeSequenceForAssassinateBlock(1, doer);
                 }
             }

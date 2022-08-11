@@ -1,6 +1,7 @@
 package Logic.Game;
 
 import GUI.Card;
+import GUI.Frame;
 import GUI.HumanSection;
 import Logic.Player.Bot;
 import Logic.Player.BotType;
@@ -150,6 +151,7 @@ public class Game extends Thread{
             Collections.shuffle(list);
             if (list.size() != 0) x = list.get(0);
         }
+        if (x != 0) Game.recordAction(x, "Challenge", who);
         return x;
     }
 
@@ -230,6 +232,7 @@ public class Game extends Thread{
                         }
                         break;
                 }
+                if (x != 0) Game.recordAction(x, "Block", who);
                 return x;
         }
 
@@ -242,6 +245,12 @@ public class Game extends Thread{
             }
         }
         return bot;
+    }
+
+    public static void recordAction(int by, String action, int on) {
+        if (on == 0) Frame.text.append("Player " + by + ":      " + action + "\n");
+        else Frame.text.append("Player " + by + ":      " + action + " \u2192" + " Player " + on + "\n");
+        Frame.text.append("------------------------------------------------" + "\n");
     }
 
     @Override
