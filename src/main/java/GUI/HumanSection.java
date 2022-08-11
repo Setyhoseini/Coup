@@ -81,7 +81,7 @@ public class HumanSection implements ActionListener {
     public static void enableIsToPlay() {
         disableAll();
         for (Bot b : Game.bots) {
-            if (Game.players.contains(b.getNum()) && b.coins >= 0) {
+            if (Game.players.contains(b.getNum()) && b.coins > 0) {
                 b.section.disableAll();
                 b.section.steal.setEnabled(true);
             }

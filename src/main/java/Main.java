@@ -26,7 +26,7 @@ public class Main {
         Human player = new Human(card14, card7);
         new HumanSection(card14, card7);
 
-        Bot bot2 = new Bot(2, card3, card4, BotType.Paranoid);
+        Bot bot2 = new Bot(2, card3, card4, BotType.Nerd);
         Bot bot3 = new Bot(3, card1, card8, BotType.Cautious_Assassin);
         Bot bot4 = new Bot(4, card15, card2, BotType.Coup_Lover);
 

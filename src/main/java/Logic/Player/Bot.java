@@ -82,6 +82,7 @@ public class Bot extends Thread {
         section.controller = Controller.Income;
         Thread.sleep(2000);
         section.controller = Controller.Neutral;
+        section.controller = Controller.Neutral;
         Action.income(getNum());
     }
 
@@ -90,11 +91,13 @@ public class Bot extends Thread {
             section.controller = Controller.Exchange_One_Card;
             Thread.sleep(2000);
             section.controller = Controller.Neutral;
+            section.controller = Controller.Neutral;
             Action.exchangeOne(getNum(), 1);
         }
         else {
             section.controller = Controller.Exchange_One_Card;
             Thread.sleep(2000);
+            section.controller = Controller.Neutral;
             section.controller = Controller.Neutral;
             Action.exchangeOne(getNum(), 2);
         }
@@ -131,6 +134,7 @@ public class Bot extends Thread {
             if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
                     section.controller = Controller.Is_Thinking;
                     Thread.sleep(2000);
+                    section.controller = Controller.Neutral;
                     section.controller = Controller.Neutral;
                     if (card1 == Card.Captain || card2 == Card.Captain) {
                         Vector<Integer> list = stealWithAtLeastTwoCoins();
@@ -208,6 +212,7 @@ public class Bot extends Thread {
                 section.controller = Controller.Is_Thinking;
                 Thread.sleep(2000);
                 section.controller = Controller.Neutral;
+                section.controller = Controller.Neutral;
                 if (card1 == Card.Assassin || card2 == Card.Assassin) {
                     if (coins > 2) {
                         assassinateDecision();
@@ -243,7 +248,7 @@ public class Bot extends Thread {
                 section.controller = Controller.Is_Thinking;
                 Thread.sleep(2000);
                 section.controller = Controller.Neutral;
-                state = PlayerState.Neutral;
+                section.controller = Controller.Neutral;
                     if (coins < 7) {
                         Action.challengeSequenceForTax(getNum());
                     }
@@ -271,6 +276,7 @@ public class Bot extends Thread {
                         section.controller = Controller.Neutral;
                         Action.coup(getNum(), Game.players.get(rnd));
                     }
+                    state = PlayerState.Neutral;
             }
         }
     }
@@ -280,6 +286,8 @@ public class Bot extends Thread {
             if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
                 section.controller = Controller.Is_Thinking;
                 Thread.sleep(2000);
+                section.controller = Controller.Neutral;
+                section.controller = Controller.Neutral;
                 if ((card1 == Card.Assassin && card2 == Card.Captain) || (card2 == Card.Assassin && card1 == Card.Captain)) {
                     if (coins > 4) {
                         if (Math.random() > 0.45) assassinateDecision();
@@ -421,6 +429,7 @@ public class Bot extends Thread {
                         (card2 == Card.Duke && card1 == null)) {
                     Action.challengeSequenceForTax(getNum());
                 }
+                state = PlayerState.Neutral;
             }
         }
     }
