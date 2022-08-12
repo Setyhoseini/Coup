@@ -35,11 +35,13 @@ public class Game extends Thread{
             int handle = turn.get();
             if (turn.get() == 1) {
                 Human.state = PlayerState.Neutral;
+                HumanSection.changeTitleStateToNeutral();
             }
             else {
                 for (Bot b : bots) {
                     if (turn.get() == b.getNum()) {
                         b.state = PlayerState.Neutral;
+                        b.section.changeTitleStateToNeutral();
                         break;
                     }
                 }
@@ -61,11 +63,13 @@ public class Game extends Thread{
                     }
                     else HumanSection.enableIsToPlay();
                     Human.state = PlayerState.IsToPlay;
+                    HumanSection.changeTitleStateToPlay();
                 }
                 else {
                     for (Bot b : bots) {
                         if (Objects.equals(b.getNum(), turn.get())) {
                             b.state = PlayerState.IsToPlay;
+                            b.section.changeTitleStateToPlay();
                             break;
                         }
                     }
@@ -80,11 +84,13 @@ public class Game extends Thread{
                     }
                     else HumanSection.enableIsToPlay();
                     Human.state = PlayerState.IsToPlay;
+                    HumanSection.changeTitleStateToPlay();
                 }
                 else {
                     for (Bot b : bots) {
                         if (Objects.equals(b.getNum(), players.get(newTurn))) {
                             b.state = PlayerState.IsToPlay;
+                            b.section.changeTitleStateToPlay();
                             break;
                         }
                     }
@@ -104,11 +110,13 @@ public class Game extends Thread{
                     }
                     else HumanSection.enableIsToPlay();
                     Human.state = PlayerState.IsToPlay;
+                    HumanSection.changeTitleStateToPlay();
                 }
                 else {
                     for (Bot b : bots) {
                         if (Objects.equals(b.getNum(), turn.get())) {
                             b.state = PlayerState.IsToPlay;
+                            b.section.changeTitleStateToPlay();
                             break;
                         }
                     }

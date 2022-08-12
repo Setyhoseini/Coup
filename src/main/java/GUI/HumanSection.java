@@ -11,8 +11,11 @@ import java.awt.event.ActionListener;
 import java.util.Collections;
 
 public class HumanSection implements ActionListener {
+    static ImageIcon titleIcon = new ImageIcon("player1.png");
+    static ImageIcon toPlay = new ImageIcon("player1ToPlay.png");
     static JLabel card1 = new JLabel();
     static JLabel card2 = new JLabel();
+    static JLabel title = new JLabel();
     static JLabel num = new JLabel("" + Human.coins);
     static JButton income;
     static JButton aid;
@@ -35,6 +38,17 @@ public class HumanSection implements ActionListener {
         initReactToChallengeButton();
         initDoNothingButton();
         initExchangeButtons();
+        title.setIcon(toPlay);
+        title.setBounds(460, 375, 200, 70);
+        Frame.sectionOfHuman.add(title);
+    }
+
+    public static void changeTitleStateToNeutral() {
+        title.setIcon(titleIcon);
+    }
+
+    public static void changeTitleStateToPlay() {
+        title.setIcon(toPlay);
     }
 
     public static void disableAll() {

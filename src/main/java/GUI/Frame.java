@@ -13,6 +13,11 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 public class Frame extends JFrame implements ActionListener {
+    public static JLabel sectionOfHuman = new JLabel();
+    public static JLabel section2 = new JLabel();
+    public static JLabel section3 = new JLabel();
+    public static JLabel section4 = new JLabel();
+
     ImageIcon icon2 = new ImageIcon("sum.png");
     ImageIcon icon3 = new ImageIcon("test2.png");
     ImageIcon icon7 = new ImageIcon("coin.png");
@@ -160,11 +165,10 @@ public class Frame extends JFrame implements ActionListener {
         coin2.setBounds(585, 390, 60, 60);
         coin2.setVisible(true);
         label.add(coin2);
-        JLabel section = new JLabel();
-        section.setIcon(icon3);
-        section.setBounds(570, 35, 570, 430);
-        section.setVisible(true);
-        label.add(section);
+        sectionOfHuman.setIcon(icon3);
+        sectionOfHuman.setBounds(570, 35, 570, 430);
+        sectionOfHuman.setVisible(true);
+        label.add(sectionOfHuman);
     }
 
     public void initPlayerTwoSection() {
@@ -173,7 +177,6 @@ public class Frame extends JFrame implements ActionListener {
         coin3.setBounds(1185, 390, 60, 60);
         coin3.setVisible(true);
         label.add(coin3);
-        JLabel section2 = new JLabel();
         section2.setIcon(icon3);
         section2.setBounds(1170, 35, 570, 430);
         section2.setVisible(true);
@@ -186,7 +189,6 @@ public class Frame extends JFrame implements ActionListener {
         coin4.setBounds(1185, 850, 60, 60);
         coin4.setVisible(true);
         label.add(coin4);
-        JLabel section3 = new JLabel();
         section3.setIcon(icon3);
         section3.setBounds(1170, 495, 570, 430);
         section3.setVisible(true);
@@ -199,7 +201,6 @@ public class Frame extends JFrame implements ActionListener {
         coin.setBounds(585, 850, 60, 60);
         coin.setVisible(true);
         label.add(coin);
-        JLabel section4 = new JLabel();
         section4.setIcon(icon3);
         section4.setBounds(570, 495, 570, 430);
         section4.setVisible(true);
@@ -299,6 +300,8 @@ public class Frame extends JFrame implements ActionListener {
         }
 
         if (actionEvent.getSource() == confirm) {
+            repaint();
+            revalidate();
             Vector<Card> cards = Loader.cards();
             for (Card c : cards) {
                 Card.Deck.remove(c);

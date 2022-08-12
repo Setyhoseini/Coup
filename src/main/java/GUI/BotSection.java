@@ -19,6 +19,15 @@ public class BotSection extends Thread implements ActionListener {
     public Controller controller = Controller.Neutral;
     public AtomicBoolean running = new AtomicBoolean(true);
 
+    public JLabel title = new JLabel();
+    public static ImageIcon titleIcon2 = new ImageIcon("player2.png");
+    public static ImageIcon titleIcon3 = new ImageIcon("player3.png");
+    public static ImageIcon titleIcon4 = new ImageIcon("player4.png");
+
+    public static ImageIcon toPlay2 = new ImageIcon("player2ToPlay.png");
+    public static ImageIcon toPlay3 = new ImageIcon("player3ToPlay.png");
+    public static ImageIcon toPlay4 = new ImageIcon("player4ToPlay.png");
+
     Bot bot;
     JLabel card1 = new JLabel();
     JLabel card2 = new JLabel();
@@ -104,6 +113,51 @@ public class BotSection extends Thread implements ActionListener {
         initBlockButton(bot.getNum());
         initStateLabels(bot.getNum());
         bot.setSection(this);
+        switch (bot.getNum()) {
+            case 2:
+                title.setIcon(titleIcon2);
+                title.setBounds(1628, 343, 200, 200);
+                Frame.label.add(title);
+                break;
+            case 3:
+                title.setIcon(titleIcon3);
+                title.setBounds(1628, 803, 200, 200);
+                Frame.label.add(title);
+                break;
+            case 4:
+                title.setIcon(titleIcon4);
+                title.setBounds(1028, 803, 200, 200);
+                Frame.label.add(title);
+                break;
+        }
+    }
+
+    public void changeTitleStateToNeutral() {
+        switch (bot.getNum()) {
+            case 2:
+              title.setIcon(titleIcon2);
+              break;
+            case 3:
+                title.setIcon(titleIcon3);
+                break;
+            case 4:
+                title.setIcon(titleIcon4);
+                break;
+        }
+    }
+
+    public void changeTitleStateToPlay() {
+        switch (bot.getNum()) {
+            case 2:
+                title.setIcon(toPlay2);
+                break;
+            case 3:
+                title.setIcon(toPlay3);
+                break;
+            case 4:
+                title.setIcon(toPlay4);
+                break;
+        }
     }
 
     public void initStateLabels(int id) {
