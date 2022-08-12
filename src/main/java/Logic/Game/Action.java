@@ -738,7 +738,6 @@ public class Action {
             Bot blocker = Game.getBotByNum(theBlocker);
             blocker.section.controller.set(Controller.Neutral);
             Integer challenge2 = Game.botChallenges(theBlocker);
-
             if (challenge2 == 0) {
                 pause(2);
                 Game.changeTurn();
@@ -898,7 +897,6 @@ public class Action {
         else {
             Bot blocker = Game.getBotByNum(theBlocker);
             blocker.section.controller.set(Controller.Blocks);
-        //    blocker.section.controller = Controller.Neutral;
             pause(3);
             Integer challenge2 = Game.botChallenges(theBlocker);
             if (challenge2 == 0) {
@@ -1100,8 +1098,8 @@ public class Action {
     }
 
     public static void challengeSequenceForAssassinate(int by, int on) throws InterruptedException {
-        Integer challenge = Game.botChallenges(by);
         if (by == 1) {
+            Integer challenge = Game.botChallenges(by);
             if (challenge == 0) {
                 pause(2);
                 Action.assassinate(1, on);
@@ -1133,6 +1131,7 @@ public class Action {
             }
         }
         else if (!Game.players.contains(1)) {
+            Integer challenge = Game.botChallenges(by);
             Bot doer = Game.getBotByNum(by);
             if (challenge == 0) {
                 pause(2);
@@ -1171,6 +1170,7 @@ public class Action {
             HumanSection.enableIsAskedToChallenge(by);
             Human.waitForResponse();
             if (Human.lastAction == ActionName.Do_Nothing) {
+                Integer challenge = Game.botChallenges(by);
                 Human.lastAction = null;
                 HumanSection.enableNeutral();
                 if (challenge == 0) {
@@ -1237,8 +1237,8 @@ public class Action {
     }
 
     public static void challengeSequenceForSteal(int by, int on) throws InterruptedException {
-        Integer challenge = Game.botChallenges(by);
         if (by == 1) {
+            Integer challenge = Game.botChallenges(by);
             if (challenge == 0) {
                 pause(2);
                 Action.steal(1, on);
@@ -1270,6 +1270,7 @@ public class Action {
             }
         }
         else if (!Game.players.contains(1)) {
+            Integer challenge = Game.botChallenges(by);
             Bot doer = Game.getBotByNum(by);
             if (challenge == 0) {
                 pause(2);
@@ -1307,6 +1308,7 @@ public class Action {
             HumanSection.enableIsAskedToChallenge(by);
             Human.waitForResponse();
             if (Human.lastAction == ActionName.Do_Nothing) {
+                Integer challenge = Game.botChallenges(by);
                 Human.lastAction = null;
                 HumanSection.enableNeutral();
                 if (challenge == 0) {
