@@ -1,5 +1,6 @@
 package GUI;
 import Logic.Game.Game;
+import Logic.Game.Loader;
 import Logic.Player.Bot;
 import Logic.Player.BotType;
 import Logic.Player.Human;
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.Vector;
 
 public class Frame extends JFrame implements ActionListener {
@@ -296,38 +298,21 @@ public class Frame extends JFrame implements ActionListener {
             }
         }
 
-
-
-
         if (actionEvent.getSource() == confirm) {
+            Vector<Card> cards = Loader.cards();
+            for (Card c : cards) {
+                Card.Deck.remove(c);
+            }
 
+            Human player = new Human(cards.get(0), cards.get(1));
+            new HumanSection(cards.get(0), cards.get(1));
 
+            Loader.saveTypes(player2Type, player3Type, player4Type);
+            Vector<BotType> types = Loader.types();
 
-
-            this.repaint();
-            this.revalidate();
-
-
-            Card card1 = Card.Duke;         Card card2 = Card.Duke;         Card card3 = Card.Duke;
-            Card card4 = Card.Ambassador;   Card card5 = Card.Ambassador;   Card card6 = Card.Ambassador;
-            Card card7 = Card.Contessa;     Card card8 = Card.Contessa;     Card card9 = Card.Contessa;
-            Card card10 = Card.Captain;     Card card11 = Card.Captain;     Card card12 = Card.Captain;
-            Card card13 = Card.Assassin;    Card card14 = Card.Assassin;    Card card15 = Card.Assassin;
-
-            Card.Deck.add(card9);
-            Card.Deck.add(card10);
-            Card.Deck.add(card11);
-            Card.Deck.add(card12);
-            Card.Deck.add(card13);
-            Card.Deck.add(card6);
-            Card.Deck.add(card5);
-
-            Human player = new Human(card14, card7);
-            new HumanSection(card14, card7);
-
-            Bot bot2 = new Bot(2, card3, card4, player2Type);
-            Bot bot3 = new Bot(3, card1, card8, player3Type);
-            Bot bot4 = new Bot(4, card15, card2, player4Type);
+            Bot bot2 = new Bot(2, cards.get(2), cards.get(3), types.get(0));
+            Bot bot3 = new Bot(3, cards.get(4), cards.get(5), types.get(1));
+            Bot bot4 = new Bot(4, cards.get(6), cards.get(7), types.get(2));
 
             Vector<Bot> bots = new Vector<>();
             bots.add(bot2);
@@ -349,7 +334,6 @@ public class Frame extends JFrame implements ActionListener {
             section3.start();
             section4.start();
 
-
             game.start();
 
             initTextArea();
@@ -358,8 +342,6 @@ public class Frame extends JFrame implements ActionListener {
             initPlayerTwoSection();
             initPlayerThreeSection();
             initPlayerFourSection();
-
-
 
             label.setVisible(true);
             label1.setVisible(false);

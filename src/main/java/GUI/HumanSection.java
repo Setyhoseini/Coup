@@ -281,6 +281,7 @@ public class HumanSection implements ActionListener {
         Human.card1 = card;
         card1.setIcon(card.getImage());
     }
+
     public static void setCard2(Card card) {
         Human.card2 = card;
         card2.setIcon(card.getImage());

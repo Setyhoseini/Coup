@@ -32,7 +32,6 @@ public class Game extends Thread{
     }
 
     public static void changeTurn() {
-       // if (gameIsGoing.get()) {
             int handle = turn.get();
             if (turn.get() == 1) {
                 Human.state = PlayerState.Neutral;

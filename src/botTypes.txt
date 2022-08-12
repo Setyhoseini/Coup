@@ -1,0 +1,5 @@
+[
+  "Paranoid",
+  "Cautious_Assassin",
+  "Coup_Lover"
+]

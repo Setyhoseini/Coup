@@ -1,0 +1,10 @@
+[
+  "Duke",
+  "Ambassador",
+  "Assassin",
+  "Assassin",
+  "Duke",
+  "Duke",
+  "Assassin",
+  "Contessa"
+]
