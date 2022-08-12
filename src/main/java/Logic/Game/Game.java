@@ -3,6 +3,7 @@ package Logic.Game;
 import GUI.Card;
 import GUI.Frame;
 import GUI.HumanSection;
+import GUI.WinnerWindow;
 import Logic.Player.Bot;
 import Logic.Player.BotType;
 import Logic.Player.Human;
@@ -32,20 +33,19 @@ public class Game extends Thread{
     }
 
     public static void changeTurn() {
+        for (Bot b : bots) {
+            b.section.controller = Controller.Neutral;
+        }
             int handle = turn.get();
-            if (turn.get() == 1) {
+
                 Human.state = PlayerState.Neutral;
                 HumanSection.changeTitleStateToNeutral();
-            }
-            else {
+
                 for (Bot b : bots) {
-                    if (turn.get() == b.getNum()) {
-                        b.state = PlayerState.Neutral;
-                        b.section.changeTitleStateToNeutral();
-                        break;
-                    }
+                    b.state.set(PlayerState.Neutral);
+                    b.section.changeTitleStateToNeutral();
                 }
-            }
+
             if (!players.contains(turn.get())) {
                 int temp = turn.get();
                 for (int n : players) {
@@ -68,7 +68,7 @@ public class Game extends Thread{
                 else {
                     for (Bot b : bots) {
                         if (Objects.equals(b.getNum(), turn.get())) {
-                            b.state = PlayerState.IsToPlay;
+                            b.state.set(PlayerState.IsToPlay);
                             b.section.changeTitleStateToPlay();
                             break;
                         }
@@ -89,7 +89,7 @@ public class Game extends Thread{
                 else {
                     for (Bot b : bots) {
                         if (Objects.equals(b.getNum(), players.get(newTurn))) {
-                            b.state = PlayerState.IsToPlay;
+                            b.state.set(PlayerState.IsToPlay);
                             b.section.changeTitleStateToPlay();
                             break;
                         }
@@ -115,7 +115,7 @@ public class Game extends Thread{
                 else {
                     for (Bot b : bots) {
                         if (Objects.equals(b.getNum(), turn.get())) {
-                            b.state = PlayerState.IsToPlay;
+                            b.state.set(PlayerState.IsToPlay);
                             b.section.changeTitleStateToPlay();
                             break;
                         }
@@ -263,10 +263,27 @@ public class Game extends Thread{
     @Override
     public void run() {
          while (gameIsGoing.get()) {
-             // if (players.size == 1) --> todo
              if (players.size() == 1) {
+                 HumanSection.enableNeutral();
                  gameIsGoing.set(false);
-                 for (Bot b : bots) b.state = PlayerState.Neutral;
+                 for (Bot b : bots) b.state.set(PlayerState.Neutral);
+                 if (players.get(0) == 1) new WinnerWindow("human");
+                 else {
+                     switch (Game.getBotByNum(players.get(0)).getRole()) {
+                         case Nerd:
+                             new WinnerWindow("nerd");
+                             break;
+                         case Paranoid:
+                             new WinnerWindow("paranoid");
+                             break;
+                         case Coup_Lover:
+                             new WinnerWindow("coup_lover");
+                             break;
+                         case Cautious_Assassin:
+                             new WinnerWindow("cautious_assassin");
+                             break;
+                     }
+                 }
              }
          }
     }

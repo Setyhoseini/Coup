@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Bot extends Thread {
     public BotSection section;
@@ -18,7 +19,7 @@ public class Bot extends Thread {
     public int coins;
     public Card card1;
     public Card card2;
-    public PlayerState state;
+    public AtomicReference<PlayerState> state = new AtomicReference<>();
     public static AtomicBoolean paranoidChallenge = new AtomicBoolean(false);
     public static AtomicBoolean paranoidIsPlaying = new AtomicBoolean(false);
 
@@ -28,7 +29,7 @@ public class Bot extends Thread {
         this.card2 = card2;
         this.role = role;
         this.coins = 2;
-        this.state = PlayerState.Neutral;
+        this.state.set(PlayerState.Neutral);
         if (role == BotType.Paranoid) paranoidIsPlaying.set(true);
     }
 
@@ -135,7 +136,7 @@ public class Bot extends Thread {
                 if (Human.coins > 1) list.add(1);
             }
             else {
-                if (Game.getBotByNum(n).coins > 1 && n != num) list.add(Game.getBotByNum(n).getNum());
+                if (Game.getBotByNum(n).coins > 1 && n != getNum()) list.add(Game.getBotByNum(n).getNum());
             }
         }
         Collections.shuffle(list);
@@ -149,7 +150,7 @@ public class Bot extends Thread {
                 if (Human.coins > 0) list.add(1);
             }
             else {
-                if (Game.getBotByNum(n).coins > 1 && n != num) list.add(Game.getBotByNum(n).getNum());
+                if (Game.getBotByNum(n).coins > 1 && n != getNum()) list.add(Game.getBotByNum(n).getNum());
             }
         }
         Collections.shuffle(list);
@@ -158,12 +159,12 @@ public class Bot extends Thread {
 
     public void playParanoid() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
-            if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
+            if (state.get() == PlayerState.IsToPlay && Game.players.size() != 1) {
                     section.controller = Controller.Is_Thinking;
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                     section.controller = Controller.Neutral;
                     section.controller = Controller.Neutral;
-                    state = PlayerState.Neutral;
+                    state.set(PlayerState.Neutral);
                     if (coins >= 10) {
                         coupDecision();
                     }
@@ -234,19 +235,19 @@ public class Bot extends Thread {
                             }
                         }
                     }
-                    state = PlayerState.Neutral;
+                    state.set(PlayerState.Neutral);
             }
         }
     }
 
     public void playCautiousAssassin() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
-            if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
+            if (state.get() == PlayerState.IsToPlay && Game.players.size() != 1) {
                 section.controller = Controller.Is_Thinking;
-                Thread.sleep(2000);
+                Thread.sleep(3000);
                 section.controller = Controller.Neutral;
                 section.controller = Controller.Neutral;
-                state = PlayerState.Neutral;
+                state.set(PlayerState.Neutral);
                 if (coins >= 10) {
                     coupDecision();
                 }
@@ -276,38 +277,38 @@ public class Bot extends Thread {
                         }
                     }
                 }
-                state = PlayerState.Neutral;
+                state.set(PlayerState.Neutral);
             }
         }
     }
 
     public void playCoupLover() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
-            if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
+            if (state.get() == PlayerState.IsToPlay && Game.players.size() != 1) {
                 section.controller = Controller.Is_Thinking;
-                Thread.sleep(2000);
+                Thread.sleep(3000);
                 section.controller = Controller.Neutral;
                 section.controller = Controller.Neutral;
-                state = PlayerState.Neutral;
+                state.set(PlayerState.Neutral);
                     if (coins < 7) {
                         Action.challengeSequenceForTax(getNum());
                     }
                     else {
                         coupDecision();
                     }
-                    state = PlayerState.Neutral;
+                    state.set(PlayerState.Neutral);
             }
         }
     }
 
     public void playNerd() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
-            if (state == PlayerState.IsToPlay && Game.players.size() != 1) {
+            if (state.get() == PlayerState.IsToPlay && Game.players.size() != 1) {
                 section.controller = Controller.Is_Thinking;
-                Thread.sleep(2000);
+                Thread.sleep(3000);
                 section.controller = Controller.Neutral;
                 section.controller = Controller.Neutral;
-                state = PlayerState.Neutral;
+                state.set(PlayerState.Neutral);
                 if (coins >= 10) {
                     coupDecision();
                 }
@@ -327,7 +328,7 @@ public class Bot extends Thread {
                             else Action.blockSequenceForSteal(getNum(), list.get(0));
                         }
                     }
-                    if ((card1 == Card.Assassin && card2 == Card.Contessa) || (card2 == Card.Assassin && card1 == Card.Contessa)) {
+                    else if ((card1 == Card.Assassin && card2 == Card.Contessa) || (card2 == Card.Assassin && card1 == Card.Contessa)) {
                         if (coins < 4) {
                             if (coins > 0) exchangeOneDecision();
                             else incomeDecision();
@@ -337,7 +338,7 @@ public class Bot extends Thread {
                             else Action.blockSequenceForForeignAid(getNum());
                         }
                     }
-                    if ((card1 == Card.Assassin && card2 == Card.Ambassador) || (card2 == Card.Assassin && card1 == Card.Ambassador)) {
+                   else if ((card1 == Card.Assassin && card2 == Card.Ambassador) || (card2 == Card.Assassin && card1 == Card.Ambassador)) {
                         if (Game.players.size() == 2) {
                             if (coins > 2) assassinateDecision();
                             else Action.challengeSequenceForExchange(getNum());
@@ -347,7 +348,7 @@ public class Bot extends Thread {
                             else Action.challengeSequenceForTax(getNum());
                         }
                     }
-                    if ((card1 == Card.Assassin && card2 == Card.Duke) || (card2 == Card.Assassin && card1 == Card.Duke)) {
+                   else if ((card1 == Card.Assassin && card2 == Card.Duke) || (card2 == Card.Assassin && card1 == Card.Duke)) {
                         if (Game.players.size() == 2) {
                             if (coins > 2) assassinateDecision();
                             else Action.challengeSequenceForTax(getNum());
@@ -371,7 +372,7 @@ public class Bot extends Thread {
                             else incomeDecision();
                         }
                     }
-                    if ((card1 == Card.Contessa && card2 == Card.Captain) || (card2 == Card.Contessa && card1 == Card.Captain)) {
+                   else if ((card1 == Card.Contessa && card2 == Card.Captain) || (card2 == Card.Contessa && card1 == Card.Captain)) {
                         if (coins > 3) Action.blockSequenceForForeignAid(getNum());
                         else {
                             Vector<Integer> list = stealWithAtLeastTwoCoins();
@@ -386,7 +387,7 @@ public class Bot extends Thread {
                             else Action.blockSequenceForSteal(getNum(), list.get(0));
                         }
                     }
-                    if ((card1 == Card.Ambassador && card2 == Card.Captain) || (card2 == Card.Ambassador && card1 == Card.Captain)) {
+                   else if ((card1 == Card.Ambassador && card2 == Card.Captain) || (card2 == Card.Ambassador && card1 == Card.Captain)) {
                         Vector<Integer> list = stealWithAtLeastTwoCoins();
                         if (list.size() == 0) {
                             list = stealWithAtLeastOneCoin();
@@ -395,35 +396,35 @@ public class Bot extends Thread {
                         }
                         else Action.blockSequenceForSteal(getNum(), list.get(0));
                     }
-                    if ((card1 == Card.Duke && card2 == Card.Captain) || (card2 == Card.Duke && card1 == Card.Captain)) {
+                   else if ((card1 == Card.Duke && card2 == Card.Captain) || (card2 == Card.Duke && card1 == Card.Captain)) {
                         if (Math.random() > 0.1) Action.challengeSequenceForTax(getNum());
                         else incomeDecision();
                     }
-                    if ((card1 == Card.Ambassador && card2 == Card.Contessa) || (card2 == Card.Ambassador && card1 == Card.Contessa)) {
+                   else if ((card1 == Card.Ambassador && card2 == Card.Contessa) || (card2 == Card.Ambassador && card1 == Card.Contessa)) {
                         Action.challengeSequenceForExchange(getNum());
                     }
-                    if ((card1 == Card.Duke && card2 == Card.Contessa) || (card2 == Card.Duke && card1 == Card.Contessa)) {
+                   else if ((card1 == Card.Duke && card2 == Card.Contessa) || (card2 == Card.Duke && card1 == Card.Contessa)) {
                         if (Math.random() > 0.3) Action.challengeSequenceForTax(getNum());
                         else {
                             if (coins > 2) assassinateDecision();
                             else Action.challengeSequenceForTax(getNum());
                         }
                     }
-                    if ((card1 == Card.Ambassador && card2 == Card.Duke) || (card2 == Card.Ambassador && card1 == Card.Duke)) {
+                   else if ((card1 == Card.Ambassador && card2 == Card.Duke) || (card2 == Card.Ambassador && card1 == Card.Duke)) {
                         double random = Math.random();
                         if (random > 0.4) Action.blockSequenceForForeignAid(getNum());
                         else if (random < 0.4 && random > 0.2) Action.challengeSequenceForTax(getNum());
                         else if (coins > 0) exchangeOneDecision();
                         else incomeDecision();
                     }
-                    if ((card1 == Card.Assassin && card2 == null) ||
+                   else if ((card1 == Card.Assassin && card2 == null) ||
                             (card1 == Card.Assassin && card2 == Card.Assassin) ||
                             (card2 == Card.Assassin && card1 == null)) {
                         if (coins > 2) assassinateDecision();
                         else if (Math.random() > 0.5) Action.blockSequenceForForeignAid(getNum());
                         else Action.challengeSequenceForTax(getNum());
                     }
-                    if ((card1 == Card.Captain && card2 == null) ||
+                   else if ((card1 == Card.Captain && card2 == null) ||
                             (card1 == Card.Captain && card2 == Card.Captain) ||
                             (card2 == Card.Captain && card1 == null)) {
                         Vector<Integer> list = stealWithAtLeastTwoCoins();
@@ -435,7 +436,7 @@ public class Bot extends Thread {
                         }
                         else Action.blockSequenceForSteal(getNum(), list.get(0));
                     }
-                    if ((card1 == Card.Contessa && card2 == null) ||
+                   else if ((card1 == Card.Contessa && card2 == null) ||
                             (card1 == Card.Contessa && card2 == Card.Contessa) ||
                             (card2 == Card.Contessa && card1 == null)) {
                         double random = Math.random();
@@ -443,18 +444,21 @@ public class Bot extends Thread {
                         else if (random < 0.5 && random > 0.25) Action.blockSequenceForForeignAid(getNum());
                         else incomeDecision();
                     }
-                    if ((card1 == Card.Ambassador && card2 == null) ||
+                   else if ((card1 == Card.Ambassador && card2 == null) ||
                             (card1 == Card.Ambassador && card2 == Card.Ambassador) ||
                             (card2 == Card.Ambassador && card1 == null)) {
                         Action.challengeSequenceForExchange(getNum());
                     }
-                    if ((card1 == Card.Duke && card2 == null) ||
+                    else if ((card1 == Card.Duke && card2 == null) ||
                             (card1 == Card.Duke && card2 == Card.Duke) ||
                             (card2 == Card.Duke && card1 == null)) {
                         Action.challengeSequenceForTax(getNum());
                     }
+                    else {
+                        incomeDecision();
+                    }
                 }
-                state = PlayerState.Neutral;
+                state.set(PlayerState.Neutral);
             }
         }
     }

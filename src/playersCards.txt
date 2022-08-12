@@ -5,6 +5,6 @@
   "Assassin",
   "Duke",
   "Duke",
-  "Assassin",
-  "Contessa"
+  "Ambassador",
+  "Ambassador"
 ]
