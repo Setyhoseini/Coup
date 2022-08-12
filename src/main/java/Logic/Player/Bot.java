@@ -163,7 +163,7 @@ public class Bot extends Thread {
                     Thread.sleep(2000);
                     section.controller = Controller.Neutral;
                     section.controller = Controller.Neutral;
-
+                    state = PlayerState.Neutral;
                     if (coins >= 10) {
                         coupDecision();
                     }
@@ -246,7 +246,7 @@ public class Bot extends Thread {
                 Thread.sleep(2000);
                 section.controller = Controller.Neutral;
                 section.controller = Controller.Neutral;
-
+                state = PlayerState.Neutral;
                 if (coins >= 10) {
                     coupDecision();
                 }
@@ -288,6 +288,7 @@ public class Bot extends Thread {
                 Thread.sleep(2000);
                 section.controller = Controller.Neutral;
                 section.controller = Controller.Neutral;
+                state = PlayerState.Neutral;
                     if (coins < 7) {
                         Action.challengeSequenceForTax(getNum());
                     }
@@ -306,7 +307,7 @@ public class Bot extends Thread {
                 Thread.sleep(2000);
                 section.controller = Controller.Neutral;
                 section.controller = Controller.Neutral;
-
+                state = PlayerState.Neutral;
                 if (coins >= 10) {
                     coupDecision();
                 }
