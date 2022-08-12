@@ -192,11 +192,13 @@ public class Action {
                         Card card1 = doer.card1;
                         doer.card1 = deck1;
                         Card.Deck.add(card1);
+                        Card.Deck.remove(Card.Assassin);
                     }
                     else {
                         Card card2 = doer.card2;
                         doer.card2 = deck1;
                         Card.Deck.add(card2);
+                        Card.Deck.remove(Card.Assassin);
                     }
                 }
                 else if (deck2 == Card.Assassin){
@@ -204,11 +206,13 @@ public class Action {
                         Card card1 = doer.card1;
                         doer.card1 = deck2;
                         Card.Deck.add(card1);
+                        Card.Deck.remove(Card.Assassin);
                     }
                     else {
                         Card card2 = doer.card2;
                         doer.card2 = deck2;
                         Card.Deck.add(card2);
+                        Card.Deck.remove(Card.Assassin);
                     }
                 }
             }
