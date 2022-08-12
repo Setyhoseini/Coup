@@ -3,8 +3,8 @@
   "Ambassador",
   "Assassin",
   "Assassin",
+  "Contessa",
   "Duke",
-  "Duke",
-  "Ambassador",
+  "Contessa",
   "Ambassador"
 ]

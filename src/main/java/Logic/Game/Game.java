@@ -122,6 +122,15 @@ public class Game extends Thread{
                     }
                 }
             }
+
+//            // test
+//            for (int N : players) {
+//                if (N != 1) {
+//                    System.out.println(N + ": card1 = " + getBotByNum(N).getCard1() +
+//                            " *** " + "card2 = " + getBotByNum(N).getCard2());
+//                }
+//            }
+//            System.out.println(Card.Deck + "\n");
     }
 
     public static Integer botChallenges(int who) {

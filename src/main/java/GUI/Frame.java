@@ -48,6 +48,8 @@ public class Frame extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
+        ImageIcon logo = new ImageIcon("logo.png");
+        this.setIconImage(logo.getImage());
         initChoosePlayersWindow();
         this.repaint();
         this.revalidate();
