@@ -78,20 +78,20 @@ public class Bot extends Thread {
         }
         switch (Game.players.get(rnd)) {
             case 1:
-                section.controller = Controller.Launches_Coup_Against_1;
+                section.controller.set(Controller.Launches_Coup_Against_1);
                 break;
             case 2:
-                section.controller = Controller.Launches_Coup_Against_2;
+                section.controller.set(Controller.Launches_Coup_Against_2);
                 break;
             case 3:
-                section.controller = Controller.Launches_Coup_Against_3;
+                section.controller.set(Controller.Launches_Coup_Against_3);
                 break;
             case 4:
-                section.controller = Controller.Launches_Coup_Against_4;
+                section.controller.set(Controller.Launches_Coup_Against_4);
                 break;
         }
         Thread.sleep(2000);
-        section.controller = Controller.Neutral;
+        section.controller.set(Controller.Neutral);
         Action.coup(getNum(), Game.players.get(rnd));
     }
 
@@ -105,26 +105,26 @@ public class Bot extends Thread {
     }
 
     public void incomeDecision() throws InterruptedException {
-        section.controller = Controller.Income;
+        section.controller.set(Controller.Income);
         Thread.sleep(2000);
-        section.controller = Controller.Neutral;
-        section.controller = Controller.Neutral;
+        section.controller.set(Controller.Neutral);
+        section.controller.set(Controller.Neutral);
         Action.income(getNum());
     }
 
     public void exchangeOneDecision() throws InterruptedException {
         if (card1 != null) {
-            section.controller = Controller.Exchange_One_Card;
+            section.controller.set(Controller.Exchange_One_Card);
             Thread.sleep(2000);
-            section.controller = Controller.Neutral;
-            section.controller = Controller.Neutral;
+            section.controller.set(Controller.Neutral);
+            section.controller.set(Controller.Neutral);
             Action.exchangeOne(getNum(), 1);
         }
         else {
-            section.controller = Controller.Exchange_One_Card;
+            section.controller.set(Controller.Exchange_One_Card);
             Thread.sleep(2000);
-            section.controller = Controller.Neutral;
-            section.controller = Controller.Neutral;
+            section.controller.set(Controller.Neutral);
+            section.controller.set(Controller.Neutral);
             Action.exchangeOne(getNum(), 2);
         }
     }
@@ -160,10 +160,10 @@ public class Bot extends Thread {
     public void playParanoid() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
             if (state.get() == PlayerState.IsToPlay && Game.players.size() != 1) {
-                    section.controller = Controller.Is_Thinking;
+                    section.controller.set(Controller.Is_Thinking);
                     Thread.sleep(3000);
-                    section.controller = Controller.Neutral;
-                    section.controller = Controller.Neutral;
+                    section.controller.set(Controller.Neutral);
+                    section.controller.set(Controller.Neutral);
                     state.set(PlayerState.Neutral);
                     if (coins >= 10) {
                         coupDecision();
@@ -243,10 +243,10 @@ public class Bot extends Thread {
     public void playCautiousAssassin() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
             if (state.get() == PlayerState.IsToPlay && Game.players.size() != 1) {
-                section.controller = Controller.Is_Thinking;
+                section.controller.set(Controller.Is_Thinking);
                 Thread.sleep(3000);
-                section.controller = Controller.Neutral;
-                section.controller = Controller.Neutral;
+                section.controller.set(Controller.Neutral);
+                section.controller.set(Controller.Neutral);
                 state.set(PlayerState.Neutral);
                 if (coins >= 10) {
                     coupDecision();
@@ -285,10 +285,10 @@ public class Bot extends Thread {
     public void playCoupLover() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
             if (state.get() == PlayerState.IsToPlay && Game.players.size() != 1) {
-                section.controller = Controller.Is_Thinking;
+                section.controller.set(Controller.Is_Thinking);
                 Thread.sleep(3000);
-                section.controller = Controller.Neutral;
-                section.controller = Controller.Neutral;
+                section.controller.set(Controller.Neutral);
+                section.controller.set(Controller.Neutral);
                 state.set(PlayerState.Neutral);
                     if (coins < 7) {
                         Action.challengeSequenceForTax(getNum());
@@ -304,10 +304,10 @@ public class Bot extends Thread {
     public void playNerd() throws InterruptedException {
         while (Game.gameIsGoing.get()) {
             if (state.get() == PlayerState.IsToPlay && Game.players.size() != 1) {
-                section.controller = Controller.Is_Thinking;
+                section.controller.set(Controller.Is_Thinking);
                 Thread.sleep(3000);
-                section.controller = Controller.Neutral;
-                section.controller = Controller.Neutral;
+                section.controller.set(Controller.Neutral);
+                section.controller.set(Controller.Neutral);
                 state.set(PlayerState.Neutral);
                 if (coins >= 10) {
                     coupDecision();

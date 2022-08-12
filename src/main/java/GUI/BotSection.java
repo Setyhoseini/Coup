@@ -14,9 +14,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class BotSection extends Thread implements ActionListener {
-    public Controller controller = Controller.Neutral;
+    public AtomicReference<Controller> controller = new AtomicReference<>();
     public AtomicBoolean running = new AtomicBoolean(true);
 
     public JLabel title = new JLabel();
@@ -100,6 +101,7 @@ public class BotSection extends Thread implements ActionListener {
     }
 
     public BotSection(Bot bot) {
+        controller.set(Controller.Neutral);
         this.bot = bot;
         card1.setIcon(Card.Back.getImage());
         card2.setIcon(Card.Back.getImage());
@@ -1048,7 +1050,7 @@ public class BotSection extends Thread implements ActionListener {
     @Override
     public void run() {
         while (running.get()) {
-            switch (controller) {
+            switch (controller.get()) {
                 case Is_Thinking:
                     thinkingLabel.setVisible(true);
                     break;

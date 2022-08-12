@@ -34,7 +34,7 @@ public class Game extends Thread{
 
     public static void changeTurn() {
         for (Bot b : bots) {
-            b.section.controller = Controller.Neutral;
+            b.section.controller.set(Controller.Neutral);
         }
             int handle = turn.get();
 
