@@ -141,7 +141,7 @@ public class Game extends Thread{
                 Vector<Integer> list = new Vector<>();
                 for (Bot b : bots) {
                     if (b.getRole() != BotType.Paranoid && who != b.getNum() && players.contains(b.getNum())) {
-                        if ((Math.random() < 0.05)) list.add(b.getNum());
+                        if ((Math.random() < 0.15)) list.add(b.getNum());
                     }
                 }
                 Collections.shuffle(list);
@@ -152,7 +152,7 @@ public class Game extends Thread{
             Vector<Integer> list = new Vector<>();
             for (Bot b : bots) {
                 if (who != b.getNum() && players.contains(b.getNum())) {
-                    if ((Math.random() < 0.05)) list.add(b.getNum());
+                    if ((Math.random() < 0.15)) list.add(b.getNum());
                 }
             }
             Collections.shuffle(list);
@@ -170,7 +170,6 @@ public class Game extends Thread{
                 switch (action) {
                     case "foreign_aid":
                         for (Bot b : bots) {
-
                             if (b.getNum() != who) {
                                 if (b.getCard1() == Card.Duke || b.getCard2() == Card.Duke) {
                                     list1.add(b.getNum());
@@ -180,7 +179,7 @@ public class Game extends Thread{
                                             if (Math.random() < 0.4 && players.contains(b.getNum())) list2.add(b.getNum());
                                             break;
                                         case Coup_Lover:
-                                            if (Math.random() < 0.7 && players.contains(b.getNum())) list2.add(b.getNum());
+                                            if (Math.random() < 0.2 && players.contains(b.getNum())) list2.add(b.getNum());
                                             break;
                                         case Nerd:
                                             if (Math.random() < 0.13 && players.contains(b.getNum())) list2.add(b.getNum());
@@ -213,7 +212,7 @@ public class Game extends Thread{
                                     if (Math.random() < 0.50) list2.add(bot.getNum());
                                     break;
                                 case Nerd:
-                                    if (Math.random() < 0.02) list2.add(bot.getNum());
+                                    if (Math.random() < 0.05) list2.add(bot.getNum());
                                     break;
                             }
                         }
@@ -227,7 +226,7 @@ public class Game extends Thread{
                         else {
                             switch (bot.getRole()) {
                                 case Paranoid:
-                                    if (Math.random() < 0.05) list2.add(bot.getNum());
+                                    if (Math.random() < 0.08) list2.add(bot.getNum());
                                     break;
                                 case Coup_Lover:
                                     if (Math.random() < 0.20) list2.add(bot.getNum());
