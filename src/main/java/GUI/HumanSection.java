@@ -209,6 +209,7 @@ public class HumanSection implements ActionListener {
     public static void assassinateACard(int card) {
         if (Human.card1 != null || Human.card2 != null) {
             if (card == 1) {
+                assert Human.card1 != null;
                 card1.setIcon(Human.card1.getDeadImage());
                 Human.card1 = null;
             }
