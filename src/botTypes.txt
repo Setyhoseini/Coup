@@ -1,5 +1,5 @@
 [
-  "Nerd",
   "Paranoid",
-  "Cautious_Assassin"
+  "Coup_Lover",
+  "Nerd"
 ]

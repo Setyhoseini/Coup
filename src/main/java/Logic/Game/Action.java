@@ -833,6 +833,7 @@ public class Action {
                     pause(3);
                     challenger.section.controller = Controller.Neutral;
                     if (blocker.getCard1() == Card.Contessa || blocker.getCard2() == Card.Contessa) {
+                        blocker.section.controller = Controller.Neutral;
                         blocker.section.controller = Controller.Won_Challenge;
                         if (blocker.getCard1() == Card.Contessa) {
                             blocker.section.revealACard(1);
@@ -849,6 +850,7 @@ public class Action {
                         if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                         Game.changeTurn();
                     } else {
+                        blocker.section.controller = Controller.Neutral;
                         blocker.section.controller = Controller.Lost_Challenge;
                         pause(3);
                         blocker.section.revealACard();
@@ -864,6 +866,7 @@ public class Action {
                 blocker.section.controller = Controller.Neutral;
                 Human.lastAction = null;
                 if (blocker.getCard1() == Card.Contessa || blocker.getCard2() == Card.Contessa) {
+                    blocker.section.controller = Controller.Neutral;
                     blocker.section.controller = Controller.Won_Challenge;
                     if (blocker.getCard1() == Card.Contessa) {
                         blocker.section.revealACard(1);
@@ -880,6 +883,7 @@ public class Action {
                     if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                     Game.changeTurn();
                 } else {
+                    blocker.section.controller = Controller.Neutral;
                     blocker.section.controller = Controller.Lost_Challenge;
                     pause(3);
                     blocker.section.revealACard();
@@ -907,6 +911,7 @@ public class Action {
                 pause(3);
                 challenger.section.controller = Controller.Neutral;
                 if (blocker.getCard1() == Card.Contessa || blocker.getCard2() == Card.Contessa) {
+                    blocker.section.controller = Controller.Neutral;
                     blocker.section.controller = Controller.Won_Challenge;
                     if (blocker.getCard1() == Card.Contessa) {
                         blocker.section.revealACard(1);
@@ -923,6 +928,7 @@ public class Action {
                     if (on != 1) Game.getBotByNum(on).section.controller = Controller.Neutral;
                     Game.changeTurn();
                 } else {
+                    blocker.section.controller = Controller.Neutral;
                     blocker.section.controller = Controller.Lost_Challenge;
                     pause(3);
                     blocker.section.revealACard();
@@ -1389,7 +1395,10 @@ public class Action {
                 challengeSequenceForForeignAidBlock(1, by);
             }
         } else {
-            if (by != 1) Game.getBotByNum(by).section.controller = Controller.Foreign_Aid;
+            if (by != 1) {
+                Game.getBotByNum(by).section.controller = Controller.Foreign_Aid;
+                pause(3);
+            }
             Integer block = Game.botBlocks(by, 0, "foreign_aid");
             if (block == 0) {
                 if (by != 1) Game.getBotByNum(by).section.controller = Controller.Neutral;
