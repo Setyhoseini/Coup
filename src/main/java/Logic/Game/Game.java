@@ -136,6 +136,14 @@ public class Game extends Thread{
     public static Integer botChallenges(int who) {
         int x = 0;
         if (Bot.paranoidIsPlaying.get()) {
+            Bot paranoid = null;
+            for (Bot b : bots) {
+                if (b.getRole() == BotType.Paranoid && players.contains(b.getNum())) {
+                    paranoid = Game.getBotByNum(b.getNum());
+                    break;
+                }
+            }
+
             if (!Bot.paranoidChallenge.get()) {
                 for (Bot b : bots) {
                     if (b.getRole() == BotType.Paranoid && who != b.getNum() && players.contains(b.getNum())) {
@@ -143,10 +151,14 @@ public class Game extends Thread{
                         break;
                     }
                 }
-                Bot.paranoidChallenge.set(true);
+                if (paranoid != null) {
+                    if (who != paranoid.getNum()) Bot.paranoidChallenge.set(true);
+                }
             }
             else {
-                Bot.paranoidChallenge.set(false);
+                if (paranoid != null) {
+                    if (who != paranoid.getNum()) Bot.paranoidChallenge.set(false);
+                }
                 Vector<Integer> list = new Vector<>();
                 for (Bot b : bots) {
                     if (b.getRole() != BotType.Paranoid && who != b.getNum() && players.contains(b.getNum())) {

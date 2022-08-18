@@ -242,6 +242,7 @@ public class Action {
             bot.section.revealACard();
             if (bot.getCard1() == null && bot.getCard2() == null) {
                 Game.players.remove((Integer) on);
+                Game.players.remove((Integer) on);
             }
         }
         else {
@@ -254,6 +255,7 @@ public class Action {
                 Bot bot = Game.getBotByNum(on);
                 bot.section.revealACard();
                 if (bot.getCard1() == null && bot.getCard2() == null) {
+                    Game.players.remove((Integer) on);
                     Game.players.remove((Integer) on);
                 }
             }

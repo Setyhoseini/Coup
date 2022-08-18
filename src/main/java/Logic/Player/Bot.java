@@ -322,7 +322,7 @@ public class Bot extends Thread {
                             Vector<Integer> list = stealWithAtLeastTwoCoins();
                             if (list.size() == 0) {
                                 list = stealWithAtLeastOneCoin();
-                                if (list.size() == 0) Action.exchangeTwo(getNum());
+                                if (list.size() == 0) Action.challengeSequenceForExchange(getNum());
                                 else Action.blockSequenceForSteal(getNum(), list.get(0));
                             }
                             else Action.blockSequenceForSteal(getNum(), list.get(0));
@@ -359,7 +359,7 @@ public class Bot extends Thread {
                                 Vector<Integer> list = stealWithAtLeastTwoCoins();
                                 if (list.size() == 0) {
                                     list = stealWithAtLeastOneCoin();
-                                    if (list.size() == 0) Action.exchangeTwo(getNum());
+                                    if (list.size() == 0) Action.challengeSequenceForExchange(getNum());
                                     else incomeDecision();
                                 }
                                 else Action.blockSequenceForSteal(getNum(), list.get(0));
@@ -378,7 +378,7 @@ public class Bot extends Thread {
                             Vector<Integer> list = stealWithAtLeastTwoCoins();
                             if (list.size() == 0) {
                                 list = stealWithAtLeastOneCoin();
-                                if (list.size() == 0) Action.exchangeTwo(getNum());
+                                if (list.size() == 0) Action.challengeSequenceForExchange(getNum());
                                 else {
                                     if (Math.random() > 0.5) Action.challengeSequenceForExchange(getNum());
                                     else incomeDecision();
@@ -391,7 +391,7 @@ public class Bot extends Thread {
                         Vector<Integer> list = stealWithAtLeastTwoCoins();
                         if (list.size() == 0) {
                             list = stealWithAtLeastOneCoin();
-                            if (list.size() == 0) Action.exchangeTwo(getNum());
+                            if (list.size() == 0) Action.challengeSequenceForExchange(getNum());
                             else Action.challengeSequenceForExchange(getNum());
                         }
                         else Action.blockSequenceForSteal(getNum(), list.get(0));
@@ -430,7 +430,7 @@ public class Bot extends Thread {
                         Vector<Integer> list = stealWithAtLeastTwoCoins();
                         if (list.size() == 0) {
                             list = stealWithAtLeastOneCoin();
-                            if (list.size() == 0) Action.exchangeTwo(getNum());
+                            if (list.size() == 0) exchangeOneDecision();
                             else if (Math.random() > 0.5) Action.challengeSequenceForExchange(getNum());
                             else incomeDecision();
                         }
